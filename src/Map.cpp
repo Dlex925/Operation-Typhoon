@@ -28,11 +28,12 @@ Map::Map(const std::string& FileName) {
 
 }
 
-bool Map::isWall(float x, float y) {
+int Map::isWall(double x, double y) {
     int ix = static_cast<int>(x);
     int iy = static_cast<int>(y);
 
-    if (iy < 0 || iy >= map.size() || ix < 0 || ix >= map[iy].size()) {
+    if (static_cast<unsigned long>(iy) >= map.size() ||
+    static_cast<unsigned long>(ix) >= map[iy].size()) {
         return 1;
     }
 

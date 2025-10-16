@@ -2,57 +2,57 @@
 #include <cmath>
 #include <iostream>
 
-Player::Player(float x, float y)
+Player::Player(double x, double y)
     : posX(x), posY(y), dirX(-1.0f), dirY(0.0f),
       planeX(0.0f), planeY(0.66f), moveSpeed(3.5f),
       rotSpeed(1.0f), mouseSensitivity(0.0005f) {}
 
-void Player::MoveForward(float deltaTime, Map& map) {
-    float newX = posX + dirX * moveSpeed * deltaTime;
-    float newY = posY + dirY * moveSpeed * deltaTime;
+void Player::MoveForward(double deltaTime, Map& map) {
+    double newX = posX + dirX * moveSpeed * deltaTime;
+    double newY = posY + dirY * moveSpeed * deltaTime;
 
     if (!map.isWall(newX, posY)) posX = newX;
     if (!map.isWall(posX, newY)) posY = newY;
 }
 
-void Player::MoveBackward(float deltaTime, Map& map) {
-    float newX = posX - dirX * moveSpeed * deltaTime;
-    float newY = posY - dirY * moveSpeed * deltaTime;
+void Player::MoveBackward(double deltaTime, Map& map) {
+    double newX = posX - dirX * moveSpeed * deltaTime;
+    double newY = posY - dirY * moveSpeed * deltaTime;
 
     if (!map.isWall(newX, posY)) posX = newX;
     if (!map.isWall(posX, newY)) posY = newY;
 }
 
-void Player::MoveLeft(float deltaTime, Map& map) {
-    float perpDirX = -dirY;
-    float perpDirY = dirX;
+void Player::MoveLeft(double deltaTime, Map& map) {
+    double perpDirX = -dirY;
+    double perpDirY = dirX;
 
-    float newX = posX + perpDirX * moveSpeed * deltaTime;
-    float newY = posY + perpDirY * moveSpeed * deltaTime;
-
-    if (!map.isWall(newX, posY)) posX = newX;
-    if (!map.isWall(posX, newY)) posY = newY;
-}
-
-void Player::MoveRight(float deltaTime, Map& map) {
-    float perpDirX = dirY;
-    float perpDirY = -dirX;
-
-    float newX = posX + perpDirX * moveSpeed * deltaTime;
-    float newY = posY + perpDirY * moveSpeed * deltaTime;
+    double newX = posX + perpDirX * moveSpeed * deltaTime;
+    double newY = posY + perpDirY * moveSpeed * deltaTime;
 
     if (!map.isWall(newX, posY)) posX = newX;
     if (!map.isWall(posX, newY)) posY = newY;
 }
 
-void Player::RotateCamera(float mouseDeltaX) {
-    float rotationAmount = mouseDeltaX * mouseSensitivity;
+void Player::MoveRight(double deltaTime, Map& map) {
+    double perpDirX = dirY;
+    double perpDirY = -dirX;
 
-    float oldDirX = dirX;
+    double newX = posX + perpDirX * moveSpeed * deltaTime;
+    double newY = posY + perpDirY * moveSpeed * deltaTime;
+
+    if (!map.isWall(newX, posY)) posX = newX;
+    if (!map.isWall(posX, newY)) posY = newY;
+}
+
+void Player::RotateCamera(double mouseDeltaX) {
+    double rotationAmount = mouseDeltaX * mouseSensitivity;
+
+    double oldDirX = dirX;
     dirX = dirX * cos(rotationAmount) - dirY * sin(rotationAmount);
     dirY = oldDirX * sin(rotationAmount) + dirY * cos(rotationAmount);
 
-    float oldPlaneX = planeX;
+    double oldPlaneX = planeX;
     planeX = planeX * cos(rotationAmount) - planeY * sin(rotationAmount);
     planeY = oldPlaneX * sin(rotationAmount) + planeY * cos(rotationAmount);
 }

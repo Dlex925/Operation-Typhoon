@@ -7,23 +7,23 @@
 #include "Map.h++"
 
 class Player {
-    float posX, posY, dirX, dirY , planeX , planeY;
-    const float moveSpeed , rotSpeed;
-    float mouseSensitivity;
+    double posX, posY, dirX, dirY , planeX , planeY;
+    const double moveSpeed , rotSpeed;
+    double mouseSensitivity;
 public:
-    Player(float x = 1.f, float y = 1.f);
-    void MoveForward(float deltaTime, Map& map);
-    void MoveBackward(float deltaTime, Map& map);
-    void MoveLeft(float deltaTime, Map& map);
-    void MoveRight(float deltaTime, Map& map);
-    void RotateCamera(float mouseDeltaX);
+    explicit Player(double x = 1.f, double y = 1.f);
+    void MoveForward(double deltaTime, Map& map);
+    void MoveBackward(double deltaTime, Map& map);
+    void MoveLeft(double deltaTime, Map& map);
+    void MoveRight(double deltaTime, Map& map);
+    void RotateCamera(double mouseDeltaX);
     // Getters
-    float getX() const { return posX; }
-    float getY() const { return posY; }
-    float getDirX() const { return dirX; }
-    float getDirY() const { return dirY; }
-    float getPlaneX() const { return planeX; }
-    float getPlaneY() const { return planeY; }
+    [[nodiscard]]double getX() const { return posX; }
+    [[nodiscard]]double getY() const { return posY; }
+    [[nodiscard]]double getDirX() const { return dirX; }
+    [[nodiscard]] double getDirY() const { return dirY; }
+    [[nodiscard]] double getPlaneX() const { return planeX; }
+    [[nodiscard]]double getPlaneY() const { return planeY; }
     void printPosition() const;
 
 };
