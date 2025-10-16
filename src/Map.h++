@@ -11,8 +11,8 @@ class Map {
     public:
     explicit Map(const std::string& Filename);
     int isWall(double x , double y ) ;
-   [[nodiscard]] unsigned long  getTileSizeX()const {return x_size;}
-   [[nodiscard]] unsigned long  getTileSizeY()const {return y_size;}
+  // [[nodiscard]] unsigned long  getTileSizeX()const {return x_size;}
+  // [[nodiscard]] unsigned long  getTileSizeY()const {return y_size;}
 
 
 

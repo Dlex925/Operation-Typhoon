@@ -24,7 +24,7 @@ public:
     [[nodiscard]] double getDirY() const { return dirY; }
     [[nodiscard]] double getPlaneX() const { return planeX; }
     [[nodiscard]]double getPlaneY() const { return planeY; }
-    void printPosition() const;
+    //void printPosition() const;
 
 };
 
