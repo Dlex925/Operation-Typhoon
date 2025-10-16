@@ -1,7 +1,8 @@
 #ifndef OOP_RAYCAST_H
 #define OOP_RAYCAST_H
 #include "Player.h++"
-#include "SFML/Graphics/RenderWindow.hpp"
+#include <SFML/Graphics.hpp>
+
 
 
 class Raycast {
