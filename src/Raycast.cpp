@@ -55,12 +55,16 @@ void Raycast::render() {
         int drawStart = std::max(-lineHeight / 2 + h / 2, 0);
         int drawEnd = std::min(lineHeight / 2 + h / 2, h - 1);
 
-       sf::Color color =  sf::Color(255, 255, 255);
-        sf::Color color2 =  sf::Color(0, 255, 255);
-            sf::Vertex line[] = {
-            sf::Vertex(sf::Vector2f(static_cast<float>(x), static_cast<float>(drawStart)), color),
-            sf::Vertex(sf::Vector2f(static_cast<float>(x), static_cast<float>(drawEnd)), color2)
+        sf::Color color = sf::Color(255, 255, 255);
+        sf::Color color2 = sf::Color(0, 255, 255);
+
+        sf::Vertex line[] = {
+            sf::Vertex(sf::Vector2f(static_cast<float>(x), static_cast<float>(drawStart))),
+            sf::Vertex(sf::Vector2f(static_cast<float>(x), static_cast<float>(drawEnd)))
         };
+
+        line[0].color = color;
+        line[1].color = color2;
 
 
         window->draw(line, 2, sf::PrimitiveType::Lines);
