@@ -59,5 +59,5 @@ void Player::RotateCamera(double mouseDeltaX) {
 
 /*void Player::printPosition() const {
     std::cout << "Player pos: (" << posX << ", " << posY
-              << ") dir: (" << dirX << ", " << dirY << ")" << std::endl;
+              << ") dir: (" << dirX << ", " << dirY << ")" << std::endl;x
 }*/
