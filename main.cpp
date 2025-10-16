@@ -28,7 +28,7 @@ int main() {
             float deltaTime = clock.restart().asSeconds();
 
             while (std::optional<sf::Event> event = window.pollEvent()) {
-                if (event && event->is<sf::Event::Closed>()) window.close();
+                if ( event->is<sf::Event::Closed>()) window.close();
             }
 
             // Mouse rotation
