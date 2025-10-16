@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <optional>
-#include "SFML/Audio/Music.hpp"
+#include <SFML/Audio.hpp>
 #include "src/Map.h++"
 #include "src/Player.h++"
 #include "src/Raycast.h++"
