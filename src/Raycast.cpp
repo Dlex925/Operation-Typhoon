@@ -58,12 +58,11 @@ void Raycast::render() {
         sf::Color color = sf::Color(255, 255, 255);
         sf::Color color2 = sf::Color(0, 255, 255);
 
-        sf::Vertex line[] = {
-            sf::Vertex(sf::Vector2f(static_cast<float>(x), static_cast<float>(drawStart))),
-            sf::Vertex(sf::Vector2f(static_cast<float>(x), static_cast<float>(drawEnd)))
-        };
 
+        sf::Vertex line[2];
+        line[0].position = sf::Vector2f(static_cast<float>(x), static_cast<float>(drawStart));
         line[0].color = color;
+        line[1].position = sf::Vector2f(static_cast<float>(x), static_cast<float>(drawEnd));
         line[1].color = color2;
 
 

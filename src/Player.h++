@@ -8,7 +8,7 @@
 
 class Player {
     double posX, posY, dirX, dirY , planeX , planeY;
-    const double moveSpeed ;// rotSpeed;
+    const double moveSpeed  , rotSpeed;
     double mouseSensitivity;
 public:
     explicit Player(double x = 1.f, double y = 1.f);

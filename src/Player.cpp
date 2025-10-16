@@ -46,7 +46,7 @@ void Player::MoveRight(double deltaTime, Map& map) {
 }
 
 void Player::RotateCamera(double mouseDeltaX) {
-    double rotationAmount = mouseDeltaX * mouseSensitivity;
+    double rotationAmount = mouseDeltaX * mouseSensitivity * rotSpeed;
 
     double oldDirX = dirX;
     dirX = dirX * cos(rotationAmount) - dirY * sin(rotationAmount);
@@ -57,7 +57,7 @@ void Player::RotateCamera(double mouseDeltaX) {
     planeY = oldPlaneX * sin(rotationAmount) + planeY * cos(rotationAmount);
 }
 
-void Player::printPosition() const {
+/*void Player::printPosition() const {
     std::cout << "Player pos: (" << posX << ", " << posY
               << ") dir: (" << dirX << ", " << dirY << ")" << std::endl;
-}
+}*/
