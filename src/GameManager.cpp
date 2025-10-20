@@ -25,7 +25,7 @@ void GameManager::start() const{
 void GameManager::handleInput(float deltaTime) const{
 
     while (std::optional<sf::Event> event = window.pollEvent()) {
-        if (event && event->is<sf::Event::Closed>()) {
+        if (event->is<sf::Event::Closed>()) {
             window.close();
         }
     }
