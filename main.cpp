@@ -4,7 +4,7 @@
 
 int main() {
     try {
-        sf::RenderWindow window(sf::VideoMode({800, 600}), "Wolfenstein");
+        sf::RenderWindow window(sf::VideoMode({2560, 1440}), "Operation Typhoon");
 
         Map map("assets/map1");
         Player player(3.0f, 3.0f);
