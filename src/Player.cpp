@@ -7,7 +7,7 @@ Player::Player(double x, double y)
       planeX(0.0f), planeY(0.66f), moveSpeed(3.5f),
       rotSpeed(1.0f), mouseSensitivity(0.0005f) {}
 
-void Player::MoveForward(double deltaTime, Map& map) {
+void Player::MoveForward(double deltaTime, const Map& map) {
     double newX = posX + dirX * moveSpeed * deltaTime;
     double newY = posY + dirY * moveSpeed * deltaTime;
 
@@ -15,7 +15,7 @@ void Player::MoveForward(double deltaTime, Map& map) {
     if (!map.isWall(posX, newY)) posY = newY;
 }
 
-void Player::MoveBackward(double deltaTime, Map& map) {
+void Player::MoveBackward(double deltaTime, const Map& map) {
     double newX = posX - dirX * moveSpeed * deltaTime;
     double newY = posY - dirY * moveSpeed * deltaTime;
 
@@ -23,7 +23,7 @@ void Player::MoveBackward(double deltaTime, Map& map) {
     if (!map.isWall(posX, newY)) posY = newY;
 }
 
-void Player::MoveLeft(double deltaTime, Map& map) {
+void Player::MoveLeft(double deltaTime, const Map& map) {
     double perpDirX = -dirY;
     double perpDirY = dirX;
 
@@ -34,7 +34,7 @@ void Player::MoveLeft(double deltaTime, Map& map) {
     if (!map.isWall(posX, newY)) posY = newY;
 }
 
-void Player::MoveRight(double deltaTime, Map& map) {
+void Player::MoveRight(double deltaTime, const  Map& map) {
     double perpDirX = dirY;
     double perpDirY = -dirX;
 

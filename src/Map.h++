@@ -11,11 +11,9 @@ class Map {
     public:
     explicit Map(const std::string& Filename);
     int isWall(double x , double y ) const ;
-    Map(Map& other) {
-        x_size = other.x_size ;
-        y_size = other.y_size ;
-        map = other.map ;
-    }
+    Map(const Map& other)
+    : x_size(other.x_size), y_size(other.y_size), map(other.map){};
+
     Map& operator=(const Map& other) {
         if (this != &other) {
             x_size = other.x_size;

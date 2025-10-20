@@ -12,10 +12,10 @@ class Player {
     double mouseSensitivity;
 public:
     explicit Player(double x = 1.f, double y = 1.f);
-    void MoveForward(double deltaTime, Map& map);
-    void MoveBackward(double deltaTime, Map& map);
-    void MoveLeft(double deltaTime, Map& map);
-    void MoveRight(double deltaTime, Map& map);
+    void MoveForward(double deltaTime, const Map& map);
+    void MoveBackward(double deltaTime, const Map& map);
+    void MoveLeft(double deltaTime, const Map& map);
+    void MoveRight(double deltaTime, const Map& map);
     void RotateCamera(double mouseDeltaX);
     friend std::ostream& operator<<(std::ostream& os, const Player& player) ;
     // Getters
