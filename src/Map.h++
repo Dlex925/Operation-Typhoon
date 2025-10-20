@@ -10,9 +10,26 @@ class Map {
 
     public:
     explicit Map(const std::string& Filename);
-    int isWall(double x , double y ) ;
+    int isWall(double x , double y ) const ;
+    Map(Map& other) {
+        x_size = other.x_size ;
+        y_size = other.y_size ;
+        map = other.map ;
+    }
+    Map& operator=(const Map& other) {
+        if (this != &other) {
+            x_size = other.x_size;
+            y_size = other.y_size;
+            map = other.map;
+        }
+        return *this;
+    }
+    ~Map() {
+        map.clear();
+    }
   // [[nodiscard]] unsigned long  getTileSizeX()const {return x_size;}
   // [[nodiscard]] unsigned long  getTileSizeY()const {return y_size;}
+    friend std::ostream& operator<<(std::ostream& os, const Map& map);
 
 
 

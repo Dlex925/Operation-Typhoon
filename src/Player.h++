@@ -17,6 +17,7 @@ public:
     void MoveLeft(double deltaTime, Map& map);
     void MoveRight(double deltaTime, Map& map);
     void RotateCamera(double mouseDeltaX);
+    friend std::ostream& operator<<(std::ostream& os, const Player& player) ;
     // Getters
     [[nodiscard]]double getX() const { return posX; }
     [[nodiscard]]double getY() const { return posY; }

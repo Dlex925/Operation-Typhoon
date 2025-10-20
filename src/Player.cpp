@@ -61,3 +61,10 @@ void Player::RotateCamera(double mouseDeltaX) {
     std::cout << "Player pos: (" << posX << ", " << posY
               << ") dir: (" << dirX << ", " << dirY << ")" << std::endl;x
 }*/
+
+ std::ostream& operator<<(std::ostream& os, const Player& player) {
+    os << "Player(pos: (" << player.posX << ", " << player.posY
+       << "), dir: (" << player.dirX << ", " << player.dirY
+       << "), plane: (" << player.planeX << ", " << player.planeY << "))";
+    return os;
+}

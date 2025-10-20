@@ -2,7 +2,7 @@
 
 Raycast::Raycast(sf::RenderWindow& win, Map& m, Player& p )
     : window(&win), map(&m), player(&p) {}
-void Raycast::render() {
+void Raycast::render() const{
      int w = static_cast<int>(window->getSize().x);
      int h = static_cast<int>(window->getSize().y);
 
@@ -68,4 +68,11 @@ void Raycast::render() {
 
         window->draw(line, 2, sf::PrimitiveType::Lines);
     }
+}
+
+std::ostream& operator<<(std::ostream& os, const Raycast& raycast) {
+    os << "Raycast(window: " << (raycast.window ? "active" : "null")
+          << ", map: " << (raycast.map ? "loaded" : "null")
+          << ", player: " << (raycast.player ? "active" : "null") << ")";
+    return os;
 }

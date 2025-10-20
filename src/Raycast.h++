@@ -11,8 +11,8 @@ class Raycast {
     Player* player;
 public:
     Raycast(sf::RenderWindow& win, Map& m , Player& p);
-    void render();
+    void render() const;
+
+friend std::ostream& operator<<(std::ostream& os, const Raycast& raycast) ;
 };
-
-
 #endif //OOP_RAYCAST_H

@@ -64,6 +64,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/Player.h++
         src/Raycast.cpp
         src/Raycast.h++
+        src/GameManager.cpp
+        src/GameManager.h++
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

@@ -28,7 +28,7 @@ Map::Map(const std::string& FileName) {
 
 }
 
-int Map::isWall(double x, double y) {
+int Map::isWall(double x, double y) const{
     int ix = static_cast<int>(x);
     int iy = static_cast<int>(y);
 
@@ -39,4 +39,32 @@ int Map::isWall(double x, double y) {
 
     return map[iy][ix] != 0;
 }
+
+std::ostream& operator<<(std::ostream& os, const Map& map) {
+    os << "Map " << map.x_size << "x" << map.y_size << ":\n";
+
+    os << "   █";
+    for (unsigned long x = 0; x < map.x_size; x++) os << "█";
+    os << "█\n";
+
+    for (unsigned long y = 0; y < map.y_size; y++) {
+        os << "   █";
+        for (unsigned long x = 0; x < map.x_size; x++) {
+            if (map.map[y][x] != 0) {
+                os << "█";
+            } else {
+                os << " ";
+            }
+        }
+        os << "█\n";
+    }
+
+    os << "   █";
+    for (unsigned long x = 0; x < map.x_size; x++) os << "█";
+    os << "█\n";
+
+    return os;
+}
+
+
 
