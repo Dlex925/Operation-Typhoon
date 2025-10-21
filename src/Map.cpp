@@ -44,12 +44,12 @@ std::ostream& operator<<(std::ostream& os, const Map& map) {
     os << "Map " << map.x_size << "x" << map.y_size << ":\n";
 
     os << "   █";
-    for (unsigned long x = 0; x < map.x_size; x++) os << "█";
+    for (unsigned long x = 0; x < map.x_size; ++x) os << "█";
     os << "█\n";
 
-    for (unsigned long y = 0; y < map.y_size; y++) {
+    for (unsigned long y = 0; y < map.y_size; ++y) {
         os << "   █";
-        for (unsigned long x = 0; x < map.x_size; x++) {
+        for (unsigned long x = 0; x < map.x_size; ++x) {
             if (map.map[y][x] != 0) {
                 os << "█";
             } else {
@@ -60,7 +60,7 @@ std::ostream& operator<<(std::ostream& os, const Map& map) {
     }
 
     os << "   █";
-    for (unsigned long x = 0; x < map.x_size; x++) os << "█";
+    for (unsigned long x = 0; x < map.x_size; ++x) os << "█";
     os << "█\n";
 
     return os;
