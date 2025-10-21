@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <iostream>
 
 class Map {
     unsigned long x_size, y_size;
@@ -23,7 +24,7 @@ class Map {
         return *this;
     }
     ~Map() {
-        map.clear();
+        std::cout << "Map destroyed";
     }
   // [[nodiscard]] unsigned long  getTileSizeX()const {return x_size;}
   // [[nodiscard]] unsigned long  getTileSizeY()const {return y_size;}
