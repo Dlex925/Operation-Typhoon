@@ -1,4 +1,5 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
+# Operation Typhoon
+Wolfenstein 3D inspired 2.5D shooter implemented using raycasting in C++
 
 ### Folosiți template-ul corespunzător grupei voastre!
 
