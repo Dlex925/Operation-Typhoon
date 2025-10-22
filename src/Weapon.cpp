@@ -5,7 +5,6 @@ Weapon::Weapon()
     : texture1("assets/Weapon1.png"),texture2("assets/Weapon2.png"),sprite(texture1)
 {
 
-        sf::Vector2u texSize = texture1.getSize();
         float scale = 0.75f;
         sprite.setPosition({800, 450});
         sprite.setScale({scale, scale});
