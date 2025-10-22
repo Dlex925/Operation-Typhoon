@@ -9,7 +9,7 @@ private:
     sf::Sprite sprite;
     bool shooting = false;
     float shootTimer = 0.0f;
-    float shootDuration = 0.1f;
+    float shootDuration = 0.35f;
     float originalY;
 
 public:
@@ -17,7 +17,9 @@ public:
     void update(float deltaTime);
     void shoot();
     void draw(sf::RenderWindow& window);
-    bool isShooting() const { return shooting; }
+   // bool isShooting() const { return shooting; }
+   friend std::ostream& operator<<(std::ostream& os, const Weapon& weapon) ;
+
 };
 
 #endif //OOP_WEAPON_H

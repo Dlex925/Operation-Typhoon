@@ -11,7 +11,6 @@ int main() {
        // std::cout << map << "\n";
        // std::cout << player << "\n";
        // std::cout << raycast << "\n";
-
         GameManager game(window, map, p);
         std::cout << game << "\n";
         game.start();

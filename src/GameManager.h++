@@ -33,6 +33,9 @@ friend std::ostream& operator<<(std::ostream& os, const GameManager& gm) {
     os << "\nRAYCAST:\n";
     os << gm.raycast;
 
+    os << "\nWEAPON:\n";
+    os << gm.player.getWeapon() ;
+
     return os;
 }
 };
