@@ -5,17 +5,18 @@
 #include "Player.h++"
 #include "Raycast.h++"
 #include <SFML/Graphics.hpp>
+#include <string>
 
 class GameManager {
 
     sf::RenderWindow& window;
-    Map& map;
+    Map map;
     Player& player;
-    Raycast& raycast;
+    Raycast raycast;
 
 
 public:
-    GameManager(sf::RenderWindow& win, Map& m, Player& p, Raycast& r);
+    GameManager(sf::RenderWindow& win, std::string harta, Player& p);
     void start()const;
     void handleInput(float deltaTime)const;
     void Engine() const;

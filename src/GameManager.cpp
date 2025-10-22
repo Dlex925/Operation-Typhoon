@@ -3,8 +3,8 @@
 #include <SFML/Audio.hpp>
 
 
-GameManager::GameManager(sf::RenderWindow& win, Map& m, Player& p, Raycast& r)
-    : window(win), map(m), player(p), raycast(r) {}
+GameManager::GameManager(sf::RenderWindow& win, std::string harta, Player& p)
+    : window(win), map(harta), player(p), raycast(window,map,player) {}
 
 void GameManager::start() const{
     sf::Clock clock;
