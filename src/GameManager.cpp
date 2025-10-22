@@ -18,6 +18,7 @@ void GameManager::start() const{
     while (window.isOpen()) {
         float deltaTime = clock.restart().asSeconds();
         handleInput(deltaTime);
+        player.updateWeapon(deltaTime);
         Engine();
     }
 }
@@ -41,10 +42,15 @@ void GameManager::handleInput(float deltaTime) const{
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) player.MoveLeft(deltaTime, map);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) player.MoveRight(deltaTime, map);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) window.close();
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+        player.shoot();
+    }
 }
 
 void GameManager::Engine()const {
     window.clear(sf::Color(0, 0, 0));
     raycast.render();
+    player.drawWeapon(window);
     window.display();
+
 }

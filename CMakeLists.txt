@@ -66,6 +66,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/Raycast.h++
         src/GameManager.cpp
         src/GameManager.h++
+        src/Weapon.cpp
+        src/Weapon.h++
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )
