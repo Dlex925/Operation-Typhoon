@@ -5,7 +5,7 @@ Weapon::Weapon()
     : texture1("assets/Weapon1.png"),texture2("assets/Weapon2.png"),sprite(texture1)
 {
 
-        float scale = 0.75f;
+        float scale = 15.75f;
         sprite.setPosition({800, 450});
         sprite.setScale({scale, scale});
         originalY = 450;
