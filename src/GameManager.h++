@@ -19,12 +19,16 @@ class GameManager {
 
 
     void performHitscanDamage();
+
     void performShortRangeAttackDamage();
 
 public:
     GameManager(sf::RenderWindow& win, std::string harta, Player& p);
+
     void start();
+
     void handleInput(float deltaTime);
+
     void Engine() const;
 
 friend std::ostream& operator<<(std::ostream& os, const GameManager& gm) {
@@ -40,7 +44,7 @@ friend std::ostream& operator<<(std::ostream& os, const GameManager& gm) {
     os << gm.raycast;
 
     os << "\nWEAPON:\n";
-    os << const_cast<GameManager&>(gm).player.getWeapon() ;
+    os << const_cast<GameManager &>(gm).player.getWeapon();
 
     return os;
 }

@@ -32,15 +32,14 @@ void GameManager::start() {
         float deltaTime = clock.restart().asSeconds();
         handleInput(deltaTime);
         player.updateWeapon(deltaTime);
-        for (auto& e : enemies) {
+        for (auto &e: enemies) {
             e.update(deltaTime, map, player);
         }
         Engine();
     }
 }
 
-void GameManager::handleInput(float deltaTime){
-
+void GameManager::handleInput(float deltaTime) {
     while (std::optional<sf::Event> event = window.pollEvent()) {
         if (event->is<sf::Event::Closed>()) {
             window.close();
@@ -59,12 +58,12 @@ void GameManager::handleInput(float deltaTime){
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) player.MoveRight(deltaTime, map);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) window.close();
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
-        if (player.getWeapon().shootPrimary(map,player,enemies)) {
+        if (player.getWeapon().shootPrimary(map, player, enemies)) {
             performHitscanDamage();
         }
     }
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
-        if (player.getWeapon().shootSecondary(map,player,enemies)) {
+        if (player.getWeapon().shootSecondary(map, player, enemies)) {
             performShortRangeAttackDamage();
         }
     }
@@ -73,24 +72,23 @@ void GameManager::handleInput(float deltaTime){
 void GameManager::Engine() const{
     window.clear(sf::Color(0, 0, 0));
     raycast.render();
-    
+
     std::vector<size_t> order(enemies.size());
     for (size_t i = 0; i < enemies.size(); ++i) order[i] = i;
-    std::sort(order.begin(), order.end(), [&](size_t a, size_t b){
+    std::sort(order.begin(), order.end(), [&](size_t a, size_t b) {
         double dxA = enemies[a].getWorldX() - player.getX();
         double dyA = enemies[a].getWorldY() - player.getY();
         double dxB = enemies[b].getWorldX() - player.getX();
         double dyB = enemies[b].getWorldY() - player.getY();
-        double da = dxA*dxA + dyA*dyA;
-        double db = dxB*dxB + dyB*dyB;
+        double da = dxA * dxA + dyA * dyA;
+        double db = dxB * dxB + dyB * dyB;
         return da > db;
     });
-    for (size_t idx : order) {
+    for (size_t idx: order) {
         raycast.renderEnemy(enemies[idx]);
     }
     player.drawWeapon(window);
     window.display();
-
 }
 
 
@@ -98,7 +96,7 @@ void GameManager::performHitscanDamage() {
     if (enemies.empty()) return;
     double rayDirX = player.getDirX();
     double rayDirY = player.getDirY();
-    
+
     int mapX = static_cast<int>(player.getX());
     int mapY = static_cast<int>(player.getY());
 
@@ -138,20 +136,20 @@ void GameManager::performHitscanDamage() {
         if (std::abs(mapX) > 1000 || std::abs(mapY) > 1000) { hit = 1; }
     }
     double wallDist = (side == 0) ? (sideDistX - deltaDistX) : (sideDistY - deltaDistY);
-    
-    const double hitWidth = 0.3; 
+
+    const double hitWidth = 0.3;
     int closestIdx = -1;
     double closestForward = 1e30;
 
     for (size_t i = 0; i < enemies.size(); ++i) {
-        auto& e = enemies[i];
+        auto &e = enemies[i];
         if (e.isDead()) continue;
         double vx = e.getWorldX() - player.getX();
         double vy = e.getWorldY() - player.getY();
         double forward = vx * rayDirX + vy * rayDirY;
-        if (forward <= 0) continue; 
+        if (forward <= 0) continue;
         double perp = std::abs(vx * (-rayDirY) + vy * rayDirX);
-        if (perp > hitWidth) continue; 
+        if (perp > hitWidth) continue;
         if (forward < wallDist && forward < closestForward) {
             closestForward = forward;
             closestIdx = static_cast<int>(i);
@@ -216,12 +214,12 @@ void GameManager::performShortRangeAttackDamage() {
     double closestForward = 1e30;
 
     for (size_t i = 0; i < enemies.size(); ++i) {
-        auto& e = enemies[i];
+        auto &e = enemies[i];
         if (e.isDead()) continue;
         double vx = e.getWorldX() - player.getX();
         double vy = e.getWorldY() - player.getY();
         double forward = vx * rayDirX + vy * rayDirY;
-        if (forward <= 0) continue; 
+        if (forward <= 0) continue;
         double perp = std::abs(vx * (-rayDirY) + vy * rayDirX);
         if (perp > hitWidth) continue;
         if (forward < effectiveMaxDist && forward < closestForward) {

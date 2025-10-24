@@ -11,11 +11,13 @@ class Raycast {
     Map* map;
     Player* player;
     mutable std::vector<double> depthBuffer;
+
 public:
     Raycast(sf::RenderWindow& win, Map& m , Player& p);
     void render() const;
-    void renderEnemy(const Enemy& enemy) const;
 
-friend std::ostream& operator<<(std::ostream& os, const Raycast& raycast) ;
+    void renderEnemy(const Enemy &enemy) const;
+
+    friend std::ostream& operator<<(std::ostream& os, const Raycast& raycast) ;
 };
 #endif //OOP_RAYCAST_H

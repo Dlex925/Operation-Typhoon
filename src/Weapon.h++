@@ -18,18 +18,21 @@ private:
     float shootDuration = 0.35f;
     float originalY{};
 
-    static int hitscanClosestEnemy(const Map& map, const Player& player,
-                                   const std::vector<Enemy>& enemies,
+    static int hitscanClosestEnemy(const Map &map, const Player &player,
+                                   const std::vector<Enemy> &enemies,
                                    double rangeCap, double hitWidth);
+
 public:
     Weapon();
     void update(float deltaTime);
 
-    bool shootPrimary(const Map& map, const Player& player, std::vector<Enemy>& enemies);
-    bool shootSecondary(const Map& map, const Player& player, std::vector<Enemy>& enemies);
+    bool shootPrimary(const Map &map, const Player &player, std::vector<Enemy> &enemies);
 
-    void const draw(sf::RenderWindow& window) const;
-   friend std::ostream& operator<<(std::ostream& os, const Weapon& weapon) ;
+    bool shootSecondary(const Map &map, const Player &player, std::vector<Enemy> &enemies);
+
+    void const draw(sf::RenderWindow &window) const;
+
+    friend std::ostream& operator<<(std::ostream& os, const Weapon& weapon) ;
 
 };
 

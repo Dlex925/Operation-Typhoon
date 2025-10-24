@@ -8,7 +8,7 @@ void Raycast::render() const{
      int h = static_cast<int>(window->getSize().y);
      depthBuffer.resize(w);
 
-    for (int x = 0; x < w; x++) {
+     for (int x = 0; x < w; x++) {
         double cameraX = 2 * x / static_cast<double
         >(w) - 1;
         double rayDirX = player->getDirX() + player->getPlaneX() * cameraX;
@@ -73,7 +73,7 @@ void Raycast::render() const{
     }
 }
 
-void Raycast::renderEnemy(const Enemy& enemy) const {
+void Raycast::renderEnemy(const Enemy &enemy) const {
     static bool texturesLoaded = false;
     static sf::Texture enemyTex1;
     static sf::Texture enemyTex2;
@@ -115,7 +115,7 @@ void Raycast::renderEnemy(const Enemy& enemy) const {
     const bool hasTex1 = enemyTex1.getSize().x > 0 && enemyTex1.getSize().y > 0;
     const bool hasTex2 = enemyTex2.getSize().x > 0 && enemyTex2.getSize().y > 0;
 
-    const sf::Texture* tex = nullptr;
+    const sf::Texture *tex = nullptr;
     if (enemy.isDead()) {
         if (hasTex2) tex = &enemyTex2;
         else if (hasTex1) tex = &enemyTex1;
@@ -128,36 +128,38 @@ void Raycast::renderEnemy(const Enemy& enemy) const {
     unsigned texH = tex ? tex->getSize().y : 0;
 
     int unclippedStartY = -spriteHeight / 2 + h / 2;
-   //int unclippedEndY   =  spriteHeight / 2 + h / 2;
+    //int unclippedEndY   =  spriteHeight / 2 + h / 2;
 
     int visibleStart = w;
     int visibleEnd = -1;
     for (int stripe = drawStartX; stripe <= drawEndX; ++stripe) {
         if (stripe < 0 || stripe >= static_cast<int>(depthBuffer.size())) continue;
         if (transformY < depthBuffer[stripe]) {
-                int screenLeft = -spriteWidth / 2 + spriteScreenX;
-                double rel = static_cast<double>(stripe - screenLeft) / static_cast<double>(spriteWidth);
-                if (rel < 0.0 || rel > 1.0) continue;
-                int texX = static_cast<int>(rel * static_cast<double>(texW));
-                if (texX < 0) texX = 0;
-                if (texX >= static_cast<int>(texW)) texX = static_cast<int>(texW) - 1;
+            int screenLeft = -spriteWidth / 2 + spriteScreenX;
+            double rel = static_cast<double>(stripe - screenLeft) / static_cast<double>(spriteWidth);
+            if (rel < 0.0 || rel > 1.0) continue;
+            int texX = static_cast<int>(rel * static_cast<double>(texW));
+            if (texX < 0) texX = 0;
+            if (texX >= static_cast<int>(texW)) texX = static_cast<int>(texW) - 1;
 
-                int visTop = drawStartY;
-                int visBot = drawEndY;
-                double topFrac = static_cast<double>(visTop - unclippedStartY) / static_cast<double>(spriteHeight);
-                double botFrac = static_cast<double>(visBot - unclippedStartY + 1) / static_cast<double>(spriteHeight);
-                if (topFrac < 0.0) topFrac = 0.0; if (topFrac > 1.0) topFrac = 1.0;
-                if (botFrac < 0.0) botFrac = 0.0; if (botFrac > 1.0) botFrac = 1.0;
-                int texTop = static_cast<int>(topFrac * static_cast<double>(texH));
-                int texBottom = static_cast<int>(botFrac * static_cast<double>(texH));
-                int texHeightSub = texBottom - texTop;
-                if (texHeightSub <= 0) texHeightSub = 1;
+            int visTop = drawStartY;
+            int visBot = drawEndY;
+            double topFrac = static_cast<double>(visTop - unclippedStartY) / static_cast<double>(spriteHeight);
+            double botFrac = static_cast<double>(visBot - unclippedStartY + 1) / static_cast<double>(spriteHeight);
+            if (topFrac < 0.0) topFrac = 0.0;
+            if (topFrac > 1.0) topFrac = 1.0;
+            if (botFrac < 0.0) botFrac = 0.0;
+            if (botFrac > 1.0) botFrac = 1.0;
+            int texTop = static_cast<int>(topFrac * static_cast<double>(texH));
+            int texBottom = static_cast<int>(botFrac * static_cast<double>(texH));
+            int texHeightSub = texBottom - texTop;
+            if (texHeightSub <= 0) texHeightSub = 1;
 
-                sf::RectangleShape col(sf::Vector2f(1.f, static_cast<float>(drawEndY - drawStartY + 1)));
-                col.setPosition(sf::Vector2f(static_cast<float>(stripe), static_cast<float>(drawStartY)));
-                col.setTexture(tex);
-                col.setTextureRect(sf::IntRect(sf::Vector2i(texX, texTop), sf::Vector2i(1, texHeightSub)));
-                window->draw(col);
+            sf::RectangleShape col(sf::Vector2f(1.f, static_cast<float>(drawEndY - drawStartY + 1)));
+            col.setPosition(sf::Vector2f(static_cast<float>(stripe), static_cast<float>(drawStartY)));
+            col.setTexture(tex);
+            col.setTextureRect(sf::IntRect(sf::Vector2i(texX, texTop), sf::Vector2i(1, texHeightSub)));
+            window->draw(col);
 
             if (stripe < visibleStart) visibleStart = stripe;
             if (stripe > visibleEnd) visibleEnd = stripe;

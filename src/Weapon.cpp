@@ -7,8 +7,8 @@
 #include <algorithm>
 
 Weapon::Weapon()
-    : texture1("assets/Weapon1.png"), texture2("assets/Weapon2.png"), knifeTexture("assets/Cutit.png"), sprite(texture1)
-{
+    : texture1("assets/Weapon1.png"), texture2("assets/Weapon2.png"), knifeTexture("assets/Cutit.png"),
+      sprite(texture1) {
         float scale = 15.75f;
         sprite.setPosition({800, 450});
         sprite.setScale({scale, scale});
@@ -27,8 +27,8 @@ void Weapon::update(float deltaTime) {
 }
 
 
-int Weapon::hitscanClosestEnemy(const Map& map, const Player& player,
-                                const std::vector<Enemy>& enemies,
+int Weapon::hitscanClosestEnemy(const Map &map, const Player &player,
+                                const std::vector<Enemy> &enemies,
                                 double rangeCap, double hitWidth) {
     if (enemies.empty()) return -1;
 
@@ -82,7 +82,7 @@ int Weapon::hitscanClosestEnemy(const Map& map, const Player& player,
     double closestForward = std::numeric_limits<double>::infinity();
 
     for (size_t i = 0; i < enemies.size(); ++i) {
-        const auto& e = enemies[i];
+        const auto &e = enemies[i];
         if (e.isDead()) continue;
         double vx = e.getWorldX() - player.getX();
         double vy = e.getWorldY() - player.getY();
@@ -99,7 +99,7 @@ int Weapon::hitscanClosestEnemy(const Map& map, const Player& player,
     return closestIdx;
 }
 
-bool Weapon::shootPrimary(const Map& map, const Player& player, std::vector<Enemy>& enemies) {
+bool Weapon::shootPrimary(const Map &map, const Player &player, std::vector<Enemy> &enemies) {
     bool started = false;
     if (!shooting) {
         shooting = true;
@@ -117,7 +117,7 @@ bool Weapon::shootPrimary(const Map& map, const Player& player, std::vector<Enem
     return started;
 }
 
-bool Weapon::shootSecondary(const Map& map, const Player& player, std::vector<Enemy>& enemies) {
+bool Weapon::shootSecondary(const Map &map, const Player &player, std::vector<Enemy> &enemies) {
     bool started = false;
     if (!shooting) {
         shooting = true;
@@ -135,8 +135,8 @@ bool Weapon::shootSecondary(const Map& map, const Player& player, std::vector<En
     return started;
 }
 
-void  const Weapon::draw(sf::RenderWindow& window) const {
-        window.draw(sprite);
+void const Weapon::draw(sf::RenderWindow &window) const {
+    window.draw(sprite);
 }
 
  std::ostream& operator<<(std::ostream& os, const Weapon& weapon) {
