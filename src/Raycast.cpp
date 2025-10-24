@@ -73,7 +73,6 @@ void Raycast::render() const{
 }
 
 void Raycast::renderEnemy(const Enemy &enemy) const {
-    static bool texturesLoaded = false;
     static sf::Texture enemyTex1("assets/Enemy1.png");
     static sf::Texture enemyTex2("assets/Enemy2.png");
     int w = static_cast<int>(window->getSize().x);
