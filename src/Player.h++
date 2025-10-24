@@ -16,7 +16,6 @@ public:
     void MoveRight(double deltaTime, const Map& map);
     void RotateCamera(double mouseDeltaX);
     friend std::ostream& operator<<(std::ostream& os, const Player& player) ;
-    void shoot() { weapon.shoot(); }
     void updateWeapon(float deltaTime) { weapon.update(deltaTime); }
     void drawWeapon(sf::RenderWindow& window) { weapon.draw(window); }
     Weapon& getWeapon() { return weapon; }
@@ -27,7 +26,7 @@ public:
     [[nodiscard]] double getDirY() const { return dirY; }
     [[nodiscard]] double getPlaneX() const { return planeX; }
     [[nodiscard]]double getPlaneY() const { return planeY; }
-    //void printPosition() const;
+
 
 };
 

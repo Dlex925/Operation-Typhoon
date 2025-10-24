@@ -57,10 +57,6 @@ void Player::RotateCamera(double mouseDeltaX) {
     planeY = oldPlaneX * sin(rotationAmount) + planeY * cos(rotationAmount);
 }
 
-/*void Player::printPosition() const {
-    std::cout << "Player pos: (" << posX << ", " << posY
-              << ") dir: (" << dirX << ", " << dirY << ")" << std::endl;x
-}*/
 
  std::ostream& operator<<(std::ostream& os, const Player& player) {
     os << "Player(pos: (" << player.posX << ", " << player.posY
