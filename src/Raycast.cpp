@@ -74,16 +74,8 @@ void Raycast::render() const{
 
 void Raycast::renderEnemy(const Enemy &enemy) const {
     static bool texturesLoaded = false;
-    static sf::Texture enemyTex1;
-    static sf::Texture enemyTex2;
-    if (!texturesLoaded) {
-        texturesLoaded = true;
-        enemyTex1.setRepeated(false);
-        enemyTex2.setRepeated(false);
-        enemyTex1.loadFromFile("assets/Enemy1.png");
-        enemyTex2.loadFromFile("assets/Enemy2.png");
-    }
-
+    static sf::Texture enemyTex1("assets/Enemy1.png");
+    static sf::Texture enemyTex2("assets/Enemy2.png");
     int w = static_cast<int>(window->getSize().x);
     int h = static_cast<int>(window->getSize().y);
 

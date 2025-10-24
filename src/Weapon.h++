@@ -30,7 +30,7 @@ public:
 
     bool shootSecondary(const Map &map, const Player &player, std::vector<Enemy> &enemies);
 
-    void const draw(sf::RenderWindow &window) const;
+    void draw(sf::RenderWindow &window) const;
 
     friend std::ostream &operator<<(std::ostream &os, const Weapon &weapon);
 };

@@ -135,7 +135,7 @@ bool Weapon::shootSecondary(const Map &map, const Player &player, std::vector<En
     return started;
 }
 
-void const Weapon::draw(sf::RenderWindow &window) const {
+void Weapon::draw(sf::RenderWindow &window) const {
     window.draw(sprite);
 }
 
