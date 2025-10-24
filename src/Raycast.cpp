@@ -9,10 +9,9 @@ void Raycast::render() const{
      depthBuffer.resize(w);
 
      for (int x = 0; x < w; x++) {
-         double cameraX = 2 * x / static_cast<double
-                          >(w) - 1;
-        double rayDirX = player->getDirX() + player->getPlaneX() * cameraX;
-        double rayDirY = player->getDirY() + player->getPlaneY() * cameraX;
+         double cameraX = 2 * x / static_cast<double>(w) - 1;
+         double rayDirX = player->getDirX() + player->getPlaneX() * cameraX;
+         double rayDirY = player->getDirY() + player->getPlaneY() * cameraX;
 
         int mapX = static_cast<int>(player->getX());
         int mapY = static_cast<int>(player->getY());
