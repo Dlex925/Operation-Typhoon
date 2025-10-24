@@ -9,7 +9,7 @@
 Weapon::Weapon()
     : texture1("assets/Weapon1.png"), texture2("assets/Weapon2.png"), knifeTexture("assets/Cutit.png"),
       sprite(texture1) {
-        float scale = 15.75f;
+    float scale = 15.75f;
         sprite.setPosition({800, 450});
         sprite.setScale({scale, scale});
         originalY = 450;
@@ -139,7 +139,7 @@ void const Weapon::draw(sf::RenderWindow &window) const {
     window.draw(sprite);
 }
 
- std::ostream& operator<<(std::ostream& os, const Weapon& weapon) {
+std::ostream& operator<<(std::ostream& os, const Weapon& weapon) {
      os << "\nWeapon\n" <<weapon.shootDuration << " - shootDuration\n" << weapon.shootTimer << " - shootTimer\n" << weapon.shooting << " is Shooting\n";
     return os ;
  }

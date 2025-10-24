@@ -18,6 +18,6 @@ public:
 
     void renderEnemy(const Enemy &enemy) const;
 
-    friend std::ostream& operator<<(std::ostream& os, const Raycast& raycast) ;
+    friend std::ostream &operator<<(std::ostream &os, const Raycast &raycast);
 };
 #endif //OOP_RAYCAST_H

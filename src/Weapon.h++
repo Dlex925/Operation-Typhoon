@@ -32,8 +32,7 @@ public:
 
     void const draw(sf::RenderWindow &window) const;
 
-    friend std::ostream& operator<<(std::ostream& os, const Weapon& weapon) ;
-
+    friend std::ostream &operator<<(std::ostream &os, const Weapon &weapon);
 };
 
 #endif //OOP_WEAPON_H

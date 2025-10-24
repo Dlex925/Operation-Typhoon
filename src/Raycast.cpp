@@ -9,8 +9,8 @@ void Raycast::render() const{
      depthBuffer.resize(w);
 
      for (int x = 0; x < w; x++) {
-        double cameraX = 2 * x / static_cast<double
-        >(w) - 1;
+         double cameraX = 2 * x / static_cast<double
+                          >(w) - 1;
         double rayDirX = player->getDirX() + player->getPlaneX() * cameraX;
         double rayDirY = player->getDirY() + player->getPlaneY() * cameraX;
 
@@ -70,7 +70,7 @@ void Raycast::render() const{
 
 
         window->draw(line, 2, sf::PrimitiveType::Lines);
-    }
+     }
 }
 
 void Raycast::renderEnemy(const Enemy &enemy) const {
