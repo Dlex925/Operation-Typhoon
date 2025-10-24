@@ -15,7 +15,7 @@ class Enemy {
     bool dead{false};
 
 public:
-    Enemy(double x = 2.5, double y = 2.5, float heightScale = 0.9f);
+    explicit Enemy(double x = 2.5, double y = 2.5, float heightScale = 0.9f);
 
     void setWorldPosition(double x, double y);
 
