@@ -214,7 +214,7 @@ void GameManager::performShortRangeAttackDamage() {
     double closestForward = 1e30;
 
     for (size_t i = 0; i < enemies.size(); ++i) {
-        const  Enemy &e = enemies[i];
+        const Enemy &e = enemies[i];
         if (e.isDead()) continue;
         double vx = e.getWorldX() - player.getX();
         double vy = e.getWorldY() - player.getY();
