@@ -140,6 +140,7 @@ void const Weapon::draw(sf::RenderWindow &window) const {
 }
 
 std::ostream &operator<<(std::ostream &os, const Weapon &weapon) {
-    os << "\nWeapon\n" <<weapon.shootDuration << " - shootDuration\n" << weapon.shootTimer << " - shootTimer\n" << weapon.shooting << " is Shooting\n";
+    os << "\nWeapon\n" << weapon.shootDuration << " - shootDuration\n" << weapon.shootTimer << " - shootTimer\n" <<
+            weapon.shooting << " is Shooting\n";
     return os ;
  }
