@@ -9,6 +9,8 @@
 - **Left click** - To shoot using the weapon
 - **Right Click** - To use the knife - short range with 2x damage
 
+### All the assets from the game are original(including the music)  and have not been taken from the internet.
+
 ### Known bugs:
 
 1. Enemies sprites might stack causing lag - will be fixed when implementing a better tracking algorithm
@@ -27,6 +29,7 @@ This does not represent the full feature list of the game, just the more importa
 5. More enemy types - for example a boss derived from the main class - might be good for making the inheritance
    requirements.
 6. Pause menu.
+7. Sprint
 
 ### Things that wont be implemented:
 
