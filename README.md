@@ -21,11 +21,12 @@ This does not represent the full feature list of the game, just the more importa
 
 1. Hp/Ammo
 2. More maps
-3. Menu windows to setup resolution
+3. Menu window to setup resolution and other small details before starting the game.
 4. Better enemy logic and more enemy types + making enemies attack, also spawning enemies based on positions given on
-   the map
+   the map.
 5. More enemy types - for example a boss derived from the main class - might be good for making the inheritance
    requirements.
+6. Pause menu.
 
 ### Things that wont be implemented:
 
