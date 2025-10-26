@@ -28,7 +28,6 @@ void Enemy::takeDamage(int amount) {
     if (dead) return;
     hp -= amount;
     if (hp <= 0) {
-        hp = 0;
         dead = true;
     }
 }

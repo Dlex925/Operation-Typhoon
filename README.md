@@ -1,32 +1,52 @@
 # Operation Typhoon
-Wolfenstein 3D inspired 2.5D shooter implemented using raycasting in C++
 
-### Folosiți template-ul corespunzător grupei voastre!
+### Wolfenstein 3D inspired 2.5D shooter implemented using raycasting in C++.
 
-| Laborant  | Link template                                |
-|-----------|----------------------------------------------|
-| Dragoș B  | https://github.com/Ionnier/oop-template      |
-| Tiberiu M | https://github.com/MaximTiberiu/oop-template |
-| Marius MC | https://github.com/mcmarius/oop-template     |
+### Controls :
 
-### Important!
+- **W,A,S,D** - For movement.
+- **Mouse** - To move the camera
+- **Left click** - To shoot using the weapon
+- **Right Click** - To use the knife - short range with 2x damage
 
-Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar dacă documentați riguros acest proces.
-Codul generat pus "ca să fie"/pe care nu îl înțelegeți se punctează doar pentru puncte bonus, doar în contextul
-în care oferă funcționalități ajutătoare și doar dacă are sens.
+### Known bugs:
 
-Codul din proiect trebuie să poată fi ușor de înțeles și de modificat de către altcineva. Pentru detalii, veniți la ore.
+1. Enemies sprites might stack causing lag - will be fixed when implementing a better tracking algorithm
 
-O cerință nu se consideră îndeplinită dacă este realizată doar prin cod generat.
+### To implement:
 
-- **Fără cod de umplutură/fără sens!**
-- **Fără copy-paste!**
-- **Fără variabile globale!**
-- **Fără atribute publice!**
-- **Pentru T2 și T3, fără date în cod!** Datele vor fi citite din fișier, aveți exemple destule.
-- **Obligatoriu** fișiere cu date mai multe din care să citiți
-- _aproape_ obligatoriu să integrați cel puțin două biblioteci externe
+(This section represents the features i want to add to the game, along side the requirements for "Tema 1", "Tema 2"
+and "Tema 3")  
+This does not represent the full feature list of the game, just the more important ones.
 
+1. Hp/Ammo
+2. More maps
+3. Menu windows to setup resolution
+4. Better enemy logic and more enemy types + making enemies attack, also spawning enemies based on positions given on
+   the map
+5. More enemy types - for example a boss derived from the main class - might be good for making the inheritance
+   requirements.
+
+### Things that wont be implemented:
+
+- **Minimap** - trying to stay close to the source material, i believe that a big part of Wolfenstein 3D was the lack of
+  minimap, forcing you feel lost/in a maze - also might open the possibility for future maze like levels.
+
+### "Modding":
+
+For basic "modding", you can go to the assets folder and replace textures and music with whatever you like. Just make
+sure to keep the filenames the same.
+
+- Cutit.png - knife texture
+- Enemy1.png - alive enemy
+- Enemy2.png - dead enemy
+- Weapon1.png - normal weapon
+- Weapon2.png - shooting weapon
+- ezoteric.ogg - the music in the game.
+- You can also change the map by modifying the map1 file - just make sure to have the map bordered with 1's.   
+  1 is a wall and 0 is a free space -> will probably get modified in a future update to include marking enemy positions.
+
+#### Notice the game won't start with any missing files/files named incorrectly.
 ### Tema 0
 
 - [x] Nume proiect (poate fi schimbat ulterior)
@@ -140,8 +160,23 @@ Vezi și [`scripts/cmake.sh`](scripts/cmake.sh).
 Observație: folderele `build/` și `install_dir/` sunt adăugate în fișierul `.gitignore` deoarece
 conțin fișiere generate și nu ne ajută să le versionăm.
 
-
-## Resurse
+## Resources
 <!-- renovate: datasource=github-tags depName=SFML/SFML versioning=loose -->
 - [SFML](https://github.com/SFML/SFML/tree/3.0.1) (Zlib)
-- adăugați trimiteri **detaliate** către resursele externe care v-au ajutat sau pe care le-ați folosit
+
+### The inspiration for the project:
+
+- https://www.youtube.com/watch?v=LUYxLjic0Bc
+- https://www.youtube.com/watch?v=OpIS1zoz6fU
+
+### Raycasting tutorials - (helped me understand the math and logic of the rendering method)
+
+- https://www.youtube.com/watch?v=gYRrGTC7GtA (you can check the hole series, it's amazing)
+- https://lodev.org/cgtutor/raycasting.html
+- https://en.wikipedia.org/wiki/Ray_casting# - Also the wikipedia page is very good for understanding the concept.
+
+### Also the SFML documentation is very helpfull:
+
+- https://www.sfml-dev.org/documentation/3.0.2/
+
+### The original game can be found online and played in the browser(not sure if i can leave the link here).
