@@ -8,9 +8,13 @@ Player::Player(double x, double y)
       rotSpeed(1.0f), mouseSensitivity(0.0005f) {}
 
 void Player::MoveForward(double deltaTime, const Map& map) {
+
     double newX = posX + dirX * moveSpeed * deltaTime;
     double newY = posY + dirY * moveSpeed * deltaTime;
-
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) {
+         newX = posX + dirX * moveSpeed * deltaTime * 2 ;
+         newY = posY + dirY * moveSpeed * deltaTime * 2 ;
+    }
     if (!map.isWall(newX, posY)) posX = newX;
     if (!map.isWall(posX, newY)) posY = newY;
 }

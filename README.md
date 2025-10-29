@@ -4,7 +4,8 @@
 
 ### Controls :
 
-- **W,A,S,D** - For movement.
+- **W,A,S,D** - For movement
+- **LShift** - Sprint - 2x speed
 - **Mouse** - To move the camera
 - **Left click** - To shoot using the weapon
 - **Right Click** - To use the knife - short range with 2x damage
@@ -14,7 +15,8 @@
 ### Known bugs:
 
 1. Enemies sprites might stack causing lag - will be fixed when implementing a better tracking algorithm
-
+2. If the map is not bordered with 1's, even if the wall looks good when you "push" into it, the wall will move 1 tile -
+   solved by creating a correct map(bordered with 1's) - **Not a problem**
 ### To implement:
 
 (This section represents the features i want to add to the game, along side the requirements for "Tema 1", "Tema 2"
