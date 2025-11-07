@@ -46,7 +46,7 @@ public:
 
     virtual void update(double deltaTime, const Map &map, const Player &player);
 
-   // void setTypeCode(int code) { typeCode_ = code; }
+    // void setTypeCode(int code) { typeCode_ = code; }
 
     [[nodiscard]] virtual double attackRange() const = 0;
 

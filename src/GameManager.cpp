@@ -101,7 +101,7 @@ void GameManager::start() {
                     music.pause();
                 }
                 if (!gameOverSoundPlayed_) {
-                    if (gameOverJingle_.openFromFile("assets/ezoteric.ogg")) {
+                    if (gameOverJingle_.openFromFile("assets/Dead.ogg")) {
                         // PLACEHOLDER
                         gameOverJingle_.setLooping(false);
                         gameOverJingle_.play();
@@ -223,7 +223,7 @@ void GameManager::Engine() const{
     if (gameOver_) {
         const float duration = 2.5f;
         float t = std::min(gameOverTimer_, duration);
-        float progress = (t / duration) ;
+        float progress = (t / duration);
         float h = static_cast<float>(window.getSize().y);
         float w = static_cast<float>(window.getSize().x);
         float filledH = h * progress;

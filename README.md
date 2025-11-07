@@ -12,7 +12,7 @@
 - **P** - To pause the game
 - **R** - To restart the game when you die
 
-### All the assets from the game are original(including the music)  and have not been taken from the internet.
+### All the assets from the game are original(including the music)  and have not been taken from the internet. Excluding the font.
 
 ### Known bugs:
 
