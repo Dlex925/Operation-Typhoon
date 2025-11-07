@@ -53,7 +53,7 @@ std::ostream& operator<<(std::ostream& os, const Map& map) {
     for (unsigned long y = 0; y < map.y_size; ++y) {
         os << "   █";
         for (unsigned long x = 0; x < map.x_size; ++x) {
-            if (map.map[y][x] != 0) {
+            if (map.map[y][x] == 1) {
                 os << "█";
             } else {
                 os << " ";

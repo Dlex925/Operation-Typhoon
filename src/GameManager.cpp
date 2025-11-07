@@ -193,7 +193,6 @@ void GameManager::Engine() const{
     }
     player.drawWeapon(window);
 
-    // HUD: HP and Ammo (top-left)
     if (uiFontLoaded_) {
         sf::Text hud(uiFont, "");
         hud.setCharacterSize(22);
@@ -204,16 +203,13 @@ void GameManager::Engine() const{
         window.draw(hud);
     }
 
-    // Draw pause overlay if needed
     if (paused_) {
-        // Semi-transparent dark overlay
         sf::RectangleShape overlay({static_cast<float>(window.getSize().x), static_cast<float>(window.getSize().y)});
         overlay.setFillColor(sf::Color(0, 0, 0, 160));
         window.draw(overlay);
 
-        // Big centered "Pauzed" text
         if (uiFontLoaded_) {
-            sf::Text pausedText(uiFont, "PAUZED");
+            sf::Text pausedText(uiFont, "PAUSED");
             pausedText.setCharacterSize(72);
             pausedText.setFillColor(sf::Color(255, 255, 255));
             auto b = pausedText.getLocalBounds();
@@ -224,28 +220,24 @@ void GameManager::Engine() const{
         }
     }
 
-    // Game Over overlay: red fill animation + text + restart hint
     if (gameOver_) {
-        const float duration = 2.5f; // seconds
+        const float duration = 2.5f;
         float t = std::min(gameOverTimer_, duration);
-        float progress = (duration > 0.f) ? (t / duration) : 1.f; // 0..1
+        float progress = (t / duration) ;
         float h = static_cast<float>(window.getSize().y);
         float w = static_cast<float>(window.getSize().x);
         float filledH = h * progress;
 
-        // Draw red filled rectangle portion
         sf::RectangleShape redPart({w, filledH});
         redPart.setPosition({0.f, 0.f});
         redPart.setFillColor(sf::Color(180, 0, 0, 255));
         window.draw(redPart);
 
-        // Draw semi-transparent remainder with increasing alpha for a smoother feel
         sf::RectangleShape tint({w, h - filledH});
         tint.setPosition({0.f, filledH});
         unsigned char alpha = static_cast<unsigned char>(std::clamp(progress, 0.f, 1.f) * 200.f);
         tint.setFillColor(sf::Color(120, 0, 0, alpha));
         window.draw(tint);
-        // Big centered GAME OVER text and instructions
         if (uiFontLoaded_) {
             sf::Text go(uiFont, "GAME OVER");
             go.setCharacterSize(88);
@@ -265,7 +257,6 @@ void GameManager::Engine() const{
             window.draw(hint);
         }
 
-        // When finished, keep the screen solid red
     }
 
     window.display();
@@ -273,74 +264,3 @@ void GameManager::Engine() const{
 
 
 
-void GameManager::performShortRangeAttackDamage() {
-    if (enemies.empty()) return;
-    double rayDirX = player.getDirX();
-    double rayDirY = player.getDirY();
-
-    int mapX = static_cast<int>(player.getX());
-    int mapY = static_cast<int>(player.getY());
-
-    double deltaDistX = (rayDirX == 0) ? 1e30 : std::abs(1 / rayDirX);
-    double deltaDistY = (rayDirY == 0) ? 1e30 : std::abs(1 / rayDirY);
-
-    double sideDistX, sideDistY;
-    int stepX, stepY;
-
-    if (rayDirX < 0) {
-        stepX = -1;
-        sideDistX = (player.getX() - mapX) * deltaDistX;
-    } else {
-        stepX = 1;
-        sideDistX = (static_cast<double>(mapX) + 1.0 - player.getX()) * deltaDistX;
-    }
-    if (rayDirY < 0) {
-        stepY = -1;
-        sideDistY = (player.getY() - mapY) * deltaDistY;
-    } else {
-        stepY = 1;
-        sideDistY = (static_cast<double>(mapY) + 1.0 - player.getY()) * deltaDistY;
-    }
-
-    int hit = 0, side = 0;
-    while (hit == 0) {
-        if (sideDistX < sideDistY) {
-            sideDistX += deltaDistX;
-            mapX += stepX;
-            side = 0;
-        } else {
-            sideDistY += deltaDistY;
-            mapY += stepY;
-            side = 1;
-        }
-        if (map.isWall(static_cast<double>(mapX), static_cast<double>(mapY))) hit = 1;
-        if (std::abs(mapX) > 1000 || std::abs(mapY) > 1000) { hit = 1; }
-    }
-    double wallDist = (side == 0) ? (sideDistX - deltaDistX) : (sideDistY - deltaDistY);
-
-    const double rangeCap = 3.0;
-    double effectiveMaxDist = std::min(wallDist, rangeCap);
-
-    const double hitWidth = 0.3;
-    int closestIdx = -1;
-    double closestForward = 1e30;
-
-    for (size_t i = 0; i < enemies.size(); ++i) {
-        const Enemy &e = *enemies[i];
-        if (e.isDead()) continue;
-        double vx = e.getWorldX() - player.getX();
-        double vy = e.getWorldY() - player.getY();
-        double forward = vx * rayDirX + vy * rayDirY;
-        if (forward <= 0) continue;
-        double perp = std::abs(vx * (-rayDirY) + vy * rayDirX);
-        if (perp > hitWidth) continue;
-        if (forward < effectiveMaxDist && forward < closestForward) {
-            closestForward = forward;
-            closestIdx = static_cast<int>(i);
-        }
-    }
-
-    if (closestIdx >= 0) {
-        enemies[static_cast<size_t>(closestIdx)]->takeDamage(100);
-    }
-}

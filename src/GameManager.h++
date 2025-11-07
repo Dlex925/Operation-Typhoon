@@ -22,7 +22,7 @@ class GameManager {
     bool pHeld_ = false;
     bool rHeld_ = false;
     sf::Font uiFont;
-    bool uiFontLoaded_ = false;
+    bool uiFontLoaded_ = false;//y
     sf::Music music;
 
     bool gameOver_ = false;

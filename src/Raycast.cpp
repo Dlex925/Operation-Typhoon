@@ -88,7 +88,7 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
     auto it = cache.find(type);
     if (it == cache.end()) {
         Textures t;
-        std::string base;
+        //std::string base;
         /*if (type == "ShortRangeEnemy") base = "EnemyShort";
         else if (type == "LongRangeEnemy") base = "EnemyLong";
         else if (type == "LongRangeHighDamageEnemy") base = "EnemyLongHD";

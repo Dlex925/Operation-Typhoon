@@ -34,7 +34,7 @@ void LongRangeHighDamageEnemy::update(double deltaTime, const Map &map, const Pl
     double dy = player.getY() - getWorldY();
     double dist = std::sqrt(dx*dx + dy*dy);
 
-    double step = 0.0;
+    double step = 0.1;
     if (dist > attackRange() * 0.1) {
         step = std::min(1.5 * deltaTime, dist);
         double nx = getWorldX() + (dx / (dist + 1e-6)) * step;

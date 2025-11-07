@@ -110,7 +110,7 @@ sf::VideoMode Menu::selectResolution() {
         }
 
         auto sel = options[current];
-        std::string modeStr = fullscreenChosen_ ? "Fullscreen" : "Windowed";
+        //std::string modeStr = fullscreenChosen_ ? "Fullscreen" : "Windowed";
 
         if (fullscreenChosen_) {
             window.setTitle(
