@@ -88,8 +88,8 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
     auto it = cache.find(type);
     if (it == cache.end()) {
         Textures t;
-        //std::string base;
-        /*if (type == "ShortRangeEnemy") base = "EnemyShort";
+        std::string base;
+        if (type == "ShortRangeEnemy") base = "EnemyShort";
         else if (type == "LongRangeEnemy") base = "EnemyLong";
         else if (type == "LongRangeHighDamageEnemy") base = "EnemyLongHD";
         else base = "Enemy";
@@ -99,10 +99,10 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
         t.attack = sf::Texture("assets/" + base + "_Attack.png");
         t.attack2 = sf::Texture("assets/" + base + "_Attack.png");
         t.dead = sf::Texture("assets/" + base + "_Dead.png");
-        if (type == "LongRangeHighDamageEnemy")  t.attack2 = sf::Texture("assets/" + base + "_Attack2.png");*/
-        t.idle = sf::Texture("assets/Enemy1.png");
-        t.dead = sf::Texture("assets/Enemy2.png");
-        t.attack = sf::Texture("assets/Weapon1.png"); // The placeholder of placeholders
+        if (type == "LongRangeHighDamageEnemy")  t.attack2 = sf::Texture("assets/" + base + "_Attack2.png");
+      //  t.idle = sf::Texture("assets/Enemy1.png");
+     //   t.dead = sf::Texture("assets/Enemy2.png");
+      //  t.attack = sf::Texture("assets/Weapon1.png");
         t.loaded = true;
         it = cache.emplace(type, std::move(t)).first;
     }
@@ -126,7 +126,7 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
         else if (legacy1.getSize().x > 0) tex = &legacy1;
     } else if (isAttacking) {
         if (it->second.attack.getSize().x > 0 && In_short_range)tex = &it->second.attack2;
-        if (it->second.attack.getSize().x > 0) tex = &it->second.attack;
+        else if (it->second.attack.getSize().x > 0) tex = &it->second.attack;
         else if (it->second.idle.getSize().x > 0) tex = &it->second.idle;
         else if (legacy1.getSize().x > 0) tex = &legacy1;
     } else {

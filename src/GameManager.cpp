@@ -102,7 +102,6 @@ void GameManager::start() {
                 }
                 if (!gameOverSoundPlayed_) {
                     if (gameOverJingle_.openFromFile("assets/Dead.ogg")) {
-                        // PLACEHOLDER
                         gameOverJingle_.setLooping(false);
                         gameOverJingle_.play();
                     }
@@ -146,7 +145,7 @@ void GameManager::handleInput(float deltaTime) {
     }
     pHeld_ = pNow;
 
-    if (paused_) return;
+    if (paused_) return;//
 
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     if (mousePos.x != 400) {
@@ -196,7 +195,7 @@ void GameManager::Engine() const{
     if (uiFontLoaded_) {
         sf::Text hud(uiFont, "");
         hud.setCharacterSize(22);
-        hud.setFillColor(sf::Color(255, 255, 255));
+        hud.setFillColor(sf::Color(110, 0, 100));
         hud.setString("HP: " + std::to_string(player.getHp()) + "/" + std::to_string(player.getMaxHp()) +
                       "    Ammo: " + std::to_string(player.getAmmo()));
         hud.setPosition({12.f, 10.f});

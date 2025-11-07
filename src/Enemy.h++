@@ -19,7 +19,7 @@ class Enemy {
 
 protected:
     float attackInterval_{0.5f};
-    float attackCooldown_{0.f};
+    float attackCooldown_{0.9f};
 
     static bool hasLineOfSight(const Map &map, double sx, double sy, double tx, double ty);
 

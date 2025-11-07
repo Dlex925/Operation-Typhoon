@@ -9,7 +9,7 @@ public:
         : Enemy(x, y, heightScale) {}
 
     [[nodiscard]] double attackRange() const override { return 1.2; }
-    [[nodiscard]] int attackDamage() const override { return 90; }
+    [[nodiscard]] int attackDamage() const override { return 30; }
     [[nodiscard]] const char* typeName() const override { return "ShortRangeEnemy"; }
 
     void attackPlayer(Player& player, double deltaTime, const Map &map) override ;

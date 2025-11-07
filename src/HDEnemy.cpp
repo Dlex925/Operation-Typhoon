@@ -2,6 +2,7 @@
 #include <cmath>
 #include "Map.h++"
 #include "Player.h++"
+#include <SFML/Audio.hpp>
 
 void LongRangeHighDamageEnemy::attackPlayer(Player& player, double deltaTime, const Map &map) {
     attackCooldown_ -= static_cast<float>(deltaTime);
@@ -22,9 +23,9 @@ void LongRangeHighDamageEnemy::SRAttackPlayer(Player &player, double deltaTime) 
     double dx = getWorldX() - player.getX();
     double dy = getWorldY() - player.getY();
     double dist2 = dx*dx + dy*dy;
-    double rng = attackRange();
-    if (dist2 <= rng*rng) {
-        player.takeDamage(attackDamage() * 500);
+    double rng = attackRange()/6;
+    if (dist2 <= rng*rng ) {
+        player.takeDamage(attackDamage() * 5);
         attackCooldown_ = attackInterval_ * 0.8f;
     }
 }

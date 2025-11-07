@@ -2,7 +2,7 @@
 #define OOP_HDENEMY_H
 
 #include "Enemy.h++"
-
+#include <SFML/Audio.hpp>
 class LongRangeHighDamageEnemy : public Enemy {
 
 public:
