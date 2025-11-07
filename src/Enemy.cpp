@@ -3,8 +3,8 @@
 #include "Player.h++"
 #include <cmath>
 
-Enemy::Enemy(double x, double y, float heightScale)
-    : worldX(x), worldY(y), baseHeight(heightScale) {
+Enemy::Enemy(double x, double y, float heightScale, int hp1)
+    : worldX(x), worldY(y), baseHeight(heightScale), maxHp(hp1), hp(hp1) {
 }
 
 void Enemy::setWorldPosition(double x, double y) {
@@ -75,21 +75,21 @@ bool Enemy::hasLineOfSight(const Map &map, double sx, double sy, double tx, doub
 }
 
 void Enemy::update(double deltaTime, const Map &map, const Player &player) {
-    if (dead) return;
-    double dx = player.getX() - worldX;
-    double dy = player.getY() - worldY;
-    double dist2 = dx * dx + dy * dy;
-    double stopDist2 = stopDistance * stopDistance;
-    if (dist2 <= stopDist2) return;
-    double dist = std::sqrt(dist2);
-    if (dist < 1e-6) return;
-    double step = moveSpeed * deltaTime;
-    double dirX = dx / dist;
-    double dirY = dy / dist;
-    double newX = worldX + dirX * step;
-    double newY = worldY + dirY * step;
-    if (!map.isWall(newX, worldY)) worldX = newX;
-    if (!map.isWall(worldX, newY)) worldY = newY;
-}
+    double dx = player.getX() - getWorldX();
+    double dy = player.getY() - getWorldY();
+    double dist = std::sqrt(dx*dx + dy*dy);
 
+    if (dist > attackRange() * 0.9) {
+        double step = 0.1;
+        step = std::min(1.5 * deltaTime, dist);
+        double nx = getWorldX() + (dx / (dist + 1e-6)) * step;
+        double ny = getWorldY() + (dy / (dist + 1e-6)) * step;
+        if (!map.isWall(nx, ny)) {
+            setWorldPosition(nx, ny);
+        }
+    }
+
+    attackPlayer(const_cast<Player&>(player), deltaTime,map);
+
+}
 

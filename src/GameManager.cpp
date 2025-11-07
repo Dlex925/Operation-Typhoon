@@ -24,13 +24,21 @@ void GameManager::spawnEnemiesFromMap() {
             double cy = static_cast<double>(y) + 0.5;
             if (cell == 2) {
                 auto e = std::make_unique<ShortRangeEnemy>(cx, cy);
+                std::cout << *e << "\n";
                 enemies.push_back(std::move(e));
+
+
             } else if (cell == 3) {
                 auto e = std::make_unique<LongRangeEnemy>(cx, cy);
+                std::cout << *e << "\n";
                 enemies.push_back(std::move(e));
+
+
             } else if (cell == 4) {
                 auto e = std::make_unique<LongRangeHighDamageEnemy>(cx, cy);
+                std::cout << *e << "\n";
                 enemies.push_back(std::move(e));
+
             }
         }
     }
@@ -145,7 +153,7 @@ void GameManager::handleInput(float deltaTime) {
     }
     pHeld_ = pNow;
 
-    if (paused_) return;//
+    if (paused_) return; //
 
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     if (mousePos.x != 400) {

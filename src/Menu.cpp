@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 #include <memory>
-
+#include <SFML/Audio.hpp>
 static bool loadMenuFont(sf::Font &font) {
     const char *path = "assets/0xProtoNerdFontPropo-Regular.ttf";
     return font.openFromFile(path);
@@ -68,6 +68,12 @@ sf::VideoMode Menu::selectResolution() {
                     return sf::VideoMode({deskSize.x, deskSize.y});
                 }
                 if (key->code == sf::Keyboard::Key::Enter) {
+                    sf::Music music ;
+                    if (music.openFromFile("assets/Close.ogg")) {
+                        music.setLooping(false);
+                        music.play();
+                    }
+                    sleep(1);
                     if (fullscreenChosen_) {
                         auto dm = sf::VideoMode::getDesktopMode();
                         window.close();

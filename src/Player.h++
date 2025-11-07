@@ -10,8 +10,8 @@ class Player {
     const double moveSpeed  , rotSpeed;
     double mouseSensitivity;
     Weapon weapon;
-    int hp_ = 100000;
-    int maxHp_ = 100000;
+    int hp_ = 1000;
+    int maxHp_ = 1000;
     int ammo_ = 60;
 public:
     explicit Player(double x = 1.f, double y = 1.f);

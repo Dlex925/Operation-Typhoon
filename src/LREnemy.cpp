@@ -17,7 +17,7 @@ void LongRangeEnemy::attackPlayer(Player& player, double deltaTime,const Map &ma
     }
 }
 
-void LongRangeEnemy::update(double deltaTime, const Map &map, const Player &player) {
+/*void LongRangeEnemy::update(double deltaTime, const Map &map, const Player &player) {
     double dx = player.getX() - getWorldX();
     double dy = player.getY() - getWorldY();
     double dist = std::sqrt(dx*dx + dy*dy);
@@ -34,4 +34,4 @@ void LongRangeEnemy::update(double deltaTime, const Map &map, const Player &play
     }
 
     attackPlayer(const_cast<Player&>(player), deltaTime,map);
-}
+}*/

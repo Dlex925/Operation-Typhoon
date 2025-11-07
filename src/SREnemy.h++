@@ -2,6 +2,8 @@
 #define OOP_SRENEMY_H
 
 #include "Enemy.h++"
+#include <memory>
+#include <ostream>
 
 class ShortRangeEnemy : public Enemy {
 public:
@@ -13,6 +15,12 @@ public:
     [[nodiscard]] const char* typeName() const override { return "ShortRangeEnemy"; }
 
     void attackPlayer(Player& player, double deltaTime, const Map &map) override ;
+
+    // cloning and virtual print
+    [[nodiscard]] std::unique_ptr<Enemy> clone() const override { return std::make_unique<ShortRangeEnemy>(*this); }
+    void print(std::ostream &os) const override {
+        os << typeName() << "(hp=" << getHp() << "/" << getMaxHp() << ", x=" << getWorldX() << ", y=" << getWorldY() << ")";
+    }
 };
 
 #endif // OOP_SRENEMY_H

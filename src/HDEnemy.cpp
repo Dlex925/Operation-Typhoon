@@ -11,7 +11,11 @@ void LongRangeHighDamageEnemy::attackPlayer(Player& player, double deltaTime, co
     double dx = player.getX() - getWorldX();
     double dy = player.getY() - getWorldY();
     double dist = std::sqrt(dx*dx + dy*dy);
-    if (dist <= attackRange() && this->hasLineOfSight(map,this->getWorldX(),this->getWorldY(), player.getX(), player.getY()) && dist >= attackRange() * 0.2) {
+    if (dist <= attackRange() * 0.2) {
+        SRAttackPlayer(player, deltaTime);
+        return;
+    }
+    if (dist <= attackRange() && this->hasLineOfSight(map,this->getWorldX(),this->getWorldY(), player.getX(), player.getY()) ) {
         player.takeDamage(attackDamage());
         attackCooldown_ = attackInterval_;
     }
@@ -23,30 +27,12 @@ void LongRangeHighDamageEnemy::SRAttackPlayer(Player &player, double deltaTime) 
     double dx = getWorldX() - player.getX();
     double dy = getWorldY() - player.getY();
     double dist2 = dx*dx + dy*dy;
-    double rng = attackRange()/6;
-    if (dist2 <= rng*rng ) {
-        player.takeDamage(attackDamage() * 5);
+    double rng = attackRange() / 6;
+    if (dist2 <= rng * rng) {
+        player.takeDamage(attackDamage() * 4);
         attackCooldown_ = attackInterval_ * 0.8f;
     }
 }
 
-void LongRangeHighDamageEnemy::update(double deltaTime, const Map &map, const Player &player) {
-    double dx = player.getX() - getWorldX();
-    double dy = player.getY() - getWorldY();
-    double dist = std::sqrt(dx*dx + dy*dy);
 
-    if (dist > attackRange() * 0.1) {
-        double
-                step = 0.1;
-        step = std::min(1.5 * deltaTime, dist);
-        double nx = getWorldX() + (dx / (dist + 1e-6)) * step;
-        double ny = getWorldY() + (dy / (dist + 1e-6)) * step;
-        if (!map.isWall(nx, ny)) {
-            setWorldPosition(nx, ny);
-        }
-    }
-
-    attackPlayer(const_cast<Player&>(player), deltaTime,map);
-    SRAttackPlayer(const_cast<Player&>(player), deltaTime);
-}
 

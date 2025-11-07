@@ -2,6 +2,8 @@
 #define OOP_ENEMY_H
 
 #include <cstddef>
+#include <memory>
+#include <iosfwd>
 
 class Map;
 class Player;
@@ -24,7 +26,7 @@ protected:
     static bool hasLineOfSight(const Map &map, double sx, double sy, double tx, double ty);
 
 public:
-    explicit Enemy(double x = 2.5, double y = 2.5, float heightScale = 0.9f);
+    explicit Enemy(double x = 2.5, double y = 2.5, float heightScale = 0.9f,int hp1 = 100);
 
     virtual ~Enemy() = default;
 
@@ -55,6 +57,16 @@ public:
     [[nodiscard]] virtual const char *typeName() const = 0;
 
     virtual void attackPlayer(Player &player, double deltaTime, const Map &map) = 0;
+
+    // Virtual constructor (clone)
+    [[nodiscard]] virtual std::unique_ptr<Enemy> clone() const = 0;
+
+    // Virtual display with non-virtual interface
+    virtual void print(std::ostream &os) const = 0;
+    friend std::ostream &operator<<(std::ostream &os, const Enemy &e) {
+        e.print(os);
+        return os;
+    }
 
     //virtual void SRAttackPlayer(Player& player, double deltaTime) {} ;
 };

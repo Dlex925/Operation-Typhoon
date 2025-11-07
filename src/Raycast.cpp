@@ -5,7 +5,7 @@
 #include "Enemy.h++"
 
 Raycast::Raycast(sf::RenderWindow& win, Map& m, Player& p )
-    : window(&win), map(&m), player(&p) {}
+    : window{&win}, map{&m}, player{&p} {}
 void Raycast::render() const{
      int w = static_cast<int>(window->getSize().x);
      int h = static_cast<int>(window->getSize().y);
@@ -94,15 +94,15 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
         else if (type == "LongRangeHighDamageEnemy") base = "EnemyLongHD";
         else base = "Enemy";
 
-        // Try to load from assets. Missing files are fine.
+
         t.idle = sf::Texture("assets/" + base + "_Idle.png");
         t.attack = sf::Texture("assets/" + base + "_Attack.png");
         t.attack2 = sf::Texture("assets/" + base + "_Attack.png");
         t.dead = sf::Texture("assets/" + base + "_Dead.png");
-        if (type == "LongRangeHighDamageEnemy")  t.attack2 = sf::Texture("assets/" + base + "_Attack2.png");
-      //  t.idle = sf::Texture("assets/Enemy1.png");
-     //   t.dead = sf::Texture("assets/Enemy2.png");
-      //  t.attack = sf::Texture("assets/Weapon1.png");
+        if (type == "LongRangeHighDamageEnemy") t.attack2 = sf::Texture("assets/" + base + "_Attack2.png");
+        //  t.idle = sf::Texture("assets/Enemy1.png");
+        //   t.dead = sf::Texture("assets/Enemy2.png");
+        //  t.attack = sf::Texture("assets/Weapon1.png");
         t.loaded = true;
         it = cache.emplace(type, std::move(t)).first;
     }
