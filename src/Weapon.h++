@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <memory>
 
 class Map;
 class Player;
@@ -19,16 +20,16 @@ private:
     float originalY{};
 
     static int hitscanClosestEnemy(const Map &map, const Player &player,
-                                   const std::vector<Enemy> &enemies,
+                                   const std::vector<std::unique_ptr<Enemy>> &enemies,
                                    double rangeCap, double hitWidth);
 
 public:
     Weapon();
     void update(float deltaTime);
 
-    bool shootPrimary(const Map &map, const Player &player, std::vector<Enemy> &enemies);
+    bool shootPrimary(const Map &map, const Player &player, std::vector<std::unique_ptr<Enemy>> &enemies);
 
-    bool shootSecondary(const Map &map, const Player &player, std::vector<Enemy> &enemies);
+    bool shootSecondary(const Map &map, const Player &player, std::vector<std::unique_ptr<Enemy>> &enemies);
 
     void draw(sf::RenderWindow &window) const;
 

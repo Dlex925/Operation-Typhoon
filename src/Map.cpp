@@ -1,4 +1,6 @@
 #include "Map.h++"
+
+#include <cmath>
 #include <iostream>
 Map::Map(const std::string& FileName) {
     std::ifstream fin(FileName);
@@ -29,15 +31,16 @@ Map::Map(const std::string& FileName) {
 }
 
 int Map::isWall(double x, double y) const{
-    int ix = static_cast<int>(x);
-    int iy = static_cast<int>(y);
+    int ix = static_cast<int>(std::trunc(x));
+    int iy = (static_cast<int>(std::trunc(y)));
 
     if (static_cast<unsigned long>(iy) >= map.size() ||
     static_cast<unsigned long>(ix) >= map[iy].size()) {
         return 1;
     }
 
-    return map[iy][ix] != 0;
+    // Treat only tile '1' as wall; others (0=empty, 2/3/4=enemies) are walkable
+    return map[iy][ix] == 1;
 }
 
 std::ostream& operator<<(std::ostream& os, const Map& map) {

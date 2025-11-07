@@ -1,16 +1,29 @@
 #include <SFML/Graphics.hpp>
 #include "src/GameManager.h++"
+#include "src/Menu.h++"
 #include <iostream>
 
 int main() {
     try {
-        sf::RenderWindow window(sf::VideoMode({2560, 1440}), "Operation Typhoon");
+        // Ask user to choose a resolution and mode via Menu (singleton)
+        auto &menu = Menu::getInstance();
+        auto selectedMode = menu.selectResolution();
+
+        // Choose window style based on menu selection
+        std::uint32_t style = sf::Style::Default;
+        if (menu.wasFullscreenChosen()) {
+            // Use borderless fullscreen at desktop size for broad SFML compatibility
+            auto desktop = sf::VideoMode::getDesktopMode();
+            selectedMode = sf::VideoMode({desktop.size.x, desktop.size.y});
+            style = sf::Style::None;
+        }
+        sf::RenderWindow window(selectedMode, "Operation Typhoon", style);
+        if (menu.wasFullscreenChosen()) {
+            window.setPosition({0, 0});
+        }
 
         std::string map = "assets/map1";
         Player p(3.0f,3.0f);
-       // std::cout << map << "\n";
-       // std::cout << player << "\n";
-       // std::cout << raycast << "\n";
         GameManager game(window, map, p);
         std::cout << game << "\n";
         game.start();

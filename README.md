@@ -9,6 +9,8 @@
 - **Mouse** - To move the camera
 - **Left click** - To shoot using the weapon
 - **Right Click** - To use the knife - short range with 2x damage
+- **P** - To pause the game
+- **R** - To restart the game when you die
 
 ### All the assets from the game are original(including the music)  and have not been taken from the internet.
 
@@ -23,15 +25,15 @@
 and "Tema 3")  
 This does not represent the full feature list of the game, just the more important ones.
 
-1. Hp/Ammo
+1. ~~Hp/Ammo~~
 2. More maps
-3. Menu window to setup resolution and other small details before starting the game.
-4. Better enemy logic and more enemy types + making enemies attack, also spawning enemies based on positions given on
-   the map.
-5. More enemy types - for example a boss derived from the main class - might be good for making the inheritance
-   requirements.
-6. Pause menu.
-7. Sprint
+3. ~~Menu window to setup resolution and other small details before starting the game.~~
+4. ~~Better enemy logic and more enemy types + making enemies attack, also spawning enemies based on positions given on
+   the map.~~
+5. ~~More enemy types - for example a boss derived from the main class - might be good for making the inheritance
+   requirements.~~
+6. ~~Pause menu.~~
+7. ~~Sprint~~
 
 ### Things that wont be implemented:
 
@@ -81,7 +83,7 @@ sure to keep the filenames the same.
 
 #### Cerințe
 - [x] separarea codului din clase în `.h` (sau `.hpp`) și `.cpp`
-- [ ] moșteniri:
+- [x] moșteniri:
   - minim o clasă de bază și **3 clase derivate** din aceeași ierarhie
   - ierarhia trebuie să fie cu bază proprie, nu derivată dintr-o clasă predefinită
   - [ ] funcții virtuale (pure) apelate prin pointeri de bază din clasa care conține atributul de tip pointer de bază

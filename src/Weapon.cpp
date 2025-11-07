@@ -28,7 +28,7 @@ void Weapon::update(float deltaTime) {
 
 
 int Weapon::hitscanClosestEnemy(const Map &map, const Player &player,
-                                const std::vector<Enemy> &enemies,
+                                const std::vector<std::unique_ptr<Enemy>> &enemies,
                                 double rangeCap, double hitWidth) {
     if (enemies.empty()) return -1;
 
@@ -82,7 +82,9 @@ int Weapon::hitscanClosestEnemy(const Map &map, const Player &player,
     double closestForward = std::numeric_limits<double>::infinity();
 
     for (size_t i = 0; i < enemies.size(); ++i) {
-        const auto &e = enemies[i];
+        const auto &ptr = enemies[i];
+        if (!ptr) continue;
+        const Enemy &e = *ptr;
         if (e.isDead()) continue;
         double vx = e.getWorldX() - player.getX();
         double vy = e.getWorldY() - player.getY();
@@ -99,7 +101,7 @@ int Weapon::hitscanClosestEnemy(const Map &map, const Player &player,
     return closestIdx;
 }
 
-bool Weapon::shootPrimary(const Map &map, const Player &player, std::vector<Enemy> &enemies) {
+bool Weapon::shootPrimary(const Map &map, const Player &player, std::vector<std::unique_ptr<Enemy>> &enemies) {
     bool started = false;
     if (!shooting) {
         shooting = true;
@@ -111,13 +113,15 @@ bool Weapon::shootPrimary(const Map &map, const Player &player, std::vector<Enem
     if (started) {
         int idx = hitscanClosestEnemy(map, player, enemies, std::numeric_limits<double>::infinity(), 0.3);
         if (idx >= 0) {
-            enemies[static_cast<size_t>(idx)].takeDamage(50);
+            if (enemies[static_cast<size_t>(idx)]) {
+                enemies[static_cast<size_t>(idx)]->takeDamage(50);
+            }
         }
     }
     return started;
 }
 
-bool Weapon::shootSecondary(const Map &map, const Player &player, std::vector<Enemy> &enemies) {
+bool Weapon::shootSecondary(const Map &map, const Player &player, std::vector<std::unique_ptr<Enemy>> &enemies) {
     bool started = false;
     if (!shooting) {
         shooting = true;
@@ -129,14 +133,44 @@ bool Weapon::shootSecondary(const Map &map, const Player &player, std::vector<En
     if (started) {
         int idx = hitscanClosestEnemy(map, player, enemies, 3.0, 0.3);
         if (idx >= 0) {
-            enemies[static_cast<size_t>(idx)].takeDamage(100);
+            if (enemies[static_cast<size_t>(idx)]) {
+                enemies[static_cast<size_t>(idx)]->takeDamage(100);
+            }
         }
     }
     return started;
 }
 
 void Weapon::draw(sf::RenderWindow &window) const {
-    window.draw(sprite);
+    sf::Sprite spr = sprite;
+
+    spr.setScale({1.f, 1.f});
+    spr.setRotation(sf::degrees(0));
+    spr.setPosition({0.f, 0.f});
+    spr.setOrigin({0.f, 0.f});
+
+    auto lb = spr.getLocalBounds();
+    float baseW = lb.size.x;
+    float baseH = lb.size.y;
+    if (baseW <= 0.f || baseH <= 0.f) {
+        window.draw(spr);
+        return;
+    }
+
+    auto viewSize = window.getView().getSize();
+    float winW = viewSize.x;
+    float winH = viewSize.y;
+
+    float targetH = std::max(100.f, winH * 0.33f);
+    float scale = (targetH / baseH) * 2.0f;
+    spr.setScale({scale, scale});
+
+    spr.setOrigin({lb.position.x + lb.size.x * 0.5f - 5, lb.position.y + lb.size.y});
+
+    float bottomMargin = std::max(2.f, winH * 0.005f);
+    spr.setPosition({winW * 0.5f, winH - bottomMargin});
+
+    window.draw(spr);
 }
 
 std::ostream &operator<<(std::ostream &os, const Weapon &weapon) {

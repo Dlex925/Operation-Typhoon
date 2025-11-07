@@ -1,5 +1,8 @@
 #include "Raycast.h++"
 #include <cmath>
+#include <unordered_map>
+#include <string>
+#include "Enemy.h++"
 
 Raycast::Raycast(sf::RenderWindow& win, Map& m, Player& p )
     : window(&win), map(&m), player(&p) {}
@@ -73,8 +76,62 @@ void Raycast::render() const{
 }
 
 void Raycast::renderEnemy(const Enemy &enemy) const {
-    static sf::Texture enemyTex1("assets/Enemy1.png");
-    static sf::Texture enemyTex2("assets/Enemy2.png");
+    struct Textures { sf::Texture idle, attack, dead,attack2; bool loaded=false; };
+    static std::unordered_map<std::string, Textures> cache;
+    static sf::Texture legacy1("assets/Enemy1.png"); // legacy fallback idle/attack
+    static sf::Texture legacy2("assets/Enemy2.png"); // legacy fallback dead
+
+    std::string type = enemy.typeName();
+    auto it = cache.find(type);
+    if (it == cache.end()) {
+        Textures t;
+        std::string base;
+        /*if (type == "ShortRangeEnemy") base = "EnemyShort";
+        else if (type == "LongRangeEnemy") base = "EnemyLong";
+        else if (type == "LongRangeHighDamageEnemy") base = "EnemyLongHD";
+        else base = "Enemy";
+
+        // Try to load from assets. Missing files are fine.
+        t.idle = sf::Texture("assets/" + base + "_Idle.png");
+        t.attack = sf::Texture("assets/" + base + "_Attack.png");
+        t.attack2 = sf::Texture("assets/" + base + "_Attack.png");
+        t.dead = sf::Texture("assets/" + base + "_Dead.png");
+        if (type == "LongRangeHighDamageEnemy")  t.attack2 = sf::Texture("assets/" + base + "_Attack2.png");*/
+        t.idle =  sf::Texture("assets/Enemy1.png");
+        t.dead =  sf::Texture("assets/Enemy2.png");
+        t.attack =  sf::Texture("assets/Weapon1.png"); // The placeholder of placeholders
+        t.loaded = true;
+        it = cache.emplace(type, std::move(t)).first;
+    }
+
+    bool isDead = enemy.isDead();
+    bool isAttacking = false;
+    bool In_short_range = false;
+    if (!isDead) {
+        double dx = enemy.getWorldX() - player->getX();
+        double dy = enemy.getWorldY() - player->getY();
+        double dist2 = dx*dx + dy*dy;
+        double rng = enemy.attackRange();
+        isAttacking = dist2 <= rng*rng;
+        In_short_range = dist2 <= rng*rng * 0.2;
+    }
+
+    const sf::Texture* tex = nullptr;
+    if (isDead) {
+        if (it->second.dead.getSize().x > 0) tex = &it->second.dead;
+        else if (legacy2.getSize().x > 0) tex = &legacy2;
+        else if (legacy1.getSize().x > 0) tex = &legacy1;
+    } else if (isAttacking) {
+        if (it->second.attack.getSize().x > 0 && In_short_range )tex = &it->second.attack2;
+        if (it->second.attack.getSize().x > 0) tex = &it->second.attack;
+        else if (it->second.idle.getSize().x > 0) tex = &it->second.idle;
+        else if (legacy1.getSize().x > 0) tex = &legacy1;
+    } else {
+        if (it->second.idle.getSize().x > 0) tex = &it->second.idle;
+        else if (legacy1.getSize().x > 0) tex = &legacy1;
+        else if (legacy2.getSize().x > 0) tex = &legacy2;
+    }
+
     int w = static_cast<int>(window->getSize().x);
     int h = static_cast<int>(window->getSize().y);
 
@@ -102,23 +159,10 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
 
     if (drawStartX >= w || drawEndX < 0) return;
 
-    const bool hasTex1 = enemyTex1.getSize().x > 0 && enemyTex1.getSize().y > 0;
-    const bool hasTex2 = enemyTex2.getSize().x > 0 && enemyTex2.getSize().y > 0;
-
-    const sf::Texture *tex = nullptr;
-    if (enemy.isDead()) {
-        if (hasTex2) tex = &enemyTex2;
-        else if (hasTex1) tex = &enemyTex1;
-    } else {
-        if (hasTex1) tex = &enemyTex1;
-        else if (hasTex2) tex = &enemyTex2;
-    }
-
     unsigned texW = tex ? tex->getSize().x : 0;
     unsigned texH = tex ? tex->getSize().y : 0;
 
     int unclippedStartY = -spriteHeight / 2 + h / 2;
-    //int unclippedEndY   =  spriteHeight / 2 + h / 2;
 
     int visibleStart = w;
     int visibleEnd = -1;
@@ -128,7 +172,7 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
             int screenLeft = -spriteWidth / 2 + spriteScreenX;
             double rel = static_cast<double>(stripe - screenLeft) / static_cast<double>(spriteWidth);
             if (rel < 0.0 || rel > 1.0) continue;
-            int texX = static_cast<int>(rel * static_cast<double>(texW));
+            int texX = texW > 0 ? static_cast<int>(rel * static_cast<double>(texW)) : 0;
             if (texX < 0) texX = 0;
             if (texX >= static_cast<int>(texW)) texX = static_cast<int>(texW) - 1;
 
@@ -140,15 +184,17 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
             if (topFrac > 1.0) topFrac = 1.0;
             if (botFrac < 0.0) botFrac = 0.0;
             if (botFrac > 1.0) botFrac = 1.0;
-            int texTop = static_cast<int>(topFrac * static_cast<double>(texH));
-            int texBottom = static_cast<int>(botFrac * static_cast<double>(texH));
+            int texTop = texH > 0 ? static_cast<int>(topFrac * static_cast<double>(texH)) : 0;
+            int texBottom = texH > 0 ? static_cast<int>(botFrac * static_cast<double>(texH)) : 0;
             int texHeightSub = texBottom - texTop;
             if (texHeightSub <= 0) texHeightSub = 1;
 
             sf::RectangleShape col(sf::Vector2f(1.f, static_cast<float>(drawEndY - drawStartY + 1)));
             col.setPosition(sf::Vector2f(static_cast<float>(stripe), static_cast<float>(drawStartY)));
             col.setTexture(tex);
-            col.setTextureRect(sf::IntRect(sf::Vector2i(texX, texTop), sf::Vector2i(1, texHeightSub)));
+            if (tex) {
+                col.setTextureRect(sf::IntRect(sf::Vector2i(texX, texTop), sf::Vector2i(1, texHeightSub)));
+            }
             window->draw(col);
 
             if (stripe < visibleStart) visibleStart = stripe;

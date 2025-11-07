@@ -1,7 +1,6 @@
 #ifndef OOP_RAYCAST_H
 #define OOP_RAYCAST_H
 #include "Player.h++"
-#include "Enemy.h++"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
