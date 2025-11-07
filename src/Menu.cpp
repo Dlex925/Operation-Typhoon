@@ -9,7 +9,7 @@
 #include <memory>
 
 static bool loadMenuFont(sf::Font &font) {
-    const char* path = "assets/0xProtoNerdFontPropo-Regular.ttf";
+    const char *path = "assets/0xProtoNerdFontPropo-Regular.ttf";
     return font.openFromFile(path);
 }
 
@@ -17,7 +17,7 @@ static std::string resolutionToString(const sf::Vector2u &v) {
     return std::to_string(v.x) + " x " + std::to_string(v.y);
 }
 
-Menu& Menu::getInstance() {
+Menu &Menu::getInstance() {
     static Menu instance;
     return instance;
 }
@@ -43,7 +43,9 @@ sf::VideoMode Menu::selectResolution() {
     std::unique_ptr<sf::Text> instructions;
     std::unique_ptr<sf::Text> selection;
     if (haveFont) {
-        instructions = std::make_unique<sf::Text>(font, "Left/Right: resolution (windowed only)  |  Up/Down: toggle fullscreen/windowed  |  Enter: OK  Esc: cancel");
+        instructions = std::make_unique<sf::Text>(
+            font,
+            "Left/Right: resolution (windowed only)  |  Up/Down: toggle fullscreen/windowed  |  Enter: OK  Esc: cancel");
         selection = std::make_unique<sf::Text>(font, "");
 
         instructions->setCharacterSize(22);
@@ -112,11 +114,14 @@ sf::VideoMode Menu::selectResolution() {
 
         if (fullscreenChosen_) {
             window.setTitle(
-                std::string("Select Resolution | Mode: Fullscreen (desktop) | Up/Down to toggle, Enter to confirm, Esc to cancel")
+                std::string(
+                    "Select Resolution | Mode: Fullscreen (desktop) | Up/Down to toggle, Enter to confirm, Esc to cancel")
             );
         } else {
             window.setTitle(
-                std::string("Select Resolution | Mode: Windowed | Left/Right to change res, Enter to confirm, Esc to cancel | Selected: ") + resolutionToString(sel)
+                std::string(
+                    "Select Resolution | Mode: Windowed | Left/Right to change res, Enter to confirm, Esc to cancel | Selected: ")
+                + resolutionToString(sel)
             );
         }
 

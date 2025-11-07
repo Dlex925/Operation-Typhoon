@@ -10,7 +10,7 @@
 
 class Menu {
 public:
-    static Menu& getInstance();
+    static Menu &getInstance();
 
     sf::VideoMode selectResolution();
 
@@ -18,12 +18,16 @@ public:
 
 private:
     Menu() = default;
+
     ~Menu() = default;
 
-    Menu(const Menu&) = delete;
-    Menu& operator=(const Menu&) = delete;
-    Menu(Menu&&) = delete;
-    Menu& operator=(Menu&&) = delete;
+    Menu(const Menu &) = delete;
+
+    Menu &operator=(const Menu &) = delete;
+
+    Menu(Menu &&) = delete;
+
+    Menu &operator=(Menu &&) = delete;
 
     bool fullscreenChosen_ = false;
 };

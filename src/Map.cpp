@@ -35,7 +35,7 @@ int Map::isWall(double x, double y) const{
     int iy = (static_cast<int>(std::trunc(y)));
 
     if (static_cast<unsigned long>(iy) >= map.size() ||
-    static_cast<unsigned long>(ix) >= map[iy].size()) {
+        static_cast<unsigned long>(ix) >= map[iy].size()) {
         return 1;
     }
 

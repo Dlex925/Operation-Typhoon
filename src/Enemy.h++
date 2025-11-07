@@ -21,10 +21,11 @@ protected:
     float attackInterval_{0.5f};
     float attackCooldown_{0.f};
 
-    static bool hasLineOfSight(const Map& map, double sx, double sy, double tx, double ty);
+    static bool hasLineOfSight(const Map &map, double sx, double sy, double tx, double ty);
 
 public:
     explicit Enemy(double x = 2.5, double y = 2.5, float heightScale = 0.9f);
+
     virtual ~Enemy() = default;
 
     void setWorldPosition(double x, double y);
@@ -46,11 +47,15 @@ public:
     virtual void update(double deltaTime, const Map &map, const Player &player);
 
     void setTypeCode(int code) { typeCode_ = code; }
-    [[nodiscard]] virtual double attackRange() const = 0 ;
-    [[nodiscard]] virtual int attackDamage() const = 0 ;
-    [[nodiscard]] virtual const char* typeName() const = 0 ;
 
-    virtual void attackPlayer(Player& player, double deltaTime, const Map& map) = 0 ;
+    [[nodiscard]] virtual double attackRange() const = 0;
+
+    [[nodiscard]] virtual int attackDamage() const = 0;
+
+    [[nodiscard]] virtual const char *typeName() const = 0;
+
+    virtual void attackPlayer(Player &player, double deltaTime, const Map &map) = 0;
+
     //virtual void SRAttackPlayer(Player& player, double deltaTime) {} ;
 };
 

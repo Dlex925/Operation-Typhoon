@@ -33,7 +33,7 @@ void Enemy::takeDamage(int amount) {
 }
 
 // DDA line-of-sight helper
-bool Enemy::hasLineOfSight(const Map& map, double sx, double sy, double tx, double ty) {
+bool Enemy::hasLineOfSight(const Map &map, double sx, double sy, double tx, double ty) {
     int mapX = static_cast<int>(sx);
     int mapY = static_cast<int>(sy);
     int targetX = static_cast<int>(tx);
@@ -41,9 +41,10 @@ bool Enemy::hasLineOfSight(const Map& map, double sx, double sy, double tx, doub
 
     double dirX = tx - sx;
     double dirY = ty - sy;
-    double len = std::sqrt(dirX*dirX + dirY*dirY);
+    double len = std::sqrt(dirX * dirX + dirY * dirY);
     if (len < 1e-6) return true;
-    dirX /= len; dirY /= len;
+    dirX /= len;
+    dirY /= len;
 
     double deltaDistX = (dirX == 0.0) ? 1e30 : std::abs(1.0 / dirX);
     double deltaDistY = (dirY == 0.0) ? 1e30 : std::abs(1.0 / dirY);
@@ -52,11 +53,11 @@ bool Enemy::hasLineOfSight(const Map& map, double sx, double sy, double tx, doub
     int stepY = (dirY < 0) ? -1 : 1;
 
     double sideDistX = (dirX < 0)
-        ? (sx - mapX) * deltaDistX
-        : (static_cast<double>(mapX) + 1.0 - sx) * deltaDistX;
+                           ? (sx - mapX) * deltaDistX
+                           : (static_cast<double>(mapX) + 1.0 - sx) * deltaDistX;
     double sideDistY = (dirY < 0)
-        ? (sy - mapY) * deltaDistY
-        : (static_cast<double>(mapY) + 1.0 - sy) * deltaDistY;
+                           ? (sy - mapY) * deltaDistY
+                           : (static_cast<double>(mapY) + 1.0 - sy) * deltaDistY;
 
     int maxSteps = 4096;
     while (maxSteps-- > 0) {

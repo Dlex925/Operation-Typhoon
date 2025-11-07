@@ -76,7 +76,10 @@ void Raycast::render() const{
 }
 
 void Raycast::renderEnemy(const Enemy &enemy) const {
-    struct Textures { sf::Texture idle, attack, dead,attack2; bool loaded=false; };
+    struct Textures {
+        sf::Texture idle, attack, dead, attack2;
+        bool loaded = false;
+    };
     static std::unordered_map<std::string, Textures> cache;
     static sf::Texture legacy1("assets/Enemy1.png"); // legacy fallback idle/attack
     static sf::Texture legacy2("assets/Enemy2.png"); // legacy fallback dead
@@ -97,9 +100,9 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
         t.attack2 = sf::Texture("assets/" + base + "_Attack.png");
         t.dead = sf::Texture("assets/" + base + "_Dead.png");
         if (type == "LongRangeHighDamageEnemy")  t.attack2 = sf::Texture("assets/" + base + "_Attack2.png");*/
-        t.idle =  sf::Texture("assets/Enemy1.png");
-        t.dead =  sf::Texture("assets/Enemy2.png");
-        t.attack =  sf::Texture("assets/Weapon1.png"); // The placeholder of placeholders
+        t.idle = sf::Texture("assets/Enemy1.png");
+        t.dead = sf::Texture("assets/Enemy2.png");
+        t.attack = sf::Texture("assets/Weapon1.png"); // The placeholder of placeholders
         t.loaded = true;
         it = cache.emplace(type, std::move(t)).first;
     }
@@ -110,19 +113,19 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
     if (!isDead) {
         double dx = enemy.getWorldX() - player->getX();
         double dy = enemy.getWorldY() - player->getY();
-        double dist2 = dx*dx + dy*dy;
+        double dist2 = dx * dx + dy * dy;
         double rng = enemy.attackRange();
-        isAttacking = dist2 <= rng*rng;
-        In_short_range = dist2 <= rng*rng * 0.2;
+        isAttacking = dist2 <= rng * rng;
+        In_short_range = dist2 <= rng * rng * 0.2;
     }
 
-    const sf::Texture* tex = nullptr;
+    const sf::Texture *tex = nullptr;
     if (isDead) {
         if (it->second.dead.getSize().x > 0) tex = &it->second.dead;
         else if (legacy2.getSize().x > 0) tex = &legacy2;
         else if (legacy1.getSize().x > 0) tex = &legacy1;
     } else if (isAttacking) {
-        if (it->second.attack.getSize().x > 0 && In_short_range )tex = &it->second.attack2;
+        if (it->second.attack.getSize().x > 0 && In_short_range)tex = &it->second.attack2;
         if (it->second.attack.getSize().x > 0) tex = &it->second.attack;
         else if (it->second.idle.getSize().x > 0) tex = &it->second.idle;
         else if (legacy1.getSize().x > 0) tex = &legacy1;

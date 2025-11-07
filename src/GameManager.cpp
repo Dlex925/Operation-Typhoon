@@ -61,7 +61,7 @@ void GameManager::restartGame_() {
     auto viewSize = window.getView().getSize();
     int winW = viewSize.x;
     int winH = viewSize.y;
-    sf::Mouse::setPosition({ winW/2,  winH/2}, window);
+    sf::Mouse::setPosition({winW / 2, winH / 2}, window);
 }
 
 void GameManager::start() {
@@ -70,7 +70,7 @@ void GameManager::start() {
     auto viewSize = window.getView().getSize();
     int winW = viewSize.x;
     int winH = viewSize.y;
-    sf::Mouse::setPosition({ winW/2,  winH/2}, window);
+    sf::Mouse::setPosition({winW / 2, winH / 2}, window);
 
     uiFontLoaded_ = uiFont.openFromFile("assets/0xProtoNerdFontPropo-Regular.ttf");
 
@@ -89,9 +89,9 @@ void GameManager::start() {
             player.updateWeapon(deltaTime);
             for (auto &e: enemies) {
                 if (!e) continue;
-                if (!e->isDead() ) {
+                if (!e->isDead()) {
                     e->update(deltaTime, map, player);
-                    e->attackPlayer(player, deltaTime,map);
+                    e->attackPlayer(player, deltaTime, map);
                 }
             }
             if (player.getHp() <= 0) {
@@ -101,7 +101,8 @@ void GameManager::start() {
                     music.pause();
                 }
                 if (!gameOverSoundPlayed_) {
-                    if (gameOverJingle_.openFromFile("assets/ezoteric.ogg")) { // PLACEHOLDER
+                    if (gameOverJingle_.openFromFile("assets/ezoteric.ogg")) {
+                        // PLACEHOLDER
                         gameOverJingle_.setLooping(false);
                         gameOverJingle_.play();
                     }
@@ -120,7 +121,10 @@ void GameManager::handleInput(float deltaTime) {
         }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) { window.close(); return; }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
+        window.close();
+        return;
+    }
 
     if (gameOver_) {
         bool rNow = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R);
@@ -174,8 +178,8 @@ void GameManager::Engine() const{
     std::vector<size_t> order(enemies.size());
     for (size_t i = 0; i < enemies.size(); ++i) order[i] = i;
     std::sort(order.begin(), order.end(), [&](size_t a, size_t b) {
-        const Enemy* ea = enemies[a].get();
-        const Enemy* eb = enemies[b].get();
+        const Enemy *ea = enemies[a].get();
+        const Enemy *eb = enemies[b].get();
         double dxA = ea ? (ea->getWorldX() - player.getX()) : 0.0;
         double dyA = ea ? (ea->getWorldY() - player.getY()) : 0.0;
         double dxB = eb ? (eb->getWorldX() - player.getX()) : 0.0;

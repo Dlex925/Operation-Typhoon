@@ -29,6 +29,7 @@ class Map {
 
     [[nodiscard]] unsigned long getWidth() const { return x_size; }
     [[nodiscard]] unsigned long getHeight() const { return y_size; }
+
     [[nodiscard]] int getCell(unsigned long x, unsigned long y) const {
         if (y >= map.size()) return 1; // treat out-of-bounds as wall
         if (x >= map[y].size()) return 1;

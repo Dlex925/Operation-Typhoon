@@ -28,7 +28,7 @@ void Weapon::update(float deltaTime) {
 
 
 int Weapon::hitscanClosestEnemy(const Map &map, const Player &player,
-                                const std::vector<std::unique_ptr<Enemy>> &enemies,
+                                const std::vector<std::unique_ptr<Enemy> > &enemies,
                                 double rangeCap, double hitWidth) {
     if (enemies.empty()) return -1;
 
@@ -101,7 +101,7 @@ int Weapon::hitscanClosestEnemy(const Map &map, const Player &player,
     return closestIdx;
 }
 
-bool Weapon::shootPrimary(const Map &map, const Player &player, std::vector<std::unique_ptr<Enemy>> &enemies) {
+bool Weapon::shootPrimary(const Map &map, const Player &player, std::vector<std::unique_ptr<Enemy> > &enemies) {
     bool started = false;
     if (!shooting) {
         shooting = true;
@@ -121,7 +121,7 @@ bool Weapon::shootPrimary(const Map &map, const Player &player, std::vector<std:
     return started;
 }
 
-bool Weapon::shootSecondary(const Map &map, const Player &player, std::vector<std::unique_ptr<Enemy>> &enemies) {
+bool Weapon::shootSecondary(const Map &map, const Player &player, std::vector<std::unique_ptr<Enemy> > &enemies) {
     bool started = false;
     if (!shooting) {
         shooting = true;

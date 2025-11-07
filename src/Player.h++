@@ -4,6 +4,7 @@
 #include "Map.h++"
 #include "Weapon.h++"
 #include <algorithm>
+
 class Player {
     double posX, posY, dirX, dirY , planeX , planeY;
     const double moveSpeed  , rotSpeed;
@@ -29,14 +30,24 @@ public:
     [[nodiscard]] double getDirY() const { return dirY; }
     [[nodiscard]] double getPlaneX() const { return planeX; }
     [[nodiscard]]double getPlaneY() const { return planeY; }
-    void setPosition(double x, double y) { posX = x; posY = y; }
-    void resetForNewGame() { hp_ = maxHp_; ammo_ = 30; }
+
+    void setPosition(double x, double y) {
+        posX = x;
+        posY = y;
+    }
+
+    void resetForNewGame() {
+        hp_ = maxHp_;
+        ammo_ = 30;
+    }
+
     [[nodiscard]] int getHp() const { return hp_; }
     [[nodiscard]] int getMaxHp() const { return maxHp_; }
     [[nodiscard]] int getAmmo() const { return ammo_; }
     void addAmmo(int a) { ammo_ = std::min(ammo_ + std::max(0, a), 999); }
     void heal(int h) { hp_ = std::min(hp_ + std::max(0, h), maxHp_); }
     void takeDamage(int d) { hp_ = std::max(0, hp_ - std::max(0, d)); }
+
     bool consumeAmmo(int a) {
         if (a <= 0) return true;
         if (ammo_ < a) return false;
