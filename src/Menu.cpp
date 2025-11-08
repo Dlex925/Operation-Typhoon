@@ -7,8 +7,9 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <thread>
 #include <SFML/Audio.hpp>
-
+#include <chrono>
 static bool loadMenuFont(sf::Font &font) {
     const char *path = "assets/0xProtoNerdFontPropo-Regular.ttf";
     return font.openFromFile(path);
@@ -74,7 +75,7 @@ sf::VideoMode Menu::selectResolution() {
                         music.setLooping(false);
                         music.play();
                     }
-                    sleep(1);
+                    std::this_thread::sleep_for(std::chrono::seconds(1));
                     if (fullscreenChosen_) {
                         auto dm = sf::VideoMode::getDesktopMode();
                         window.close();
