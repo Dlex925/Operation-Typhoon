@@ -7,6 +7,7 @@
 #include "SREnemy.h++"
 #include "LREnemy.h++"
 #include "HDEnemy.h++"
+#include <iostream>
 
 GameManager::GameManager(sf::RenderWindow& win, std::string harta, Player& p)
     : window(win), map(harta), player(p), raycast(window, map, player) {
@@ -26,19 +27,14 @@ void GameManager::spawnEnemiesFromMap() {
                 auto e = std::make_unique<ShortRangeEnemy>(cx, cy);
                 std::cout << *e << "\n";
                 enemies.push_back(std::move(e));
-
-
             } else if (cell == 3) {
                 auto e = std::make_unique<LongRangeEnemy>(cx, cy);
                 std::cout << *e << "\n";
                 enemies.push_back(std::move(e));
-
-
             } else if (cell == 4) {
                 auto e = std::make_unique<LongRangeHighDamageEnemy>(cx, cy);
                 std::cout << *e << "\n";
                 enemies.push_back(std::move(e));
-
             }
         }
     }
@@ -102,6 +98,17 @@ void GameManager::start() {
                     e->attackPlayer(player, deltaTime, map);
                 }
             }
+
+            /*if (!winAnnounced_) {
+                bool allDead = true;
+                for (const auto &e : enemies) {
+                    if (e && !e->isDead()) { allDead = false; break; }
+                }
+                if (allDead) {
+                    std::cout << "WIN" << std::endl;
+                    winAnnounced_ = true;
+                }
+            }*/
             if (player.getHp() <= 0) {
                 gameOver_ = true;
                 gameOverTimer_ = 0.f;
@@ -133,6 +140,9 @@ void GameManager::handleInput(float deltaTime) {
         return;
     }
 
+    for (auto &e: enemies) {
+        std::cout << *e << "\n";
+    }
     if (gameOver_) {
         bool rNow = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R);
         if (rNow && !rHeld_) {

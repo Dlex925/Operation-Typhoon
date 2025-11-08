@@ -5,7 +5,9 @@
 #include "Enemy.h++"
 
 Raycast::Raycast(sf::RenderWindow& win, Map& m, Player& p )
-    : window{&win}, map{&m}, player{&p} {}
+    : window{&win}, map{&m}, player{&p} {
+}
+
 void Raycast::render() const{
      int w = static_cast<int>(window->getSize().x);
      int h = static_cast<int>(window->getSize().y);

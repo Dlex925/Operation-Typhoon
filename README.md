@@ -51,6 +51,12 @@ sure to keep the filenames the same.
 - Weapon1.png - normal weapon
 - Weapon2.png - shooting weapon
 - ezoteric.ogg - the music in the game.
+- Close.ogg - the startup sound(when switching from the menu the game)
+- Enemy1/2.png - legacy sprites.
+- EnemyShort_[Idle/Attack/Dead] - sprites for the close range enemy.
+- EnemyLong_[Idle/Attack/Dead] - sprites for the long range enemy.
+- EnemyLongHD_[Idle/Attack/Attack2/Dead] - sprites for the long range enemy that also has a short range, high damage
+  attack(Yes, HD comes from high damage).
 - You can also change the map by modifying the map1 file - just make sure to have the map bordered with 1's.   
   1 is a wall and 0 is a free space -> will probably get modified in a future update to include marking enemy positions.
 
@@ -100,7 +106,7 @@ sure to keep the filenames the same.
     - clasele de excepții trebuie să trateze categorii de erori distincte (exemplu de erori echivalente: citire fișiere cu diverse extensii)
   - [ ] utilizare cu sens: de exemplu, `throw` în constructor (sau funcție care întoarce un obiect), `try`/`catch` în `main`
   - această ierarhie va fi complet independentă de ierarhia cu funcții virtuale
-- [ ] funcții și atribute `static`
+- [x] funcții și atribute `static`
 - [x] STL
 - [x] cât mai multe `const`
 - [ ] funcții *de nivel înalt*, de eliminat cât mai mulți getters/setters/funcții low-level

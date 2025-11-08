@@ -33,6 +33,8 @@ class GameManager {
     double initialPlayerX_ = 0.0;
     double initialPlayerY_ = 0.0;
 
+    bool winAnnounced_ = false; // Announce WIN once
+
     void spawnEnemiesFromMap();
 
     void restartGame_();

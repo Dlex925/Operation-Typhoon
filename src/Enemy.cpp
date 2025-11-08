@@ -3,8 +3,12 @@
 #include "Player.h++"
 #include <cmath>
 
+int Enemy::enemy_no = 0;
+int Enemy::enemy_dead = 0;
+
 Enemy::Enemy(double x, double y, float heightScale, int hp1)
     : worldX(x), worldY(y), baseHeight(heightScale), maxHp(hp1), hp(hp1) {
+    enemy_no++;
 }
 
 void Enemy::setWorldPosition(double x, double y) {
@@ -28,6 +32,7 @@ void Enemy::takeDamage(int amount) {
     if (dead) return;
     hp -= amount;
     if (hp <= 0) {
+        enemy_dead++;
         dead = true;
     }
 }
@@ -77,7 +82,7 @@ bool Enemy::hasLineOfSight(const Map &map, double sx, double sy, double tx, doub
 void Enemy::update(double deltaTime, const Map &map, const Player &player) {
     double dx = player.getX() - getWorldX();
     double dy = player.getY() - getWorldY();
-    double dist = std::sqrt(dx*dx + dy*dy);
+    double dist = std::sqrt(dx * dx + dy * dy);
 
     if (dist > attackRange() * 0.9) {
         double step = 0.1;
@@ -89,7 +94,6 @@ void Enemy::update(double deltaTime, const Map &map, const Player &player) {
         }
     }
 
-    attackPlayer(const_cast<Player&>(player), deltaTime,map);
-
+    attackPlayer(const_cast<Player &>(player), deltaTime, map);
 }
 

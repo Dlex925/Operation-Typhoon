@@ -22,11 +22,13 @@ class Enemy {
 protected:
     float attackInterval_{0.5f};
     float attackCooldown_{0.9f};
+    static int enemy_no;
+    static int enemy_dead;
 
     static bool hasLineOfSight(const Map &map, double sx, double sy, double tx, double ty);
 
 public:
-    explicit Enemy(double x = 2.5, double y = 2.5, float heightScale = 0.9f,int hp1 = 100);
+    explicit Enemy(double x = 2.5, double y = 2.5, float heightScale = 0.9f, int hp1 = 100);
 
     virtual ~Enemy() = default;
 
@@ -63,6 +65,7 @@ public:
 
     // Virtual display with non-virtual interface
     virtual void print(std::ostream &os) const = 0;
+
     friend std::ostream &operator<<(std::ostream &os, const Enemy &e) {
         e.print(os);
         return os;
