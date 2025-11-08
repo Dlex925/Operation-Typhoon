@@ -10,6 +10,7 @@
 #include <thread>
 #include <SFML/Audio.hpp>
 #include <chrono>
+
 static bool loadMenuFont(sf::Font &font) {
     const char *path = "assets/0xProtoNerdFontPropo-Regular.ttf";
     return font.openFromFile(path);

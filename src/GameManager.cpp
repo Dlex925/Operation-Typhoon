@@ -140,9 +140,9 @@ void GameManager::handleInput(float deltaTime) {
         return;
     }
 
-    for (auto &e: enemies) {
+    /*for (auto &e: enemies) {
         std::cout << *e << "\n";
-    }
+    }Debug only*/
     if (gameOver_) {
         bool rNow = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R);
         if (rNow && !rHeld_) {

@@ -5,14 +5,11 @@
 
 int main() {
     try {
-        // Ask user to choose a resolution and mode via Menu (singleton)
         auto &menu = Menu::getInstance();
         auto selectedMode = menu.selectResolution();
 
-        // Choose window style based on menu selection
         std::uint32_t style = sf::Style::Default;
         if (menu.wasFullscreenChosen()) {
-            // Use borderless fullscreen at desktop size for broad SFML compatibility
             auto desktop = sf::VideoMode::getDesktopMode();
             selectedMode = sf::VideoMode({desktop.size.x, desktop.size.y});
             style = sf::Style::None;
