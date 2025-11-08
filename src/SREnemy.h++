@@ -11,7 +11,11 @@ public:
         : Enemy(x, y, heightScale) {}
 
     [[nodiscard]] double attackRange() const override { return 1.2; }
-    [[nodiscard]] int attackDamage() const override { return (static_cast<float>(enemy_dead)/static_cast<float>(enemy_no)) >= 0.5 ?60 : 30; }
+
+    [[nodiscard]] int attackDamage() const override {
+        return (static_cast<float>(enemy_dead) / static_cast<float>(enemy_no)) >= 0.5 ? 60 : 30;
+    }
+
     [[nodiscard]] const char* typeName() const override { return "ShortRangeEnemy"; }
 
     void attackPlayer(Player& player, double deltaTime, const Map &map) override ;

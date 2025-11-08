@@ -12,7 +12,11 @@ public:
     }
 
     [[nodiscard]] double attackRange() const override { return 10.0; }
-    [[nodiscard]] int attackDamage() const override { return (static_cast<float>(enemy_dead)/static_cast<float>(enemy_no)) >= 0.5 ? 30 : 15; }
+
+    [[nodiscard]] int attackDamage() const override {
+        return (static_cast<float>(enemy_dead) / static_cast<float>(enemy_no)) >= 0.5 ? 30 : 15;
+    }
+
     [[nodiscard]] const char* typeName() const override { return "LongRangeEnemy"; }
 
     void attackPlayer(Player& player, double deltaTime, const Map &map) override;

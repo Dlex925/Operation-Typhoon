@@ -1,13 +1,13 @@
 #include "Map.h++"
-#include "Exceptions.h++"
+//#include "Exceptions.h++"
 
 #include <cmath>
 #include <iostream>
 Map::Map(const std::string& FileName) {
     std::ifstream fin(FileName);
-    if (!fin.is_open()) {
+    /*if (!fin.is_open()) {
         throw MapOpenException("Map::Map(): cannot open file: " + FileName);
-    }
+    }*/
     std::string line;
     while (std::getline(fin, line)) {
         std::vector<int> row;
@@ -15,18 +15,18 @@ Map::Map(const std::string& FileName) {
         for (char c : line) {
             if (c >= '0' && c <= '9') {
                 row.push_back(c - '0');
-            } else if (!std::isspace(static_cast<unsigned char>(c))) {
+            } /*else if (!std::isspace(static_cast<unsigned char>(c))) {
                 // Non-whitespace, non-digit character -> invalid format
                 throw MapFormatException("Map::Map(): invalid character in map file: '" + std::string(1, c) + "'");
-            }
+            }*/
         }
         if (!row.empty()) {
             map.push_back(row);
         }
     }
-    if (map.empty()) {
+    /*if (map.empty()) {
         throw MapEmptyException("Map::Map(): empty map");
-    }
+    }*/
     y_size = map.size();
     x_size = map[0].size();
     std::cout << "Map loaded: " << x_size << "x" << y_size << std::endl;
