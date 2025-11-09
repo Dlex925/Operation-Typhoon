@@ -194,3 +194,8 @@ conțin fișiere generate și nu ne ajută să le versionăm.
 - https://www.sfml-dev.org/documentation/3.0.2/
 
 ### The original game can be found online and played in the browser(not sure if i can leave the link here).
+
+### DDA
+
+https://www.geeksforgeeks.org/computer-graphics/dda-line-generation-algorithm-computer-graphics/
+https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm)
