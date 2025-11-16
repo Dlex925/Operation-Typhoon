@@ -7,6 +7,7 @@
 
 class LongRangeEnemy : public Enemy {
     int AttackDmg{15};
+
 public:
     explicit LongRangeEnemy(double x = 2.5, double y = 2.5, float heightScale = 1.0f)
         : Enemy(x, y, heightScale, 500) {

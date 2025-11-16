@@ -7,7 +7,6 @@
 #include <iostream>
 
 std::unique_ptr<Enemy> EnemyFactory::createEnemy(EnemyType type, double x, double y) {
-    
     switch (type) {
         case EnemyType::ShortRange: {
             auto e = std::make_unique<ShortRangeEnemy>(x, y);

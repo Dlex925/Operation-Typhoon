@@ -14,8 +14,9 @@ void LongRangeHighDamageEnemy::attackPlayer(Player& player, double deltaTime, co
         SRAttackPlayer(player, deltaTime);
         return;
     }
-    if (dist <= attackRange() * attackRange()  && this->hasLineOfSight(map, this->getWorldX(), this->getWorldY(), player.getX(),
-                                                      player.getY())) {
+    if (dist <= attackRange() * attackRange() && this->hasLineOfSight(map, this->getWorldX(), this->getWorldY(),
+                                                                      player.getX(),
+                                                                      player.getY())) {
         player.takeDamage(attackDamage());
         attackCooldown_ = attackInterval_;
     }

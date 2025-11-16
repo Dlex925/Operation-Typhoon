@@ -33,9 +33,9 @@ bool Enemy::isDead() const { return dead; }
 void Enemy::takeDamage(int amount) {
     if (dead) return;
     hp -= amount;
-    LongRangeHighDamageEnemy* sre = dynamic_cast<LongRangeHighDamageEnemy*>(this);
+    LongRangeHighDamageEnemy *sre = dynamic_cast<LongRangeHighDamageEnemy *>(this);
     if (sre != nullptr) {
-        sre -> DoubleDamage() ;
+        sre->DoubleDamage();
     }
     if (hp <= 0) {
         enemy_dead++;

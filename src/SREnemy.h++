@@ -7,6 +7,7 @@
 
 class ShortRangeEnemy : public Enemy {
     int AttackDmg{30};
+
 public:
     explicit ShortRangeEnemy(double x = 2.5, double y = 2.5, float heightScale = 1.0f)
         : Enemy(x, y, heightScale) {}

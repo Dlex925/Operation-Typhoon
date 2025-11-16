@@ -7,6 +7,7 @@
 #include "SREnemy.h++"
 #include "EnemyFactory.h++"
 #include "EnemyType.h++"
+
 GameManager::GameManager(sf::RenderWindow& win, std::string harta, Player& p)
     : window(win), map(harta), player(p), raycast(window, map, player) {
     initialPlayerX_ = player.getX();
@@ -18,7 +19,6 @@ void GameManager::spawnEnemiesFromMap() {
     enemies.clear();
     for (unsigned long y = 0; y < map.getHeight(); ++y) {
         for (unsigned long x = 0; x < map.getWidth(); ++x) {
-
             int cell = map.getCell(x, y);
 
             double cx = static_cast<double>(x) + 0.5;

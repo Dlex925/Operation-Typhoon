@@ -59,7 +59,7 @@ public:
 
     [[nodiscard]] virtual int attackDamage() const = 0;
 
-   [[nodiscard]] virtual const std::string typeName() const = 0;
+    [[nodiscard]] virtual const std::string typeName() const = 0;
 
     virtual void attackPlayer(Player &player, double deltaTime, const Map &map) = 0;
 
@@ -72,12 +72,11 @@ public:
     }
 
     //virtual void SRAttackPlayer(Player& player, double deltaTime) {} ;
-    double Dist( Player &player )const
-{
-    double dx = getWorldX() - player.getX();
-    double dy = getWorldY() - player.getY();
-    double dist = dx*dx + dy*dy;
-    return dist;
+    double Dist(Player &player) const {
+        double dx = getWorldX() - player.getX();
+        double dy = getWorldY() - player.getY();
+        double dist = dx * dx + dy * dy;
+        return dist;
     }
 };
 
