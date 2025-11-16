@@ -91,10 +91,26 @@ public:
 
     //virtual void SRAttackPlayer(Player& player, double deltaTime) {} ;
      [[nodiscard]] double Dist(const Player &player) const {
-        double dx = getWorldX() - player.getX();
-        double dy = getWorldY() - player.getY();
-        double dist = dx * dx + dy * dy;
+         double dx = getWorldX() - player.getX();
+         double dy = getWorldY() - player.getY();
+         double dist = dx * dx + dy * dy;
         return dist;
+    }
+
+    friend void swap(Enemy &lhs, Enemy &rhs) noexcept {
+        using std::swap;
+        swap(lhs.worldX, rhs.worldX);
+        swap(lhs.worldY, rhs.worldY);
+        swap(lhs.baseHeight, rhs.baseHeight);
+        swap(lhs.moveSpeed, rhs.moveSpeed);
+        swap(lhs.stopDistance, rhs.stopDistance);
+        swap(lhs.maxHp, rhs.maxHp);
+        swap(lhs.hp, rhs.hp);
+        swap(lhs.dead, rhs.dead);
+        swap(lhs.typeCode_, rhs.typeCode_);
+        swap(lhs.AttackDmg, rhs.AttackDmg);
+        swap(lhs.attackInterval_, rhs.attackInterval_);
+        swap(lhs.attackCooldown_, rhs.attackCooldown_);
     }
 };
 
