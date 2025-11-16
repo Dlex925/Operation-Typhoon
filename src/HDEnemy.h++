@@ -13,7 +13,7 @@ public:
 void DoubleDamage() { AttackDmg *= 2; }
 
 explicit LongRangeHighDamageEnemy(double x = 2.5, double y = 2.5, float heightScale = 1.0f)
-        : Enemy(x, y, heightScale, 150) {
+    : Enemy(x, y, heightScale, 150) {
     }
 
     [[nodiscard]] double attackRange() const override { return 6.0; }
@@ -24,9 +24,9 @@ explicit LongRangeHighDamageEnemy(double x = 2.5, double y = 2.5, float heightSc
 
 [[nodiscard]] const std::string typeName() const override { return "LongRangeHighDamageEnemy"; }
 
-void attackPlayer(Player& player, double deltaTime, const Map &map) override;
+void attackPlayer(Player &player, double deltaTime, const Map &map) override;
 
-    //void update(double deltaTime, const Map &map, const Player &player) override;
+//void update(double deltaTime, const Map &map, const Player &player) override;
     void SRAttackPlayer(Player &player, double deltaTime);
 
     [[nodiscard]] std::unique_ptr<Enemy> clone() const override {
