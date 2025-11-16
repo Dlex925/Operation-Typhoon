@@ -6,6 +6,7 @@
 #include <ostream>
 
 class ShortRangeEnemy : public Enemy {
+    int AttackDmg{30};
 public:
     explicit ShortRangeEnemy(double x = 2.5, double y = 2.5, float heightScale = 1.0f)
         : Enemy(x, y, heightScale) {}
@@ -13,10 +14,10 @@ public:
     [[nodiscard]] double attackRange() const override { return 1.2; }
 
     [[nodiscard]] int attackDamage() const override {
-        return (static_cast<float>(enemy_dead) / static_cast<float>(enemy_no)) >= 0.5 ? 60 : 30;
+        return (static_cast<float>(enemy_dead) / static_cast<float>(enemy_no)) >= 0.5 ? AttackDmg * 2 : AttackDmg;
     }
 
-    [[nodiscard]] const char* typeName() const override { return "ShortRangeEnemy"; }
+    [[nodiscard]] const std::string typeName() const override { return "ShortRangeEnemy"; }
 
     void attackPlayer(Player& player, double deltaTime, const Map &map) override ;
 

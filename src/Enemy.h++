@@ -4,7 +4,9 @@
 #include <cstddef>
 #include <memory>
 #include <iosfwd>
+#include <string>
 
+#include "Player.h++"
 class Map;
 class Player;
 
@@ -18,6 +20,7 @@ class Enemy {
     int hp{100};
     bool dead{false};
     int typeCode_{1};
+    int AttackDmg{10};
 
 protected:
     float attackInterval_{0.5f};
@@ -56,14 +59,11 @@ public:
 
     [[nodiscard]] virtual int attackDamage() const = 0;
 
-    [[nodiscard]] virtual const char *typeName() const = 0;
+   [[nodiscard]] virtual const std::string typeName() const = 0;
 
     virtual void attackPlayer(Player &player, double deltaTime, const Map &map) = 0;
 
-    // Virtual constructor (clone)
     [[nodiscard]] virtual std::unique_ptr<Enemy> clone() const = 0;
-
-    // Virtual display with non-virtual interface
     virtual void print(std::ostream &os) const = 0;
 
     friend std::ostream &operator<<(std::ostream &os, const Enemy &e) {
@@ -72,6 +72,13 @@ public:
     }
 
     //virtual void SRAttackPlayer(Player& player, double deltaTime) {} ;
+    double Dist( Player &player )const
+{
+    double dx = getWorldX() - player.getX();
+    double dy = getWorldY() - player.getY();
+    double dist = dx*dx + dy*dy;
+    return dist;
+    }
 };
 
 #endif // OOP_ENEMY_H

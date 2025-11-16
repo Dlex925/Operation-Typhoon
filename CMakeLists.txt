@@ -76,6 +76,9 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/LREnemy.cpp
         src/HDEnemy.cpp
         src/Menu.cpp
+        src/EnemyType.h++
+        src/EnemyFactory.cpp
+        src/EnemyFactory.h++
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

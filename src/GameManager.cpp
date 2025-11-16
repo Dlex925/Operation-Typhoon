@@ -5,10 +5,8 @@
 #include <algorithm>
 #include <memory>
 #include "SREnemy.h++"
-#include "LREnemy.h++"
-#include "HDEnemy.h++"
-#include <iostream>
-
+#include "EnemyFactory.h++"
+#include "EnemyType.h++"
 GameManager::GameManager(sf::RenderWindow& win, std::string harta, Player& p)
     : window(win), map(harta), player(p), raycast(window, map, player) {
     initialPlayerX_ = player.getX();
@@ -20,21 +18,18 @@ void GameManager::spawnEnemiesFromMap() {
     enemies.clear();
     for (unsigned long y = 0; y < map.getHeight(); ++y) {
         for (unsigned long x = 0; x < map.getWidth(); ++x) {
+
             int cell = map.getCell(x, y);
+
             double cx = static_cast<double>(x) + 0.5;
             double cy = static_cast<double>(y) + 0.5;
-            if (cell == 2) {
-                auto e = std::make_unique<ShortRangeEnemy>(cx, cy);
-                std::cout << *e << "\n";
-                enemies.push_back(std::move(e));
-            } else if (cell == 3) {
-                auto e = std::make_unique<LongRangeEnemy>(cx, cy);
-                std::cout << *e << "\n";
-                enemies.push_back(std::move(e));
-            } else if (cell == 4) {
-                auto e = std::make_unique<LongRangeHighDamageEnemy>(cx, cy);
-                std::cout << *e << "\n";
-                enemies.push_back(std::move(e));
+
+            EnemyType type = static_cast<EnemyType>(cell);
+
+            auto newEnemy = EnemyFactory::createEnemy(type, cx, cy);
+
+            if (newEnemy) {
+                enemies.push_back(std::move(newEnemy));
             }
         }
     }

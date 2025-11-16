@@ -7,11 +7,8 @@
 void LongRangeEnemy::attackPlayer(Player& player, double deltaTime,const Map &map) {
     attackCooldown_ -= static_cast<float>(deltaTime);
     if (attackCooldown_ > 0.f) return;
-
-    double dx = player.getX() - getWorldX();
-    double dy = player.getY() - getWorldY();
-    double dist = std::sqrt(dx*dx + dy*dy);
-    if (dist <= attackRange() && this->hasLineOfSight(map,this->getWorldX(),this->getWorldY(), player.getX(), player.getY())) {
+    double dist = Dist(player);
+    if (dist <= attackRange() * attackRange()  && this->hasLineOfSight(map,this->getWorldX(),this->getWorldY(), player.getX(), player.getY())) {
         player.takeDamage(attackDamage());
         attackCooldown_ = attackInterval_;
     }
