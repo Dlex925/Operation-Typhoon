@@ -16,9 +16,9 @@ explicit LongRangeHighDamageEnemy(double x = 2.5, double y = 2.5, float heightSc
     : Enemy(x, y, heightScale, 150) {
 }
 
-    [[nodiscard]] double attackRange() const override { return 6.0; }
+[[nodiscard]] double attackRange() const override { return 6.0; }
 
-    [[nodiscard]] int attackDamage() const override {
+[[nodiscard]] int attackDamage() const override {
     return (static_cast<float>(enemy_dead) / static_cast<float>(enemy_no)) >= 0.5 ? AttackDmg * 2 : AttackDmg;
 }
 
@@ -29,7 +29,7 @@ void attackPlayer(Player &player, double deltaTime, const Map &map) override;
 //void update(double deltaTime, const Map &map, const Player &player) override;
 void SRAttackPlayer(Player &player, double deltaTime);
 
-    [[nodiscard]] std::unique_ptr<Enemy> clone() const override {
+[[nodiscard]] std::unique_ptr<Enemy> clone() const override {
         return std::make_unique<LongRangeHighDamageEnemy>(*this);
     }
 

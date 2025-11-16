@@ -33,22 +33,6 @@ protected:
 public:
     explicit Enemy(double x = 2.5, double y = 2.5, float heightScale = 0.9f, int hp1 = 100);
 
-    [[nodiscard]] double move_speed() const {
-        return moveSpeed;
-    }
-
-    [[nodiscard]] double stop_distance() const {
-        return stopDistance;
-    }
-
-    [[nodiscard]] int type_code() const {
-        return typeCode_;
-    }
-
-    [[nodiscard]] int attack_dmg() const {
-        return AttackDmg;
-    }
-
     virtual ~Enemy() = default;
 
     void setWorldPosition(double x, double y);
