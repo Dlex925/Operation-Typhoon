@@ -97,8 +97,9 @@ sure to keep the filenames the same.
     - constructori virtuali (clone): sunt necesari, dar nu se consideră funcții specifice temei
     - afișare virtuală, interfață non-virtuală
   - [x] apelarea constructorului din clasa de bază din constructori din derivate
-  - [ ] clasă cu atribut de tip pointer la o clasă de bază cu derivate; aici apelați funcțiile virtuale prin pointer de bază, eventual prin interfața non-virtuală din bază
-    - [ ] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
+  - [x] clasă cu atribut de tip pointer la o clasă de bază cu derivate; aici apelați funcțiile virtuale prin pointer de
+    bază, eventual prin interfața non-virtuală din bază
+    - [x] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
     - [x] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
     - [x] smart pointers (recomandat, opțional)
 - [ ] excepții

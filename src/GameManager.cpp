@@ -137,7 +137,7 @@ void GameManager::handleInput(float deltaTime) {
 
     /*for (auto &e: enemies) {
         std::cout << *e << "\n";
-    }Debug only*/
+    }Debug*/
     if (gameOver_) {
         bool rNow = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R);
         if (rNow && !rHeld_) {
@@ -207,8 +207,8 @@ void GameManager::Engine() const{
 
     if (uiFontLoaded_) {
         sf::Text hud(uiFont, "");
-        hud.setCharacterSize(22);
-        hud.setFillColor(sf::Color(110, 0, 100));
+        hud.setCharacterSize(55);
+        hud.setFillColor(sf::Color(0, 255, 100));
         hud.setString("HP: " + std::to_string(player.getHp()) + "/" + std::to_string(player.getMaxHp()) +
                       "    Ammo: " + std::to_string(player.getAmmo()));
         hud.setPosition({12.f, 10.f});

@@ -31,6 +31,38 @@ public:
         os << typeName() << "(hp=" << getHp() << "/" << getMaxHp() << ", x=" << getWorldX() << ", y=" << getWorldY() <<
                 ")";
     }
+
+LongRangeEnemy(const LongRangeEnemy &other)
+        : Enemy(other),
+          AttackDmg(other.AttackDmg) {
+    }
+
+    LongRangeEnemy(LongRangeEnemy &&other) noexcept
+        : Enemy(std::move(other)),
+          AttackDmg(other.AttackDmg) {
+    }
+
+    LongRangeEnemy & operator=(const LongRangeEnemy &other) {
+        if (this == &other)
+            return *this;
+        Enemy::operator =(other);
+        AttackDmg = other.AttackDmg;
+        return *this;
+    }
+
+    LongRangeEnemy & operator=(LongRangeEnemy &&other) noexcept {
+        if (this == &other)
+            return *this;
+        Enemy::operator =(std::move(other));
+        AttackDmg = other.AttackDmg;
+        return *this;
+    }
+
+friend void swap(LongRangeEnemy &lhs, LongRangeEnemy &rhs) noexcept {
+        using std::swap;
+        swap(static_cast<Enemy &>(lhs), static_cast<Enemy &>(rhs));
+        swap(lhs.AttackDmg, rhs.AttackDmg);
+    }
 };
 
 #endif // OOP_LRENEMY_H

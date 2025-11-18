@@ -96,6 +96,9 @@ public:
         swap(lhs.attackInterval_, rhs.attackInterval_);
         swap(lhs.attackCooldown_, rhs.attackCooldown_);
     }
+
+
+
 };
 
 #endif // OOP_ENEMY_H
