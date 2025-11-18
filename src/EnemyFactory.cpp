@@ -25,8 +25,10 @@ std::unique_ptr<Enemy> EnemyFactory::createEnemy(EnemyType type, double x, doubl
             std::cout << *e << "\n";
             return e;
         }
-
-        default:
+        case EnemyType::None:
+        case EnemyType::Wall:
             return nullptr;
+        default:
+            throw UnknownEnemyTypeException(static_cast<int>(type));
     }
 }

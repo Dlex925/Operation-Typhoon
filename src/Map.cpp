@@ -3,11 +3,12 @@
 
 #include <cmath>
 #include <iostream>
+#include "Exceptions.h++"
 Map::Map(const std::string& FileName) {
     std::ifstream fin(FileName);
-    /*if (!fin.is_open()) {
-        throw MapOpenException("Map::Map(): cannot open file: " + FileName);
-    }*/
+    if (!fin.is_open()) {
+        throw MapException("Cannot open map file: " + FileName);
+    }
     std::string line;
     while (std::getline(fin, line)) {
         std::vector<int> row;

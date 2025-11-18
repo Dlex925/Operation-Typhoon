@@ -31,7 +31,7 @@ void SRAttackPlayer(Player &player, double deltaTime);
 
 [[nodiscard]] std::unique_ptr<Enemy> clone() const override {
     return std::make_unique<LongRangeHighDamageEnemy>(*this);
-    }
+}
 
     void print(std::ostream &os) const override {
         os << typeName() << "(hp=" << getHp() << "/" << getMaxHp() << ", x=" << getWorldX() << ", y=" << getWorldY() <<
@@ -50,7 +50,7 @@ LongRangeHighDamageEnemy(LongRangeHighDamageEnemy &&other) noexcept
       AttackDmg(other.AttackDmg) {
 }
 
-LongRangeHighDamageEnemy & operator=(const LongRangeHighDamageEnemy &other) {
+LongRangeHighDamageEnemy &operator=(const LongRangeHighDamageEnemy &other) {
     if (this == &other)
         return *this;
     Enemy::operator =(other);
@@ -58,7 +58,7 @@ LongRangeHighDamageEnemy & operator=(const LongRangeHighDamageEnemy &other) {
     return *this;
 }
 
-LongRangeHighDamageEnemy & operator=(LongRangeHighDamageEnemy &&other) noexcept {
+LongRangeHighDamageEnemy &operator=(LongRangeHighDamageEnemy &&other) noexcept {
     if (this == &other)
         return *this;
     Enemy::operator =(std::move(other));
@@ -71,7 +71,6 @@ friend void swap(LongRangeHighDamageEnemy &lhs, LongRangeHighDamageEnemy &rhs) n
     swap(static_cast<Enemy &>(lhs), static_cast<Enemy &>(rhs));
     swap(lhs.AttackDmg, rhs.AttackDmg);
 }
-
 };
 
 #endif // OOP_HDENEMY_H

@@ -32,7 +32,7 @@ public:
                 ")";
     }
 
-LongRangeEnemy(const LongRangeEnemy &other)
+    LongRangeEnemy(const LongRangeEnemy &other)
         : Enemy(other),
           AttackDmg(other.AttackDmg) {
     }
@@ -42,7 +42,7 @@ LongRangeEnemy(const LongRangeEnemy &other)
           AttackDmg(other.AttackDmg) {
     }
 
-    LongRangeEnemy & operator=(const LongRangeEnemy &other) {
+    LongRangeEnemy &operator=(const LongRangeEnemy &other) {
         if (this == &other)
             return *this;
         Enemy::operator =(other);
@@ -50,7 +50,7 @@ LongRangeEnemy(const LongRangeEnemy &other)
         return *this;
     }
 
-    LongRangeEnemy & operator=(LongRangeEnemy &&other) noexcept {
+    LongRangeEnemy &operator=(LongRangeEnemy &&other) noexcept {
         if (this == &other)
             return *this;
         Enemy::operator =(std::move(other));
@@ -58,7 +58,7 @@ LongRangeEnemy(const LongRangeEnemy &other)
         return *this;
     }
 
-friend void swap(LongRangeEnemy &lhs, LongRangeEnemy &rhs) noexcept {
+    friend void swap(LongRangeEnemy &lhs, LongRangeEnemy &rhs) noexcept {
         using std::swap;
         swap(static_cast<Enemy &>(lhs), static_cast<Enemy &>(rhs));
         swap(lhs.AttackDmg, rhs.AttackDmg);

@@ -7,7 +7,7 @@
 #include <memory>
 #include "Enemy.h++"
 #include "EnemyType.h++"
-
+#include "Exceptions.h++"
 class EnemyFactory {
 public:
     static std::unique_ptr<Enemy> createEnemy(EnemyType type, double x, double y);

@@ -102,8 +102,9 @@ sure to keep the filenames the same.
     - [x] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
     - [x] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
     - [x] smart pointers (recomandat, opțional)
-- [ ] excepții
-  - [ ] ierarhie proprie cu baza `std::exception` sau derivată din `std::exception`; minim **3** clase pentru erori specifice distincte
+- [x] excepții
+  - [x] ierarhie proprie cu baza `std::exception` sau derivată din `std::exception`; minim **3** clase pentru erori
+    specifice distincte
     - clasele de excepții trebuie să trateze categorii de erori distincte (exemplu de erori echivalente: citire fișiere cu diverse extensii)
   - [ ] utilizare cu sens: de exemplu, `throw` în constructor (sau funcție care întoarce un obiect), `try`/`catch` în `main`
   - această ierarhie va fi complet independentă de ierarhia cu funcții virtuale
@@ -200,3 +201,7 @@ conțin fișiere generate și nu ne ajută să le versionăm.
 
 https://www.geeksforgeeks.org/computer-graphics/dda-line-generation-algorithm-computer-graphics/
 https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm)
+
+### Font
+
+https://www.nerdfonts.com/

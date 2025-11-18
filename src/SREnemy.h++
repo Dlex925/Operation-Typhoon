@@ -41,7 +41,7 @@ public:
           AttackDmg(other.AttackDmg) {
     }
 
-    ShortRangeEnemy & operator=(const ShortRangeEnemy &other) {
+    ShortRangeEnemy &operator=(const ShortRangeEnemy &other) {
         if (this == &other)
             return *this;
         Enemy::operator =(other);
@@ -49,7 +49,7 @@ public:
         return *this;
     }
 
-    ShortRangeEnemy & operator=(ShortRangeEnemy &&other) noexcept {
+    ShortRangeEnemy &operator=(ShortRangeEnemy &&other) noexcept {
         if (this == &other)
             return *this;
         Enemy::operator =(std::move(other));
@@ -59,11 +59,9 @@ public:
 
     friend void swap(ShortRangeEnemy &lhs, ShortRangeEnemy &rhs) noexcept {
         using std::swap;
-      swap(static_cast<Enemy &>(lhs), static_cast<Enemy &>(rhs));
-    swap(lhs.AttackDmg, rhs.AttackDmg);
+        swap(static_cast<Enemy &>(lhs), static_cast<Enemy &>(rhs));
+        swap(lhs.AttackDmg, rhs.AttackDmg);
     }
-
-
 };
 
 #endif // OOP_SRENEMY_H
