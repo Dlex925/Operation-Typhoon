@@ -65,8 +65,9 @@ void GameManager::restartGame_() {
 
 void GameManager::start() {
     sf::Clock clock;
-    if (player.getMaxHp() < player.getHp() )
-        throw GameException("Please give the player less hp then max hp"); // Planning to let the map creator chose the player hp at the start of the map.r
+    if (player.getMaxHp() < player.getHp())
+        throw GameException("Please give the player less hp then max hp");
+    // Planning to let the map creator chose the player hp at the start of the map.r
     window.setMouseCursorVisible(false);
     auto viewSize = window.getView().getSize();
     int winW = viewSize.x;
@@ -81,8 +82,7 @@ void GameManager::start() {
     if (music.openFromFile("assets/ezoteric.ogg")) {
         music.setLooping(true);
         music.play();
-    }
-    else throw AssetLoadException("assets/ezoteric.ogg", "Music");
+    } else throw AssetLoadException("assets/ezoteric.ogg", "Music");
 
     while (window.isOpen()) {
         float deltaTime = clock.restart().asSeconds();
@@ -120,8 +120,7 @@ void GameManager::start() {
                     if (gameOverJingle_.openFromFile("assets/Dead.ogg")) {
                         gameOverJingle_.setLooping(false);
                         gameOverJingle_.play();
-                    }
-                    else throw AssetLoadException("assets/Dead.ogg", "Sound");
+                    } else throw AssetLoadException("assets/Dead.ogg", "Sound");
                     gameOverSoundPlayed_ = true;
                 }
             }

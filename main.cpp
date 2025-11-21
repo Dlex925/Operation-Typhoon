@@ -3,6 +3,8 @@
 #include "src/Menu.h++"
 #include <iostream>
 
+#include "src/Exceptions.h++"
+
 int main() {
     try {
         auto &menu = Menu::getInstance();
@@ -25,7 +27,24 @@ int main() {
         std::cout << game << "\n";
         game.start();
 
-    } catch (const std::exception& e) {
+    }
+    catch (const AssetLoadException& e) {
+        std::cerr << e.what() << "\n";
+        return -1;
+    }
+    catch (const MapException &e) {
+        std::cerr << e.what() << "\n";
+        return -1 ;
+    }
+    catch (const UnknownEnemyTypeException& e) {
+        std::cerr << e.what() << "\n";
+        return -1 ;
+    }
+    catch (const GameException &e) {
+        std::cerr << e.what() << "\n";
+        return -1 ;
+    }
+    catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << "\n";
         return -1;
     }

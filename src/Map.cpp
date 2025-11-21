@@ -4,6 +4,7 @@
 #include <cmath>
 #include <iostream>
 #include "Exceptions.h++"
+
 Map::Map(const std::string& FileName) {
     std::ifstream fin(FileName);
     if (!fin.is_open()) {
