@@ -26,25 +26,19 @@ int main() {
         GameManager game(window, map, p);
         std::cout << game << "\n";
         game.start();
-
-    }
-    catch (const AssetLoadException& e) {
+    } catch (const AssetLoadException &e) {
         std::cerr << e.what() << "\n";
         return -1;
-    }
-    catch (const MapException &e) {
+    } catch (const MapException &e) {
         std::cerr << e.what() << "\n";
-        return -1 ;
-    }
-    catch (const UnknownEnemyTypeException& e) {
+        return -1;
+    } catch (const UnknownEnemyTypeException &e) {
         std::cerr << e.what() << "\n";
-        return -1 ;
-    }
-    catch (const GameException &e) {
+        return -1;
+    } catch (const GameException &e) {
         std::cerr << e.what() << "\n";
-        return -1 ;
-    }
-    catch (const std::exception& e) {
+        return -1;
+    } catch (const std::exception &e) {
         std::cerr << "Error: " << e.what() << "\n";
         return -1;
     }
