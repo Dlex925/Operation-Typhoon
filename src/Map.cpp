@@ -18,17 +18,16 @@ Map::Map(const std::string& FileName) {
             if (c >= '0' && c <= '9') {
                 row.push_back(c - '0');
             } /*else if (!std::isspace(static_cast<unsigned char>(c))) {
-                // Non-whitespace, non-digit character -> invalid format
-                throw MapFormatException("Map::Map(): invalid character in map file: '" + std::string(1, c) + "'");
+                throw MapException("Invalid character in map file: '" + std::string(1, c) + "'");
             }*/
         }
         if (!row.empty()) {
             map.push_back(row);
         }
     }
-    /*if (map.empty()) {
-        throw MapEmptyException("Map::Map(): empty map");
-    }*/
+    if (map.empty()) {
+        throw MapException("Empty map");
+    }
     y_size = map.size();
     x_size = map[0].size();
     std::cout << "Map loaded: " << x_size << "x" << y_size << std::endl;
