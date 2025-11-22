@@ -29,18 +29,18 @@ class GameManager {
     float gameOverTimer_ = 0.f;
     bool gameOverSoundPlayed_ = false;
     sf::Music gameOverJingle_;
+    sf::Music winmusic;
     //For restarting
     double initialPlayerX_ = 0.0;
     double initialPlayerY_ = 0.0;
+    int curentMapIndex_ = 1;
+    bool levelComplete_ = false;
+    bool gameFin = false;
 
-    bool winAnnounced_ = false;
+    void loadNextLevel();
 
     void spawnEnemiesFromMap();
-
     void restartGame_();
-
-    void performShortRangeAttackDamage();
-
 public:
     GameManager(sf::RenderWindow& win, std::string harta, Player& p);
 

@@ -36,7 +36,7 @@ void SRAttackPlayer(Player &player, double deltaTime);
 void print(std::ostream &os) const override {
     os << typeName() << "(hp=" << getHp() << "/" << getMaxHp() << ", x=" << getWorldX() << ", y=" << getWorldY() <<
             ")" << "\nDead_Enemies " << enemy_dead << "\nTotal Enemies " << enemy_no << '\n' << (
-                    static_cast<float>(enemy_dead) / static_cast<float>(enemy_no) >= 0.5) << '\n' << static_cast<float>(
+                static_cast<float>(enemy_dead) / static_cast<float>(enemy_no) >= 0.5) << '\n' << static_cast<float>(
                     enemy_dead) / static_cast<float>(enemy_no) << "\n";
     }
 

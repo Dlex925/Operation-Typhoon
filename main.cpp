@@ -22,7 +22,7 @@ int main() {
         }
 
         std::string map = "assets/map1";
-        Player p(3.0f,3.0f);
+        Player p(3.0f, 3.0f);
         GameManager game(window, map, p);
         std::cout << game << "\n";
         game.start();
@@ -41,8 +41,7 @@ int main() {
     } catch (const std::exception &e) {
         std::cerr << "Error: " << e.what() << "\n";
         return -1;
-    } catch (...)
-    {std::cerr << "Unknown Error\n";}
+    } catch (...) { std::cerr << "Unknown Error\n"; }
 
     return 0;
 }

@@ -90,6 +90,11 @@ void GameManager::start() {
 
         if (gameOver_) {
             gameOverTimer_ += deltaTime;
+        } else if (levelComplete_) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+                winmusic.stop();
+                loadNextLevel();
+            }
         } else if (!paused_) {
             player.updateWeapon(deltaTime);
             for (auto &e: enemies) {
@@ -100,16 +105,22 @@ void GameManager::start() {
                 }
             }
 
-            /*if (!winAnnounced_) {
-                bool allDead = true;
+            if (!levelComplete_) {
+                levelComplete_ = true;
                 for (const auto &e : enemies) {
-                    if (e && !e->isDead()) { allDead = false; break; }
+                    if (e && !e->isDead()) {
+                        levelComplete_ = false;
+                        break;
+                    }
                 }
-                if (allDead) {
-                    std::cout << "WIN" << std::endl;
-                    winAnnounced_ = true;
+                if (levelComplete_) {
+                    music.pause();
+                    if (winmusic.openFromFile("assets/win.ogg")) {
+                        winmusic.setLooping(false);
+                        winmusic.play();
+                    } else throw AssetLoadException("assets/win.ogg", "Sound");
                 }
-            }*/
+            }
             if (player.getHp() <= 0) {
                 gameOver_ = true;
                 gameOverTimer_ = 0.f;
@@ -164,7 +175,7 @@ void GameManager::handleInput(float deltaTime) {
     }
     pHeld_ = pNow;
 
-    if (paused_) return; //
+    if (paused_) return;
 
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     if (mousePos.x != 400) {
@@ -274,11 +285,57 @@ void GameManager::Engine() const{
             hint.setPosition({hx, hy});
             window.draw(hint);
         }
-
     }
+    if (levelComplete_) {
+        sf::RectangleShape overlay({static_cast<float>(window.getSize().x), static_cast<float>(window.getSize().y)});
+        overlay.setFillColor(sf::Color(0, 0, 0, 150));
+        window.draw(overlay);
+
+        if (uiFontLoaded_) {
+            std::string wintxt;
+            if (!gameFin) wintxt = "Level Complete";
+            else wintxt = "THANKS FOR PLAYING";
+            sf::Text winText(uiFont, wintxt);
+            winText.setCharacterSize(88);
+            winText.setFillColor(sf::Color::Red);
+
+            auto b = winText.getLocalBounds();
+            winText.setPosition({(window.getSize().x - b.size.x) / 2.f, window.getSize().y * 0.3f});
+            window.draw(winText);
+            std::string nexttxt;
+            if (!gameFin) nexttxt = "Press Space for the next level";
+            else nexttxt = "Press Esc to exit";
+            sf::Text nextText(uiFont, nexttxt);
+            nextText.setCharacterSize(88);
+            nextText.setFillColor(sf::Color::Red);
+
+            auto nb = nextText.getLocalBounds();
+            nextText.setPosition({(window.getSize().x - nb.size.x) / 2.f, window.getSize().y * 0.5f});
+            window.draw(nextText);
+        }
+    }
+
 
     window.display();
 }
 
+
+void GameManager::loadNextLevel() {
+    curentMapIndex_++;
+    try {
+        std::string nextMapPath = "assets/map" + std::to_string(curentMapIndex_);
+        map = Map(nextMapPath);
+        player.resetForNewGame();
+        player.setPosition(initialPlayerX_, initialPlayerY_);
+        enemies.clear();
+        spawnEnemiesFromMap();
+        levelComplete_ = false;
+        if (music.getStatus() != sf::SoundSource::Status::Playing) {
+            music.play();
+        }
+    } catch (...) {
+        gameFin = true;
+    }
+}
 
 
