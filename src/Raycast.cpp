@@ -95,8 +95,7 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
         std::string Attack2 = "assets/" + type + "_Attack2.png";
         if (std::filesystem::exists(Attack2)) {
             t.attack2 = sf::Texture("assets/" + type + "_Attack2.png");
-        }
-        else {
+        } else {
             t.attack2 = sf::Texture("assets/" + type + "_Attack.png");
         }
         t.dead = sf::Texture("assets/" + type + "_Dead.png");
