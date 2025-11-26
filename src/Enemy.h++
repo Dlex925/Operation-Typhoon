@@ -31,7 +31,7 @@ protected:
     static bool hasLineOfSight(const Map &map, double sx, double sy, double tx, double ty);
 
 public:
-    explicit Enemy(double x = 2.5, double y = 2.5, float heightScale = 0.9f, int hp1 = 100,double mvspeed = 2.0);
+    explicit Enemy(double x = 2.5, double y = 2.5, float heightScale = 0.9f, int hp1 = 100, double mvspeed = 2.0);
 
     virtual ~Enemy() = default;
 
