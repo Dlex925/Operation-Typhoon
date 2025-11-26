@@ -18,7 +18,7 @@ public:
         return (static_cast<float>(enemy_dead) / static_cast<float>(enemy_no)) >= 0.5 ? AttackDmg * 2 : AttackDmg;
     }
 
-    [[nodiscard]] const std::string typeName() const override { return "ShortRangeEnemy"; }
+    [[nodiscard]] const std::string typeName() const override { return "EnemyShort"; }
 
     void attackPlayer(Player& player, double deltaTime, const Map &map) override ;
 

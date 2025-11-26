@@ -90,21 +90,16 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
     auto it = cache.find(type);
     if (it == cache.end()) {
         Textures t;
-        std::string base;
-        if (type == "ShortRangeEnemy") base = "EnemyShort";
-        else if (type == "LongRangeEnemy") base = "EnemyLong";
-        else if (type == "LongRangeHighDamageEnemy") base = "EnemyLongHD";
-        else base = "Enemy";
-
-
-        t.idle = sf::Texture("assets/" + base + "_Idle.png");
-        t.attack = sf::Texture("assets/" + base + "_Attack.png");
-        t.attack2 = sf::Texture("assets/" + base + "_Attack.png");
-        t.dead = sf::Texture("assets/" + base + "_Dead.png");
-        if (type == "LongRangeHighDamageEnemy") t.attack2 = sf::Texture("assets/" + base + "_Attack2.png");
-        //  t.idle = sf::Texture("assets/Enemy1.png");
-        //   t.dead = sf::Texture("assets/Enemy2.png");
-        //  t.attack = sf::Texture("assets/Weapon1.png");
+        t.idle = sf::Texture("assets/" + type + "_Idle.png");
+        t.attack = sf::Texture("assets/" + type + "_Attack.png");
+        std::string Attack2 = "assets/" + type + "_Attack2.png";
+        if (std::filesystem::exists(Attack2)) {
+            t.attack2 = sf::Texture("assets/" + type + "_Attack2.png");
+        }
+        else {
+            t.attack2 = sf::Texture("assets/" + type + "_Attack.png");
+        }
+        t.dead = sf::Texture("assets/" + type + "_Dead.png");
         t.loaded = true;
         it = cache.emplace(type, std::move(t)).first;
     }

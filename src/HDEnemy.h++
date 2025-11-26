@@ -22,7 +22,7 @@ explicit LongRangeHighDamageEnemy(double x = 2.5, double y = 2.5, float heightSc
     return (static_cast<float>(enemy_dead) / static_cast<float>(enemy_no)) >= 0.5 ? AttackDmg * 2 : AttackDmg;
 }
 
-[[nodiscard]] const std::string typeName() const override { return "LongRangeHighDamageEnemy"; }
+[[nodiscard]] const std::string typeName() const override { return "EnemyLongHD"; }
 
 void attackPlayer(Player &player, double deltaTime, const Map &map) override;
 
