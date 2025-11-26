@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+#include "Boom.h++"
+
 std::unique_ptr<Enemy> EnemyFactory::createEnemy(EnemyType type, double x, double y) {
     switch (type) {
         case EnemyType::ShortRange: {
@@ -22,6 +24,11 @@ std::unique_ptr<Enemy> EnemyFactory::createEnemy(EnemyType type, double x, doubl
 
         case EnemyType::HighDamage: {
             auto e = std::make_unique<LongRangeHighDamageEnemy>(x, y);
+            std::cout << *e << "\n";
+            return e;
+        }
+        case EnemyType::Boom: {
+            auto e = std::make_unique<Boom>(x, y);
             std::cout << *e << "\n";
             return e;
         }

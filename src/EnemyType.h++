@@ -8,7 +8,8 @@ enum class EnemyType : int {
     Wall = 1,
     ShortRange = 2,
     LongRange = 3,
-    HighDamage = 4
+    HighDamage = 4,
+    Boom = 5,
 };
 
 #endif //OOP_ENEMYTYPE_H

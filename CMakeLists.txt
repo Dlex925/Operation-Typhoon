@@ -80,6 +80,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/EnemyFactory.cpp
         src/EnemyFactory.h++
         src/Exceptions.h++
+        src/Boom.cpp
+        src/Boom.h++
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )
