@@ -8,8 +8,8 @@
 int Enemy::enemy_no = 0;
 int Enemy::enemy_dead = 0;
 
-Enemy::Enemy(double x, double y, float heightScale, int hp1)
-    : worldX(x), worldY(y), baseHeight(heightScale), maxHp(hp1), hp(hp1) {
+Enemy::Enemy(double x, double y, float heightScale, int hp1, double mvspeed)
+    : worldX(x), worldY(y), baseHeight(heightScale), moveSpeed(mvspeed), maxHp(hp1), hp(hp1) {
     enemy_no++;
 }
 
@@ -92,7 +92,7 @@ void Enemy::update(double deltaTime, const Map &map, const Player &player) {
 
     if (dist > attackRange() * 0.9) {
         double step = 0.1;
-        step = std::min(1.5 * deltaTime, dist);
+        step = std::min(moveSpeed * deltaTime, dist);
         double nx = getWorldX() + (dx / (dist + 1e-6)) * step;
         double ny = getWorldY() + (dy / (dist + 1e-6)) * step;
         if (!map.isWall(nx, ny)) {
