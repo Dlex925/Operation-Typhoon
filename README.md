@@ -10,7 +10,7 @@
 - **Left click** - To shoot using the weapon
 - **Right Click** - To use the knife - short range with 2x damage
 - **P** - To pause the game
-- **R** - To restart the game when you die
+- **R** - To restart the game
 ### All the assets from the game are original(including the music)  and have not been taken from the internet. Excluding the font.
 
 ### Known bugs:
