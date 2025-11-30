@@ -123,8 +123,9 @@ sure to keep the filenames the same.
 ## Tema 3
 
 #### Cerințe
-- [ ] 2 șabloane de proiectare (design patterns)
-- [ ] o clasă șablon cu sens; minim **2 instanțieri**
+
+- [x] 2 șabloane de proiectare (design patterns)
+- [x] o clasă șablon cu sens; minim **2 instanțieri**
   - [ ] preferabil și o funcție șablon (template) cu sens; minim 2 instanțieri
 - [ ] minim 85% din codul propriu să fie C++
 <!-- - [ ] o specializare pe funcție/clasă șablon -->
@@ -207,3 +208,7 @@ conțin fișiere generate și nu ne ajută să le versionăm.
 ### Font
 
 - https://www.nerdfonts.com/
+
+### Design Patterns
+
+- https://refactoring.guru/design-patterns/

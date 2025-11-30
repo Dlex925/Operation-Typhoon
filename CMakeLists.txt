@@ -82,6 +82,9 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/Exceptions.h++
         src/Boom.cpp
         src/Boom.h++
+        src/PickupStrategies.h++
+        src/Pickup.cpp
+        src/Pickup.h++
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

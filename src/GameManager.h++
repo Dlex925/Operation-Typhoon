@@ -11,12 +11,15 @@
 #include <vector>
 #include <memory>
 
+#include "Pickup.h++"
+
 class GameManager {
     sf::RenderWindow& window;
     Map map;
     Player& player;
     Raycast raycast;
     std::vector<std::unique_ptr<Enemy> > enemies;
+    std::vector<std::unique_ptr<PickupBase>> pickups;
 
     bool paused_ = false;
     bool pHeld_ = false;
@@ -47,7 +50,7 @@ public:
     void start();
 
     void handleInput(float deltaTime);
-
+    void spawnPickupsFromMap();
     void Engine() const;
  
 friend std::ostream& operator<<(std::ostream& os, const GameManager& gm) {

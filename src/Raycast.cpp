@@ -235,3 +235,101 @@ std::ostream& operator<<(std::ostream& os, const Raycast& raycast) {
           << ", player: " << (raycast.player ? "active" : "null") << ")";
     return os;
 }
+
+void Raycast::renderPickup(const PickupBase &pickup) const {
+
+    static std::unordered_map<std::string, sf::Texture> cache;
+
+    std::string type = pickup.getTextureType();
+    auto it = cache.find(type);
+
+    if (it == cache.end()) {
+        sf::Texture t;
+        std::string path = "assets/" + type + ".png";
+        if (std::filesystem::exists(path)) {
+           if (! t.loadFromFile(path)) {
+               std::cerr << "Missing " << path << "\n" ;
+           }
+
+        }
+
+        it = cache.emplace(type, std::move(t)).first;
+    }
+
+    const sf::Texture *tex = &it->second;
+
+    if (tex->getSize().x == 0) return;
+
+    int w = static_cast<int>(window->getSize().x);
+    int h = static_cast<int>(window->getSize().y);
+
+    double spriteX = pickup.getX() - player->getX();
+    double spriteY = pickup.getY() - player->getY();
+
+    double invDet = 1.0 / (player->getPlaneX() * player->getDirY() - player->getDirX() * player->getPlaneY());
+
+    double transformX = invDet * (player->getDirY() * spriteX - player->getDirX() * spriteY);
+    double transformY = invDet * (-player->getPlaneY() * spriteX + player->getPlaneX() * spriteY);
+
+    if (transformY <= 0.0001) {
+        return;
+    }
+
+    int spriteScreenX = static_cast<int>((w / 2.0) * (1 + transformX / transformY));
+
+
+    int vMoveScreen = static_cast<int>(500.0 / transformY);
+    int spriteHeight = std::abs(static_cast<int>(h / transformY)) / 2;
+
+    int drawStartY = -spriteHeight / 2 + h / 2 + vMoveScreen;
+    if (drawStartY < 0) drawStartY = 0;
+    int drawEndY = spriteHeight / 2 + h / 2 + vMoveScreen;
+    if (drawEndY >= h) drawEndY = h - 1;
+
+    int spriteWidth = std::abs(static_cast<int>(h / transformY)) / 2;
+    int drawStartX = -spriteWidth / 2 + spriteScreenX;
+    if (drawStartX < 0) drawStartX = 0;
+    int drawEndX = spriteWidth / 2 + spriteScreenX;
+    if (drawEndX >= w) drawEndX = w - 1;
+
+    if (drawStartX >= w || drawEndX < 0) return;
+
+    unsigned texW = tex->getSize().x;
+    unsigned texH = tex->getSize().y;
+
+    int unclippedStartY = -spriteHeight / 2 + h / 2 + vMoveScreen;
+
+    for (int stripe = drawStartX; stripe <= drawEndX; ++stripe) {
+        if (stripe < 0 || stripe >= static_cast<int>(depthBuffer.size())) continue;
+
+        if (transformY < depthBuffer[stripe]) {
+
+            int screenLeft = -spriteWidth / 2 + spriteScreenX;
+            int texX = static_cast<int>(256 * (stripe - screenLeft) * texW / spriteWidth) / 256;
+
+            if (texX < 0) texX = 0;
+            if (texX >= static_cast<int>(texW)) texX = static_cast<int>(texW) - 1;
+
+            int visTop = drawStartY;
+            int visBot = drawEndY;
+
+            double topFrac = static_cast<double>(visTop - unclippedStartY) / static_cast<double>(spriteHeight);
+            double botFrac = static_cast<double>(visBot - unclippedStartY + 1) / static_cast<double>(spriteHeight);
+
+            if (topFrac < 0.0) topFrac = 0.0; if (topFrac > 1.0) topFrac = 1.0;
+            if (botFrac < 0.0) botFrac = 0.0; if (botFrac > 1.0) botFrac = 1.0;
+
+            int texTop = static_cast<int>(topFrac * static_cast<double>(texH));
+            int texBottom = static_cast<int>(botFrac * static_cast<double>(texH));
+            int texHeightSub = texBottom - texTop;
+
+            if (texHeightSub <= 0) texHeightSub = 1;
+
+            sf::RectangleShape col(sf::Vector2f(1.f, static_cast<float>(drawEndY - drawStartY + 1)));
+            col.setPosition(sf::Vector2f(static_cast<float>(stripe), static_cast<float>(drawStartY)));
+            col.setTexture(tex);
+            col.setTextureRect(sf::IntRect({texX, texTop}, {1, texHeightSub}));
+            window->draw(col);
+        }
+    }
+}

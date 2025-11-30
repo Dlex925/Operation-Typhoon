@@ -10,6 +10,9 @@ enum class EnemyType : int {
     LongRange = 3,
     HighDamage = 4,
     Boom = 5,
+    Health = 6,
+    Ammo = 7,
+    Mixed = 8
 };
 
 #endif //OOP_ENEMYTYPE_H

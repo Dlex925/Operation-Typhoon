@@ -13,6 +13,7 @@ GameManager::GameManager(sf::RenderWindow& win, std::string harta, Player& p)
     initialPlayerX_ = player.getX();
     initialPlayerY_ = player.getY();
     spawnEnemiesFromMap();
+    spawnPickupsFromMap();
 }
 
 void GameManager::spawnEnemiesFromMap() {
@@ -30,6 +31,21 @@ void GameManager::spawnEnemiesFromMap() {
 
             if (newEnemy) {
                 enemies.push_back(std::move(newEnemy));
+            }
+        }
+    }
+}
+void GameManager::spawnPickupsFromMap() {
+    pickups.clear();
+    for (unsigned long y = 0; y < map.getHeight(); ++y) {
+        for (unsigned long x = 0; x < map.getWidth(); ++x) {
+            int cell = map.getCell(x, y);
+            EnemyType type = static_cast<EnemyType>(cell);
+            double cx = static_cast<double>(x) + 0.5;
+            double cy = static_cast<double>(y) + 0.5;
+            auto item = EnemyFactory::createPickup(type, cx, cy);
+            if (item) {
+                pickups.push_back(std::move(item));
             }
         }
     }
@@ -54,7 +70,7 @@ void GameManager::restartGame_() {
     player.resetForNewGame();
     player.setPosition(initialPlayerX_, initialPlayerY_);
 
-    spawnEnemiesFromMap();
+    spawnEnemiesFromMap();spawnPickupsFromMap();
 
     window.setMouseCursorVisible(false);
     auto viewSize = window.getView().getSize();
@@ -104,6 +120,10 @@ void GameManager::start() {
                     e->attackPlayer(player, deltaTime, map);
                 }
             }
+                for (auto& item : pickups) {
+                    item->updateAndCollect(player);
+                }
+
 
             if (!levelComplete_) {
                 levelComplete_ = true;
@@ -139,6 +159,7 @@ void GameManager::start() {
         Engine();
     }
 }
+
 
 void GameManager::handleInput(float deltaTime) {
     while (std::optional<sf::Event> event = window.pollEvent()) {
@@ -203,25 +224,41 @@ void GameManager::handleInput(float deltaTime) {
 void GameManager::Engine() const{
     window.clear(sf::Color(0, 0, 0));
     raycast.render();
+    struct Sprites {
+        double dist;
+        int type; // 0 = Enemy, 1 = Pickup
+        int index;
+    };
 
-    std::vector<size_t> order(enemies.size());
-    for (size_t i = 0; i < enemies.size(); ++i) order[i] = i;
-    std::sort(order.begin(), order.end(), [&](size_t a, size_t b) {
-        const Enemy *ea = enemies[a].get();
-        const Enemy *eb = enemies[b].get();
-        double dxA = ea ? (ea->getWorldX() - player.getX()) : 0.0;
-        double dyA = ea ? (ea->getWorldY() - player.getY()) : 0.0;
-        double dxB = eb ? (eb->getWorldX() - player.getX()) : 0.0;
-        double dyB = eb ? (eb->getWorldY() - player.getY()) : 0.0;
-        double da = dxA * dxA + dyA * dyA;
-        double db = dxB * dxB + dyB * dyB;
-        return da > db;
+    std::vector<Sprites> allSprites;
+    for (size_t i = 0; i < enemies.size(); ++i) {
+        if (enemies[i]) {
+            double dx = player.getX() - enemies[i]->getWorldX();
+            double dy = player.getY() - enemies[i]->getWorldY();
+            double dist = dx*dx + dy*dy;
+            allSprites.push_back({dist, 0, static_cast<int>(i)});
+        }
+    }
+    for (size_t i = 0; i < pickups.size(); ++i) {
+        if (pickups[i]->isActive()) {
+            double dx = player.getX() - pickups[i]->getX();
+            double dy = player.getY() - pickups[i]->getY();
+            double dist = dx*dx + dy*dy;
+            allSprites.push_back({dist, 1, static_cast<int>(i)});
+        }
+    }
+    std::sort(allSprites.begin(), allSprites.end(), [](const Sprites& a, const Sprites& b) {
+        return a.dist > b.dist;
     });
-    for (size_t idx: order) {
-        if (enemies[idx]) raycast.renderEnemy(*enemies[idx]);
+
+    for (const auto& sprite : allSprites) {
+        if (sprite.type == 0) {
+            raycast.renderEnemy(*enemies[sprite.index]);
+        } else {
+            raycast.renderPickup(*pickups[sprite.index]);
+        }
     }
     player.drawWeapon(window);
-
     if (uiFontLoaded_) {
         sf::Text hud(uiFont, "");
         hud.setCharacterSize(55);

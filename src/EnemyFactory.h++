@@ -8,11 +8,14 @@
 #include "Enemy.h++"
 #include "EnemyType.h++"
 #include "Exceptions.h++"
-
+#include "Pickup.h++"
 class EnemyFactory {
 public:
     static std::unique_ptr<Enemy> createEnemy(EnemyType type, double x, double y);
+    static std::unique_ptr<PickupBase> createPickup(EnemyType type, double x, double y);
+
 };
+
 
 
 #endif //OOP_ENEMYFACTORY_H
