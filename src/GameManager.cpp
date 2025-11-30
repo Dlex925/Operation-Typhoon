@@ -173,18 +173,14 @@ void GameManager::handleInput(float deltaTime) {
         window.close();
         return;
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)) {
+        restartGame_();
+        return;
+    }
 
     /*for (auto &e: enemies) {
         std::cout << *e << "\n";
     }Debug*/
-    if (gameOver_) {
-        bool rNow = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R);
-        if (rNow && !rHeld_) {
-            restartGame_();
-        }
-        rHeld_ = rNow;
-        return;
-    }
 
     bool pNow = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P);
     if (pNow && !pHeld_) {

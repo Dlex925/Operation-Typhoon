@@ -313,10 +313,10 @@ void Raycast::renderPickup(const PickupBase &pickup) const {
             double topFrac = static_cast<double>(visTop - unclippedStartY) / static_cast<double>(spriteHeight);
             double botFrac = static_cast<double>(visBot - unclippedStartY + 1) / static_cast<double>(spriteHeight);
 
-            if (topFrac < 0.0) topFrac = 0.0;
-            if (topFrac > 1.0) topFrac = 1.0;
-            if (botFrac < 0.0) botFrac = 0.0;
-            if (botFrac > 1.0) botFrac = 1.0;
+            if (topFrac < 0.0) { topFrac = 0.0; }
+            if (topFrac > 1.0) { topFrac = 1.0; }
+            if (botFrac < 0.0) { botFrac = 0.0; }
+            if (botFrac > 1.0) { botFrac = 1.0; }
 
             int texTop = static_cast<int>(topFrac * static_cast<double>(texH));
             int texBottom = static_cast<int>(botFrac * static_cast<double>(texH));

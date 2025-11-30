@@ -10,7 +10,7 @@
 
 struct HealthStrategy {
     static void apply(Player &p) {
-        p.heal(50);
+        p.heal(250);
     }
 
     static std::string getTextureName() { return "Medkit"; }
@@ -18,7 +18,7 @@ struct HealthStrategy {
 
 struct AmmoStrategy {
     static void apply(Player &p) {
-        p.addAmmo(20);
+        p.addAmmo(50);
     }
 
     static std::string getTextureName() { return "Ammo"; }
@@ -26,8 +26,8 @@ struct AmmoStrategy {
 
 struct MixedStrategy {
     static void apply(Player &p) {
-        p.heal(25);
-        p.addAmmo(10);
+        p.heal(150);
+        p.addAmmo(25);
     }
 
     static std::string getTextureName() { return "Mixed"; }

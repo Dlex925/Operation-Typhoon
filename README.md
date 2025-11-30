@@ -11,7 +11,6 @@
 - **Right Click** - To use the knife - short range with 2x damage
 - **P** - To pause the game
 - **R** - To restart the game when you die
-
 ### All the assets from the game are original(including the music)  and have not been taken from the internet. Excluding the font.
 
 ### Known bugs:
@@ -26,7 +25,7 @@ and "Tema 3")
 This does not represent the full feature list of the game, just the more important ones.
 
 1. ~~Hp/Ammo~~
-2. More maps
+2. ~~More maps~~
 3. ~~Menu window to setup resolution and other small details before starting the game.~~
 4. ~~Better enemy logic and more enemy types + making enemies attack, also spawning enemies based on positions given on
    the map.~~
