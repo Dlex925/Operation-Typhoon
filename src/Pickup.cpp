@@ -5,4 +5,5 @@
 #include "Pickup.h++"
 
 PickupBase::PickupBase(double x, double y)
-    : x(x), y(y), active(true) {}
+    : x(x), y(y), active(true) {
+}

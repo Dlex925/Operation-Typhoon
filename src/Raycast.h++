@@ -17,7 +17,9 @@ public:
     void render() const;
 
     void renderEnemy(const Enemy &enemy) const;
-    void renderPickup(const PickupBase& item) const;
+
+    void renderPickup(const PickupBase &item) const;
+
     friend std::ostream &operator<<(std::ostream &os, const Raycast &raycast);
 };
 #endif //OOP_RAYCAST_H

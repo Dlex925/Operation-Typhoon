@@ -70,7 +70,8 @@ void GameManager::restartGame_() {
     player.resetForNewGame();
     player.setPosition(initialPlayerX_, initialPlayerY_);
 
-    spawnEnemiesFromMap();spawnPickupsFromMap();
+    spawnEnemiesFromMap();
+    spawnPickupsFromMap();
 
     window.setMouseCursorVisible(false);
     auto viewSize = window.getView().getSize();
@@ -120,9 +121,9 @@ void GameManager::start() {
                     e->attackPlayer(player, deltaTime, map);
                 }
             }
-                for (auto& item : pickups) {
-                    item->updateAndCollect(player);
-                }
+            for (auto &item: pickups) {
+                item->updateAndCollect(player);
+            }
 
 
             if (!levelComplete_) {
@@ -235,7 +236,7 @@ void GameManager::Engine() const{
         if (enemies[i]) {
             double dx = player.getX() - enemies[i]->getWorldX();
             double dy = player.getY() - enemies[i]->getWorldY();
-            double dist = dx*dx + dy*dy;
+            double dist = dx * dx + dy * dy;
             allSprites.push_back({dist, 0, static_cast<int>(i)});
         }
     }
@@ -243,15 +244,15 @@ void GameManager::Engine() const{
         if (pickups[i]->isActive()) {
             double dx = player.getX() - pickups[i]->getX();
             double dy = player.getY() - pickups[i]->getY();
-            double dist = dx*dx + dy*dy;
+            double dist = dx * dx + dy * dy;
             allSprites.push_back({dist, 1, static_cast<int>(i)});
         }
     }
-    std::sort(allSprites.begin(), allSprites.end(), [](const Sprites& a, const Sprites& b) {
+    std::sort(allSprites.begin(), allSprites.end(), [](const Sprites &a, const Sprites &b) {
         return a.dist > b.dist;
     });
 
-    for (const auto& sprite : allSprites) {
+    for (const auto &sprite: allSprites) {
         if (sprite.type == 0) {
             raycast.renderEnemy(*enemies[sprite.index]);
         } else {

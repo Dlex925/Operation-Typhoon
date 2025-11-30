@@ -45,7 +45,7 @@ public:
     [[nodiscard]] int getMaxHp() const { return maxHp_; }
     [[nodiscard]] int getAmmo() const { return ammo_; }
     void addAmmo(int a) { ammo_ = std::min(ammo_ + std::max(0, a), 999); }
-     void heal(int h) { hp_ = std::min(hp_ + std::max(0, h), maxHp_); }
+    void heal(int h) { hp_ = std::min(hp_ + std::max(0, h), maxHp_); }
     void takeDamage(int d) { hp_ = std::max(0, hp_ - std::max(0, d)); }
 
     bool consumeAmmo(int a) {

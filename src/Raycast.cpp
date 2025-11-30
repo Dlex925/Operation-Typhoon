@@ -237,7 +237,6 @@ std::ostream& operator<<(std::ostream& os, const Raycast& raycast) {
 }
 
 void Raycast::renderPickup(const PickupBase &pickup) const {
-
     static std::unordered_map<std::string, sf::Texture> cache;
 
     std::string type = pickup.getTextureType();
@@ -247,10 +246,9 @@ void Raycast::renderPickup(const PickupBase &pickup) const {
         sf::Texture t;
         std::string path = "assets/" + type + ".png";
         if (std::filesystem::exists(path)) {
-           if (! t.loadFromFile(path)) {
-               std::cerr << "Missing " << path << "\n" ;
-           }
-
+            if (!t.loadFromFile(path)) {
+                std::cerr << "Missing " << path << "\n";
+            }
         }
 
         it = cache.emplace(type, std::move(t)).first;
@@ -303,7 +301,6 @@ void Raycast::renderPickup(const PickupBase &pickup) const {
         if (stripe < 0 || stripe >= static_cast<int>(depthBuffer.size())) continue;
 
         if (transformY < depthBuffer[stripe]) {
-
             int screenLeft = -spriteWidth / 2 + spriteScreenX;
             int texX = static_cast<int>(256 * (stripe - screenLeft) * texW / spriteWidth) / 256;
 
@@ -316,8 +313,10 @@ void Raycast::renderPickup(const PickupBase &pickup) const {
             double topFrac = static_cast<double>(visTop - unclippedStartY) / static_cast<double>(spriteHeight);
             double botFrac = static_cast<double>(visBot - unclippedStartY + 1) / static_cast<double>(spriteHeight);
 
-            if (topFrac < 0.0) topFrac = 0.0; if (topFrac > 1.0) topFrac = 1.0;
-            if (botFrac < 0.0) botFrac = 0.0; if (botFrac > 1.0) botFrac = 1.0;
+            if (topFrac < 0.0) topFrac = 0.0;
+            if (topFrac > 1.0) topFrac = 1.0;
+            if (botFrac < 0.0) botFrac = 0.0;
+            if (botFrac > 1.0) botFrac = 1.0;
 
             int texTop = static_cast<int>(topFrac * static_cast<double>(texH));
             int texBottom = static_cast<int>(botFrac * static_cast<double>(texH));

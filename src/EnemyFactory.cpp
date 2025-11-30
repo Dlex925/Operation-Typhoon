@@ -42,11 +42,10 @@ std::unique_ptr<Enemy> EnemyFactory::createEnemy(EnemyType type, double x, doubl
         default:
             throw UnknownEnemyTypeException(static_cast<int>(type));
     }
-
 }
-template <typename TStrategy>
+template<typename TStrategy>
 std::unique_ptr<PickupBase> spawnPickup(double x, double y) {
-    return std::make_unique<PickupItem<TStrategy>>(x, y);
+    return std::make_unique<PickupItem<TStrategy> >(x, y);
 }
 
 std::unique_ptr<PickupBase> EnemyFactory::createPickup(EnemyType type, double x, double y) {
