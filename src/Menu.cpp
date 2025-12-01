@@ -52,7 +52,7 @@ sf::VideoMode Menu::selectResolution() {
         selection = std::make_unique<sf::Text>(font, "");
 
         instructions->setCharacterSize(22);
-        instructions->setFillColor(sf::Color(200, 200, 200));
+        instructions->setFillColor(sf::Color::Yellow);
         instructions->setPosition({20.f, 18.f});
 
         selection->setCharacterSize(32);
@@ -169,6 +169,10 @@ int Menu::selectGameMode(sf::RenderWindow &window) {
 
     sf::Text opt1(font, "1. START MISSION", 35);
     sf::Text opt2(font, "2. MAP CREATOR", 35);
+    sf::Text opt3(font, "3. GENERATE RANDOM MAP", 35);
+
+
+
 
     opt1.setPosition({
         (window.getSize().x - opt1.getLocalBounds().size.x) / 2.f,
@@ -179,6 +183,10 @@ int Menu::selectGameMode(sf::RenderWindow &window) {
         (window.getSize().x - opt2.getLocalBounds().size.x) / 2.f,
         window.getSize().y * 0.55f
     });
+    opt3.setPosition({
+      (window.getSize().x - opt3.getLocalBounds().size.x) / 2.f,
+      window.getSize().y * 0.65f
+  });
 
     while (window.isOpen()) {
         while (const std::optional<sf::Event> event = window.pollEvent()) {
@@ -194,6 +202,8 @@ int Menu::selectGameMode(sf::RenderWindow &window) {
                     window.close();
                     return 0;
                 }
+                if (keyEvent->code == sf::Keyboard::Key::Num3) return 3;
+
             }
         }
 
@@ -201,7 +211,62 @@ int Menu::selectGameMode(sf::RenderWindow &window) {
         window.draw(title);
         window.draw(opt1);
         window.draw(opt2);
+        window.draw(opt3);
         window.display();
     }
     return 0;
+}
+std::pair<int, int> Menu::selectGenerationSize(sf::RenderWindow& window) {
+    sf::Font font;
+    if (!loadMenuFont(font)) return {30, 30};
+
+    int w = 30;
+    int h = 30;
+
+    sf::Text title(font, "GENERATOR SETTINGS", 40);
+    title.setFillColor(sf::Color::Yellow);
+    sf::FloatRect tb = title.getLocalBounds();
+    title.setPosition({(window.getSize().x - tb.size.x) / 2.f, 50.f});
+
+    sf::Text info(font, "Use ARROWS to change size\nENTER to Generate\nESC to Cancel", 20);
+    info.setFillColor(sf::Color::White);
+    sf::FloatRect ib = info.getLocalBounds();
+    info.setPosition({(window.getSize().x - ib.size.x) / 2.f, window.getSize().y - 100.f});
+
+    while (window.isOpen()) {
+        while (const std::optional<sf::Event> event = window.pollEvent()) {
+            if (event->is<sf::Event::Closed>()) {
+                window.close();
+                return {0, 0};
+            }
+
+            if (const auto* keyEvent = event->getIf<sf::Event::KeyPressed>()) {
+                if (keyEvent->code == sf::Keyboard::Key::Escape) return {0, 0};
+                if (keyEvent->code == sf::Keyboard::Key::Enter) return {w, h};
+
+                if (keyEvent->code == sf::Keyboard::Key::Left)  w = std::max(10, w - 2);
+                if (keyEvent->code == sf::Keyboard::Key::Right) w = std::min(75, w + 2);
+                if (keyEvent->code == sf::Keyboard::Key::Down)  h = std::max(10, h - 2);
+                if (keyEvent->code == sf::Keyboard::Key::Up)    h = std::min(75, h + 2);
+            }
+        }
+
+        window.clear(sf::Color(30, 30, 30));
+        window.draw(title);
+        window.draw(info);
+
+        sf::Text txtW(font, "WIDTH:  < " + std::to_string(w) + " >", 35);
+        sf::Text txtH(font, "HEIGHT: v " + std::to_string(h) + " ^", 35);
+
+        sf::FloatRect bW = txtW.getLocalBounds();
+        sf::FloatRect bH = txtH.getLocalBounds();
+
+        txtW.setPosition({(window.getSize().x - bW.size.x) / 2.f, window.getSize().y * 0.4f});
+        txtH.setPosition({(window.getSize().x - bH.size.x) / 2.f, window.getSize().y * 0.55f});
+
+        window.draw(txtW);
+        window.draw(txtH);
+        window.display();
+    }
+    return {30, 30};
 }

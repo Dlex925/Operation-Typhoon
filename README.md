@@ -15,6 +15,7 @@
 
 ### Known bugs:
 
+I . For the random generated map, enemies might spawn in unreachable positions, so the lvl will be unfinishable.
 1. ~~Enemies sprites might stack causing lag - will be fixed when implementing a better tracking algorithm~~ (Probably
    fixed, or at least ameliorated in such a way that it wont be noticeable)
 2. If the map is not bordered with 1's, even if the wall looks good when you "push" into it, the wall will move 1 tile -
@@ -222,3 +223,9 @@ conțin fișiere generate și nu ne ajută să le versionăm.
 
 - https://en.wikipedia.org/wiki/A*_search_algorithm
 - https://www.youtube.com/watch?v=ySN5Wnu88nE
+
+### Cellular automaton
+
+- https://en.wikipedia.org/wiki/Cellular_automaton
+- https://www.geeksforgeeks.org/dsa/cellular-automaton-discrete-model/
+- https://github.com/mariotoledo/cellular-automata-map-generation 

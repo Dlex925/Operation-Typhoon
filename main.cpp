@@ -2,7 +2,7 @@
 #include "src/GameManager.h++"
 #include "src/Menu.h++"
 #include <iostream>
-
+#include "src/MapGenerator.h++"
 #include "src/Exceptions.h++"
 #include "src/MapEditor.h++"
 
@@ -33,6 +33,20 @@ int main() {
         } else if (mode == 2) {
             MapEditor editor(window);
             editor.run();
+        }
+        else if (mode == 3) {
+            auto [genW, genH] = menu.selectGenerationSize(window);
+            if (genW > 0 && genH > 0) {
+                std::cout << "Generating Random Level " << genW << "x" << genH << "...\n";
+                MapGenerator gen(genW, genH);
+                gen.generateLevel();
+                gen.populateLevel();
+                gen.saveToFile("assets/map_random");
+                std::string mapPath = "assets/map_random";
+                Player p(3.0f, 3.0f);
+                GameManager game(window, mapPath, p);
+                game.start();
+            }
         }
     } catch (const AssetLoadException &e) {
         std::cerr << e.what() << "\n";

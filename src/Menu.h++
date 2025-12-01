@@ -17,7 +17,7 @@ public:
     bool wasFullscreenChosen() const { return fullscreenChosen_; }
 
     int selectGameMode(sf::RenderWindow &window);
-
+    std::pair<int, int> selectGenerationSize(sf::RenderWindow& window);
 private:
     Menu() = default;
 
