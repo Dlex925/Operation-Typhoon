@@ -33,8 +33,7 @@ int main() {
         } else if (mode == 2) {
             MapEditor editor(window);
             editor.run();
-        }
-        else if (mode == 3) {
+        } else if (mode == 3) {
             auto [genW, genH] = menu.selectGenerationSize(window);
             if (genW > 0 && genH > 0) {
                 std::cout << "Generating Random Level " << genW << "x" << genH << "...\n";

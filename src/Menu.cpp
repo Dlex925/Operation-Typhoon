@@ -172,8 +172,6 @@ int Menu::selectGameMode(sf::RenderWindow &window) {
     sf::Text opt3(font, "3. GENERATE RANDOM MAP", 35);
 
 
-
-
     opt1.setPosition({
         (window.getSize().x - opt1.getLocalBounds().size.x) / 2.f,
         window.getSize().y * 0.45f
@@ -184,9 +182,9 @@ int Menu::selectGameMode(sf::RenderWindow &window) {
         window.getSize().y * 0.55f
     });
     opt3.setPosition({
-      (window.getSize().x - opt3.getLocalBounds().size.x) / 2.f,
-      window.getSize().y * 0.65f
-  });
+        (window.getSize().x - opt3.getLocalBounds().size.x) / 2.f,
+        window.getSize().y * 0.65f
+    });
 
     while (window.isOpen()) {
         while (const std::optional<sf::Event> event = window.pollEvent()) {
@@ -203,7 +201,6 @@ int Menu::selectGameMode(sf::RenderWindow &window) {
                     return 0;
                 }
                 if (keyEvent->code == sf::Keyboard::Key::Num3) return 3;
-
             }
         }
 
@@ -216,7 +213,8 @@ int Menu::selectGameMode(sf::RenderWindow &window) {
     }
     return 0;
 }
-std::pair<int, int> Menu::selectGenerationSize(sf::RenderWindow& window) {
+
+std::pair<int, int> Menu::selectGenerationSize(sf::RenderWindow &window) {
     sf::Font font;
     if (!loadMenuFont(font)) return {30, 30};
 
@@ -240,14 +238,14 @@ std::pair<int, int> Menu::selectGenerationSize(sf::RenderWindow& window) {
                 return {0, 0};
             }
 
-            if (const auto* keyEvent = event->getIf<sf::Event::KeyPressed>()) {
+            if (const auto *keyEvent = event->getIf<sf::Event::KeyPressed>()) {
                 if (keyEvent->code == sf::Keyboard::Key::Escape) return {0, 0};
                 if (keyEvent->code == sf::Keyboard::Key::Enter) return {w, h};
 
-                if (keyEvent->code == sf::Keyboard::Key::Left)  w = std::max(10, w - 2);
+                if (keyEvent->code == sf::Keyboard::Key::Left) w = std::max(10, w - 2);
                 if (keyEvent->code == sf::Keyboard::Key::Right) w = std::min(75, w + 2);
-                if (keyEvent->code == sf::Keyboard::Key::Down)  h = std::max(10, h - 2);
-                if (keyEvent->code == sf::Keyboard::Key::Up)    h = std::min(75, h + 2);
+                if (keyEvent->code == sf::Keyboard::Key::Down) h = std::max(10, h - 2);
+                if (keyEvent->code == sf::Keyboard::Key::Up) h = std::min(75, h + 2);
             }
         }
 
