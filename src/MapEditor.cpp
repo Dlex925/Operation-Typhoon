@@ -166,7 +166,7 @@ void MapEditor::handleInput() {
             int row = static_cast<int>(mousePos.y / cellSize);
 
             if (col >= 0 && col < gridWidth && row >= 0 && row < gridHeight) {
-                if (showSaveMessage) showSaveMessage = false;
+                 showSaveMessage = false;
 
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                     if (currentSelection == 100) {
