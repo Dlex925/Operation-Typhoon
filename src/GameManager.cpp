@@ -58,6 +58,7 @@ void GameManager::restartGame_() {
     paused_ = false;
     pHeld_ = false;
     rHeld_ = false;
+    player.addP(-9999999);
 
     if (gameOverJingle_.getStatus() == sf::SoundSource::Status::Playing) {
         gameOverJingle_.stop();
@@ -261,7 +262,7 @@ void GameManager::Engine() const{
         hud.setCharacterSize(55);
         hud.setFillColor(sf::Color(0, 255, 100));
         hud.setString("HP: " + std::to_string(player.getHp()) + "/" + std::to_string(player.getMaxHp()) +
-                      "    Ammo: " + std::to_string(player.getAmmo())+
+                      "    Ammo: " + std::to_string(player.getAmmo()) +
                       "    Score: " + std::to_string(player.score_()));
         hud.setPosition({12.f, 10.f});
         window.draw(hud);

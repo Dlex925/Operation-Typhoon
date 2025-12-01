@@ -13,7 +13,8 @@ class Player {
     int hp_ = 1000;
     int maxHp_ = 1000;
     int ammo_ = 60;
-    int score = 0 ;
+    int score = 0;
+
 public:
     explicit Player(double x = 1.f, double y = 1.f);
     void MoveForward(double deltaTime, const Map& map);
@@ -31,12 +32,16 @@ public:
     [[nodiscard]] double getDirY() const { return dirY; }
     [[nodiscard]] double getPlaneX() const { return planeX; }
     [[nodiscard]]double getPlaneY() const { return planeY; }
+
     void addP(int a) {
         score += a;
+        score = std::max(score, 0);
     }
+
     int score_() {
         return score;
     }
+
     void setPosition(double x, double y) {
         posX = x;
         posY = y;

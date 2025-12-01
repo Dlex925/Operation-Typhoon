@@ -41,7 +41,7 @@ MapEditor::MapEditor(sf::RenderWindow &win) : window(win), saveMsgText(font) {
     loadEditorAsset(tAmmo, "assets/Ammo.png");
     loadEditorAsset(tMixed, "assets/Mixed.png");
     loadEditorAsset(tPlayer, "assets/Weapon1.png");
-    loadEditorAsset(tPoints,"assets/Points.png");
+    loadEditorAsset(tPoints, "assets/Points.png");
 }
 
 void MapEditor::setupButton(sf::RectangleShape &btn, float x, float y) {

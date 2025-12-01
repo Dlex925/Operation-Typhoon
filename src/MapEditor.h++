@@ -20,7 +20,7 @@ class MapEditor {
     sf::Font font;
     bool fontLoaded = false;
 
-    sf::Texture tWall, tSR, tLR, tHD, tBoom, tHealth, tAmmo, tMixed, tPlayer,tPoints;
+    sf::Texture tWall, tSR, tLR, tHD, tBoom, tHealth, tAmmo, tMixed, tPlayer, tPoints;
 
     sf::RectangleShape btnWMinus, btnWPlus, btnHMinus, btnHPlus;
     sf::Text saveMsgText;

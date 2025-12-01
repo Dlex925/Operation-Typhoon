@@ -37,6 +37,7 @@ struct PointsStrategy {
     static void apply(Player &p) {
         p.addP(100);
     }
+
     static std::string getTextureName() { return "Points"; }
 };
 #endif //OOP_PICKUPSTRATEGIES_H
