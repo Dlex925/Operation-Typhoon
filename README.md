@@ -41,6 +41,10 @@ This does not represent the full feature list of the game, just the more importa
 - **Minimap** - trying to stay close to the source material, i believe that a big part of Wolfenstein 3D was the lack of
   minimap, forcing you feel lost/in a maze - also might open the possibility for future maze like levels.
 
+### For the map creator:
+
+- The map will be saved in the map_created file, either copy it and paste it over an existing map or create a new map(
+  n) - where (n) represents the number of maps already existing + 1.
 ### "Modding":
 
 For basic "modding", you can go to the assets folder and replace textures and music with whatever you like. Just make
@@ -213,3 +217,8 @@ conțin fișiere generate și nu ne ajută să le versionăm.
 ### Design Patterns
 
 - https://refactoring.guru/design-patterns/
+
+### A#
+
+- https://en.wikipedia.org/wiki/A*_search_algorithm
+- https://www.youtube.com/watch?v=ySN5Wnu88nE

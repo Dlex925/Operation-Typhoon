@@ -8,7 +8,8 @@
 #include <algorithm>
 #include <iostream>
 
-Pathfinder::Pathfinder(const Map &mapRef) : map(mapRef) {}
+Pathfinder::Pathfinder(const Map &mapRef) : map(mapRef) {
+}
 
 float Pathfinder::calculateH(Point start, Point end) {
     return std::sqrt(std::pow(start.x - end.x, 2) + std::pow(start.y - end.y, 2));
@@ -30,11 +31,11 @@ std::vector<Point> Pathfinder::findPath(double startX, double startY, double end
     if (start == target) return {};
     if (!isValid(target)) return {};
 
-    std::vector<std::vector<Node>> allNodes(map.getHeight(), std::vector<Node>(map.getWidth()));
-    std::vector<std::vector<bool>> closedSet(map.getHeight(), std::vector<bool>(map.getWidth(), false));
-    std::vector<std::vector<bool>> openSetMap(map.getHeight(), std::vector<bool>(map.getWidth(), false));
+    std::vector<std::vector<Node> > allNodes(map.getHeight(), std::vector<Node>(map.getWidth()));
+    std::vector<std::vector<bool> > closedSet(map.getHeight(), std::vector<bool>(map.getWidth(), false));
+    std::vector<std::vector<bool> > openSetMap(map.getHeight(), std::vector<bool>(map.getWidth(), false));
 
-    std::priority_queue<Node, std::vector<Node>, std::greater<>> openSet;
+    std::priority_queue<Node, std::vector<Node>, std::greater<> > openSet;
 
     Node startNode;
     startNode.pos = start;

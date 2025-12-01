@@ -89,17 +89,13 @@ void Enemy::update(double deltaTime, const Map &map, const Player &player) {
     double dist = Dist(player);
 
     if (dist > attackRange() * 0.9) {
-
         double nextX, nextY;
-        bool usePathfinding = true;
 
         if (hasLineOfSight(map, getWorldX(), getWorldY(), player.getX(), player.getY())) {
             nextX = player.getX();
             nextY = player.getY();
-            usePathfinding = false;
             currentPath.clear();
-        }
-        else {
+        } else {
             pathTimer -= deltaTime;
 
             if (pathTimer <= 0.0f || currentPath.empty()) {
@@ -109,7 +105,6 @@ void Enemy::update(double deltaTime, const Map &map, const Player &player) {
             }
 
             if (!currentPath.empty()) {
-
                 nextX = currentPath[0].x + 0.5;
                 nextY = currentPath[0].y + 0.5;
 
@@ -128,7 +123,7 @@ void Enemy::update(double deltaTime, const Map &map, const Player &player) {
 
         double dx = nextX - getWorldX();
         double dy = nextY - getWorldY();
-        double distToTarget = std::sqrt(dx*dx + dy*dy);
+        double distToTarget = std::sqrt(dx * dx + dy * dy);
 
         double step = std::min(moveSpeed * deltaTime, distToTarget);
 
