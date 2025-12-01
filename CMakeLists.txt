@@ -85,6 +85,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/PickupStrategies.h++
         src/Pickup.cpp
         src/Pickup.h++
+        src/MapEditor.cpp
+        src/MapEditor.h++
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

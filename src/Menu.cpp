@@ -155,3 +155,54 @@ sf::VideoMode Menu::selectResolution() {
     auto sel = options[current];
     return sf::VideoMode({sel.x, sel.y});
 }
+int Menu::selectGameMode(sf::RenderWindow& window) {
+    sf::Font font;
+    if (!loadMenuFont(font)) return 1;
+    sf::Text title(font, "SELECT MODE", 50);
+    title.setFillColor(sf::Color::Yellow);
+
+    auto b = title.getLocalBounds();
+    title.setPosition({
+        (window.getSize().x - b.size.x) / 2.f,
+        window.getSize().y * 0.2f
+    });
+
+    sf::Text opt1(font, "1. START MISSION", 35);
+    sf::Text opt2(font, "2. MAP CREATOR", 35);
+
+    opt1.setPosition({
+        (window.getSize().x - opt1.getLocalBounds().size.x) / 2.f,
+        window.getSize().y * 0.45f
+    });
+
+    opt2.setPosition({
+        (window.getSize().x - opt2.getLocalBounds().size.x) / 2.f,
+        window.getSize().y * 0.55f
+    });
+
+    while (window.isOpen()) {
+        while (const std::optional<sf::Event> event = window.pollEvent()) {
+
+            if (event->is<sf::Event::Closed>()) {
+                window.close();
+                return 0;
+            }
+
+            if (const auto* keyEvent = event->getIf<sf::Event::KeyPressed>()) {
+                if (keyEvent->code == sf::Keyboard::Key::Num1) return 1;
+                if (keyEvent->code == sf::Keyboard::Key::Num2) return 2;
+                if (keyEvent->code == sf::Keyboard::Key::Escape) {
+                    window.close();
+                    return 0;
+                }
+            }
+        }
+
+        window.clear(sf::Color(30, 30, 30));
+        window.draw(title);
+        window.draw(opt1);
+        window.draw(opt2);
+        window.display();
+    }
+    return 0;
+}

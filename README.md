@@ -15,9 +15,11 @@
 
 ### Known bugs:
 
-1. Enemies sprites might stack causing lag - will be fixed when implementing a better tracking algorithm
+1. ~~Enemies sprites might stack causing lag - will be fixed when implementing a better tracking algorithm~~ (Probably
+   fixed, or at least ameliorated in such a way that it wont be noticeable)
 2. If the map is not bordered with 1's, even if the wall looks good when you "push" into it, the wall will move 1 tile -
    solved by creating a correct map(bordered with 1's) - **Not a problem**
+3. In the map creator you might be able to place the player over a wall, making the map not playable
 ### To implement:
 
 (This section represents the features i want to add to the game, along side the requirements for "Tema 1", "Tema 2"
@@ -125,7 +127,7 @@ sure to keep the filenames the same.
 
 - [x] 2 șabloane de proiectare (design patterns)
 - [x] o clasă șablon cu sens; minim **2 instanțieri**
-  - [ ] preferabil și o funcție șablon (template) cu sens; minim 2 instanțieri
+  - [x] preferabil și o funcție șablon (template) cu sens; minim 2 instanțieri
 - [ ] minim 85% din codul propriu să fie C++
 <!-- - [ ] o specializare pe funcție/clasă șablon -->
 - [ ] tag de `git` pe commit cu **toate bifele**: de exemplu `v0.3` sau `v1.0`

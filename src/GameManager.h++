@@ -34,8 +34,8 @@ class GameManager {
     sf::Music gameOverJingle_;
     sf::Music winmusic;
     //For restarting
-    double initialPlayerX_ = 0.0;
-    double initialPlayerY_ = 0.0;
+    double initialPlayerX_;
+    double initialPlayerY_;
     int curentMapIndex_ = 1;
     bool levelComplete_ = false;
     bool gameFin = false;

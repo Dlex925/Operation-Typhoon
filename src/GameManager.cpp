@@ -9,9 +9,9 @@
 #include "EnemyType.h++"
 
 GameManager::GameManager(sf::RenderWindow& win, std::string harta, Player& p)
-    : window(win), map(harta), player(p), raycast(window, map, player) {
-    initialPlayerX_ = player.getX();
-    initialPlayerY_ = player.getY();
+    : window(win), map(harta, initialPlayerX_, initialPlayerY_), player(p), raycast(window, map, player) {
+    std::cout << initialPlayerX_ << ", " << initialPlayerY_ << "\n";
+    player.setPosition(initialPlayerX_, initialPlayerY_);
     spawnEnemiesFromMap();
     spawnPickupsFromMap();
 }
@@ -358,7 +358,7 @@ void GameManager::loadNextLevel() {
     curentMapIndex_++;
     try {
         std::string nextMapPath = "assets/map" + std::to_string(curentMapIndex_);
-        map = Map(nextMapPath);
+        map = Map(nextMapPath, initialPlayerX_, initialPlayerY_);
         player.resetForNewGame();
         player.setPosition(initialPlayerX_, initialPlayerY_);
         enemies.clear();

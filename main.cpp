@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "src/Exceptions.h++"
+#include "src/MapEditor.h++"
 
 int main() {
     try {
@@ -21,11 +22,19 @@ int main() {
             window.setPosition({0, 0});
         }
 
-        std::string map = "assets/map1";
-        Player p(3.0f, 3.0f);
-        GameManager game(window, map, p);
-        std::cout << game << "\n";
-        game.start();
+        int mode = menu.selectGameMode(window);
+
+        if (mode == 1) {
+            std::string map = "assets/map1";
+            Player p(3.0f, 3.0f);
+            GameManager game(window, map, p);
+            // std::cout << game << "\n";
+            game.start();
+        }
+        else if (mode == 2) {
+            MapEditor editor(window);
+            editor.run();
+        }
     } catch (const AssetLoadException &e) {
         std::cerr << e.what() << "\n";
         return -1;

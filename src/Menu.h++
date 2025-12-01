@@ -15,6 +15,7 @@ public:
     sf::VideoMode selectResolution();
 
     bool wasFullscreenChosen() const { return fullscreenChosen_; }
+    int selectGameMode(sf::RenderWindow& window);
 
 private:
     Menu() = default;

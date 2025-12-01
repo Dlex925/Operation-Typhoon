@@ -1,38 +1,65 @@
 #include "Map.h++"
-//#include "Exceptions.h++"
-
 #include <cmath>
 #include <iostream>
 #include "Exceptions.h++"
+#include <fstream>
+#include <vector>
+#include <string>
+#include <sstream>
 
-Map::Map(const std::string& FileName) {
+Map::Map(const std::string& FileName, double& outPlayerX, double& outPlayerY) {
     std::ifstream fin(FileName);
     if (!fin.is_open()) {
         throw MapException("Cannot open map file: " + FileName);
     }
-    std::string line;
-    while (std::getline(fin, line)) {
-        std::vector<int> row;
 
-        for (char c : line) {
+    std::vector<std::string> lines;
+    std::string line;
+
+    while (std::getline(fin, line)) {
+        if (!line.empty()) lines.push_back(line);
+    }
+    fin.close();
+
+    if (lines.size() < 2) throw MapException("Map file too short");
+
+    std::string coordsLine = lines.back();
+    lines.pop_back();
+
+    std::stringstream ss(coordsLine);
+    std::cout <<outPlayerX << ", " << outPlayerY << "\n";
+    if (!(ss >> outPlayerX >> outPlayerY)) {
+        std::cout <<outPlayerX << ", " << outPlayerY << "\n";
+
+        outPlayerX = 3; outPlayerY = 3;
+        std::cerr << "[Map] Warning: Failed to read player coords\n";
+    }
+    std::cout <<outPlayerX << ", " << outPlayerY << "\n";
+
+    unsigned long max_width = 0;
+    for (const auto& mapRowStr : lines) {
+        std::vector<int> row;
+        for (char c : mapRowStr) {
             if (c >= '0' && c <= '9') {
                 row.push_back(c - '0');
-            } /*else if (!std::isspace(static_cast<unsigned char>(c))) {
-                throw MapException("Invalid character in map file: '" + std::string(1, c) + "'");
-            }*/
+            }
         }
         if (!row.empty()) {
+            if (row.size() > max_width) max_width = row.size();
             map.push_back(row);
         }
     }
-    if (map.empty()) {
-        throw MapException("Empty map");
-    }
-    y_size = map.size();
-    x_size = map[0].size();
-    std::cout << "Map loaded: " << x_size << "x" << y_size << std::endl;
-    fin.close();
 
+    for (auto& row : map) {
+        while (row.size() < max_width) row.push_back(1);
+    }
+
+    if (map.empty()) throw MapException("Empty map grid");
+    y_size = map.size();
+    x_size = max_width;
+
+    std::cout << "Map Loaded: " << x_size << "x" << y_size << "\n";
+    std::cout << " > Player Spawn Output: " << outPlayerX << ", " << outPlayerY << "\n";
 }
 
 int Map::isWall(double x, double y) const{
@@ -44,7 +71,6 @@ int Map::isWall(double x, double y) const{
         return 1;
     }
 
-    // Treat only tile '1' as wall; others (0=empty, 2/3/4=enemies) are walkable
     return map[iy][ix] == 1;
 }
 
