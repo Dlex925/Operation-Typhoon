@@ -84,7 +84,7 @@ void GameManager::start() {
     sf::Clock clock;
     if (player.getMaxHp() < player.getHp())
         throw GameException("Please give the player less hp then max hp");
-    // Planning to let the map creator chose the player hp at the start of the map.r
+    // Planning to let the map creator chose the player hp at the start of the map
     window.setMouseCursorVisible(false);
     auto viewSize = window.getView().getSize();
     int winW = viewSize.x;
@@ -261,7 +261,8 @@ void GameManager::Engine() const{
         hud.setCharacterSize(55);
         hud.setFillColor(sf::Color(0, 255, 100));
         hud.setString("HP: " + std::to_string(player.getHp()) + "/" + std::to_string(player.getMaxHp()) +
-                      "    Ammo: " + std::to_string(player.getAmmo()));
+                      "    Ammo: " + std::to_string(player.getAmmo())+
+                      "    Score: " + std::to_string(player.score_()));
         hud.setPosition({12.f, 10.f});
         window.draw(hud);
     }
@@ -324,7 +325,6 @@ void GameManager::Engine() const{
         sf::RectangleShape overlay({static_cast<float>(window.getSize().x), static_cast<float>(window.getSize().y)});
         overlay.setFillColor(sf::Color(0, 0, 0, 150));
         window.draw(overlay);
-
         if (uiFontLoaded_) {
             std::string wintxt;
             if (!gameFin) wintxt = "Level Complete";

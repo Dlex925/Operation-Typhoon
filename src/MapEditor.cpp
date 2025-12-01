@@ -41,6 +41,7 @@ MapEditor::MapEditor(sf::RenderWindow &win) : window(win), saveMsgText(font) {
     loadEditorAsset(tAmmo, "assets/Ammo.png");
     loadEditorAsset(tMixed, "assets/Mixed.png");
     loadEditorAsset(tPlayer, "assets/Weapon1.png");
+    loadEditorAsset(tPoints,"assets/Points.png");
 }
 
 void MapEditor::setupButton(sf::RectangleShape &btn, float x, float y) {
@@ -95,7 +96,7 @@ sf::Texture *MapEditor::getTextureForId(int id) {
         case 6: return &tHealth;
         case 7: return &tAmmo;
         case 8: return &tMixed;
-        case 9: return nullptr;
+        case 9: return &tPoints;
         case 100: return &tPlayer;
         default: return nullptr;
     }
@@ -166,7 +167,7 @@ void MapEditor::handleInput() {
             int row = static_cast<int>(mousePos.y / cellSize);
 
             if (col >= 0 && col < gridWidth && row >= 0 && row < gridHeight) {
-                 showSaveMessage = false;
+                showSaveMessage = false;
 
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                     if (currentSelection == 100) {
@@ -283,6 +284,7 @@ void MapEditor::render() {
         list += "6: Health Pack\n";
         list += "7: Ammo Box\n";
         list += "8: Mixed Pack\n";
+        list += "9: Points Pickup\n";
         list += "P: PLAYER START\n";
         list += "S: Save Map\nEsc: Back";
 

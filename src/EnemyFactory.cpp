@@ -38,6 +38,7 @@ std::unique_ptr<Enemy> EnemyFactory::createEnemy(EnemyType type, double x, doubl
         case EnemyType::Health:
         case EnemyType::Mixed:
         case EnemyType::Wall:
+        case EnemyType::Points:
             return nullptr;
         default:
             throw UnknownEnemyTypeException(static_cast<int>(type));
@@ -56,6 +57,8 @@ std::unique_ptr<PickupBase> EnemyFactory::createPickup(EnemyType type, double x,
             return spawnPickup<AmmoStrategy>(x, y);
         case EnemyType::Mixed:
             return spawnPickup<MixedStrategy>(x, y);
+        case EnemyType::Points:
+            return spawnPickup<PointsStrategy>(x, y);
         default:
             return nullptr;
     }

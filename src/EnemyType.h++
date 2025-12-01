@@ -12,7 +12,8 @@ enum class EnemyType : int {
     Boom = 5,
     Health = 6,
     Ammo = 7,
-    Mixed = 8
+    Mixed = 8,
+    Points =9,
 };
 
 #endif //OOP_ENEMYTYPE_H
