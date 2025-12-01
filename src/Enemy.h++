@@ -6,6 +6,7 @@
 #include <iosfwd>
 #include <string>
 
+#include "Pathfinder.h++"
 #include "Player.h++"
 class Map;
 class Player;
@@ -21,6 +22,8 @@ class Enemy {
     bool dead{false};
     int typeCode_{1};
     int AttackDmg{10};
+    std::vector<Point> currentPath;
+    float pathTimer = 0.0f;
 
 protected:
     float attackInterval_{0.5f};

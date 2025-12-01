@@ -86,15 +86,58 @@ bool Enemy::hasLineOfSight(const Map &map, double sx, double sy, double tx, doub
 }
 
 void Enemy::update(double deltaTime, const Map &map, const Player &player) {
-    double dx = player.getX() - getWorldX();
-    double dy = player.getY() - getWorldY();
-    double dist = std::sqrt(dx * dx + dy * dy);
+    double dist = Dist(player);
 
     if (dist > attackRange() * 0.9) {
-        double step = 0.1;
-        step = std::min(moveSpeed * deltaTime, dist);
-        double nx = getWorldX() + (dx / (dist + 1e-6)) * step;
-        double ny = getWorldY() + (dy / (dist + 1e-6)) * step;
+
+        double nextX, nextY;
+        bool usePathfinding = true;
+
+        if (hasLineOfSight(map, getWorldX(), getWorldY(), player.getX(), player.getY())) {
+            nextX = player.getX();
+            nextY = player.getY();
+            usePathfinding = false;
+            currentPath.clear();
+        }
+        else {
+            pathTimer -= deltaTime;
+
+            if (pathTimer <= 0.0f || currentPath.empty()) {
+                Pathfinder pf(map);
+                currentPath = pf.findPath(getWorldX(), getWorldY(), player.getX(), player.getY());
+                pathTimer = 0.2f;
+            }
+
+            if (!currentPath.empty()) {
+
+                nextX = currentPath[0].x + 0.5;
+                nextY = currentPath[0].y + 0.5;
+
+                double dToNode = std::sqrt(std::pow(nextX - getWorldX(), 2) + std::pow(nextY - getWorldY(), 2));
+                if (dToNode < 0.1) {
+                    currentPath.erase(currentPath.begin());
+                    if (!currentPath.empty()) {
+                        nextX = currentPath[0].x + 0.5;
+                        nextY = currentPath[0].y + 0.5;
+                    }
+                }
+            } else {
+                return;
+            }
+        }
+
+        double dx = nextX - getWorldX();
+        double dy = nextY - getWorldY();
+        double distToTarget = std::sqrt(dx*dx + dy*dy);
+
+        double step = std::min(moveSpeed * deltaTime, distToTarget);
+
+        double moveX = (dx / (distToTarget + 1e-6)) * step;
+        double moveY = (dy / (distToTarget + 1e-6)) * step;
+
+        double nx = getWorldX() + moveX;
+        double ny = getWorldY() + moveY;
+
         if (!map.isWall(nx, ny)) {
             setWorldPosition(nx, ny);
         }
@@ -102,4 +145,3 @@ void Enemy::update(double deltaTime, const Map &map, const Player &player) {
 
     attackPlayer(const_cast<Player &>(player), deltaTime, map);
 }
-
