@@ -48,8 +48,8 @@ std::vector<Point> Pathfinder::findPath(double startX, double startY, double end
     allNodes[start.y][start.x] = startNode;
     openSetMap[start.y][start.x] = true;
 
-    int dirX[] = {0, 0, 1, -1, 1, 1, -1, -1};
-    int dirY[] = {1, -1, 0, 0, 1, -1, 1, -1};
+    const int dirX[] = {0, 0, 1, -1, 1, 1, -1, -1};
+    const int dirY[] = {1, -1, 0, 0, 1, -1, 1, -1};
 
     while (!openSet.empty()) {
         Node current = openSet.top();
