@@ -8,10 +8,10 @@
 class Map {
     unsigned long x_size, y_size;
     std::vector<std::vector<int>> map;
-    double playerStartX = 3;
-    double playerStartY = 3;
-    public:
-    explicit Map(const std::string& Filename,double&,double&);
+
+public:
+    explicit Map(const std::string &Filename, double &, double &);
+
     int isWall(double x , double y ) const ;
     Map(const Map& other)
     : x_size(other.x_size), y_size(other.y_size), map(other.map){};

@@ -30,8 +30,7 @@ int main() {
             GameManager game(window, map, p);
             // std::cout << game << "\n";
             game.start();
-        }
-        else if (mode == 2) {
+        } else if (mode == 2) {
             MapEditor editor(window);
             editor.run();
         }

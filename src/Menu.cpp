@@ -155,7 +155,7 @@ sf::VideoMode Menu::selectResolution() {
     auto sel = options[current];
     return sf::VideoMode({sel.x, sel.y});
 }
-int Menu::selectGameMode(sf::RenderWindow& window) {
+int Menu::selectGameMode(sf::RenderWindow &window) {
     sf::Font font;
     if (!loadMenuFont(font)) return 1;
     sf::Text title(font, "SELECT MODE", 50);
@@ -182,13 +182,12 @@ int Menu::selectGameMode(sf::RenderWindow& window) {
 
     while (window.isOpen()) {
         while (const std::optional<sf::Event> event = window.pollEvent()) {
-
             if (event->is<sf::Event::Closed>()) {
                 window.close();
                 return 0;
             }
 
-            if (const auto* keyEvent = event->getIf<sf::Event::KeyPressed>()) {
+            if (const auto *keyEvent = event->getIf<sf::Event::KeyPressed>()) {
                 if (keyEvent->code == sf::Keyboard::Key::Num1) return 1;
                 if (keyEvent->code == sf::Keyboard::Key::Num2) return 2;
                 if (keyEvent->code == sf::Keyboard::Key::Escape) {

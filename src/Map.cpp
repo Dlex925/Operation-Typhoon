@@ -7,7 +7,7 @@
 #include <string>
 #include <sstream>
 
-Map::Map(const std::string& FileName, double& outPlayerX, double& outPlayerY) {
+Map::Map(const std::string &FileName, double &outPlayerX, double &outPlayerY) {
     std::ifstream fin(FileName);
     if (!fin.is_open()) {
         throw MapException("Cannot open map file: " + FileName);
@@ -27,19 +27,15 @@ Map::Map(const std::string& FileName, double& outPlayerX, double& outPlayerY) {
     lines.pop_back();
 
     std::stringstream ss(coordsLine);
-    std::cout <<outPlayerX << ", " << outPlayerY << "\n";
     if (!(ss >> outPlayerX >> outPlayerY)) {
-        std::cout <<outPlayerX << ", " << outPlayerY << "\n";
-
-        outPlayerX = 3; outPlayerY = 3;
+        outPlayerX = 3;
+        outPlayerY = 3;
         std::cerr << "[Map] Warning: Failed to read player coords\n";
     }
-    std::cout <<outPlayerX << ", " << outPlayerY << "\n";
-
     unsigned long max_width = 0;
-    for (const auto& mapRowStr : lines) {
+    for (const auto &mapRowStr: lines) {
         std::vector<int> row;
-        for (char c : mapRowStr) {
+        for (char c: mapRowStr) {
             if (c >= '0' && c <= '9') {
                 row.push_back(c - '0');
             }
@@ -50,7 +46,7 @@ Map::Map(const std::string& FileName, double& outPlayerX, double& outPlayerY) {
         }
     }
 
-    for (auto& row : map) {
+    for (auto &row: map) {
         while (row.size() < max_width) row.push_back(1);
     }
 

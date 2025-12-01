@@ -2,7 +2,7 @@
 #include <fstream>
 #include <cmath>
 
-MapEditor::MapEditor(sf::RenderWindow& win) : window(win), saveMsgText(font) {
+MapEditor::MapEditor(sf::RenderWindow &win) : window(win), saveMsgText(font) {
     gridData.resize(gridHeight, std::vector<int>(gridWidth, 0));
 
     float uiX = static_cast<float>(window.getSize().x) * 0.76f;
@@ -27,21 +27,23 @@ MapEditor::MapEditor(sf::RenderWindow& win) : window(win), saveMsgText(font) {
 
         sf::FloatRect textRect = saveMsgText.getLocalBounds();
         saveMsgText.setOrigin({textRect.size.x / 2.0f, textRect.size.y / 2.0f});
-        saveMsgText.setPosition({static_cast<float>(window.getSize().x) / 2.0f, static_cast<float>(window.getSize().y) / 2.0f});
+        saveMsgText.setPosition({
+            static_cast<float>(window.getSize().x) / 2.0f, static_cast<float>(window.getSize().y) / 2.0f
+        });
     }
 
-   // loadEditorAsset(tWall,   "assets/Wall.png"); I don't have a wall texture yet, and the cyan kinda grew on me so i might not replace it
-    loadEditorAsset(tSR,     "assets/EnemyShort_Idle.png");
-    loadEditorAsset(tLR,     "assets/EnemyLong_Idle.png");
-    loadEditorAsset(tHD,     "assets/EnemyLongHD_Idle.png");
-    loadEditorAsset(tBoom,   "assets/Boom_Idle.png");
+    // loadEditorAsset(tWall,   "assets/Wall.png"); I don't have a wall texture yet, and the cyan kinda grew on me so i might not replace it
+    loadEditorAsset(tSR, "assets/EnemyShort_Idle.png");
+    loadEditorAsset(tLR, "assets/EnemyLong_Idle.png");
+    loadEditorAsset(tHD, "assets/EnemyLongHD_Idle.png");
+    loadEditorAsset(tBoom, "assets/Boom_Idle.png");
     loadEditorAsset(tHealth, "assets/Medkit.png");
-    loadEditorAsset(tAmmo,   "assets/Ammo.png");
-    loadEditorAsset(tMixed,  "assets/Mixed.png");
+    loadEditorAsset(tAmmo, "assets/Ammo.png");
+    loadEditorAsset(tMixed, "assets/Mixed.png");
     loadEditorAsset(tPlayer, "assets/Weapon1.png");
 }
 
-void MapEditor::setupButton(sf::RectangleShape& btn, float x, float y) {
+void MapEditor::setupButton(sf::RectangleShape &btn, float x, float y) {
     btn.setSize({30.f, 30.f});
     btn.setFillColor(sf::Color(80, 80, 80));
     btn.setOutlineColor(sf::Color::White);
@@ -49,13 +51,14 @@ void MapEditor::setupButton(sf::RectangleShape& btn, float x, float y) {
     btn.setPosition({x, y});
 }
 
-bool MapEditor::isClicked(const sf::RectangleShape& btn, const sf::Vector2i& mouse) {
+bool MapEditor::isClicked(const sf::RectangleShape &btn, const sf::Vector2i &mouse) {
     return btn.getGlobalBounds().contains({static_cast<float>(mouse.x), static_cast<float>(mouse.y)});
 }
 
 void MapEditor::resizeMap(int newW, int newH) {
     if (newW < 5) newW = 5;
-    if (newW > 1023) newW = 1023; //Overkill, way overkill, especialy with the way butons are implemented, perhaps try an autoclicker if you want to reach this
+    if (newW > 1023) newW = 1023;
+    //Overkill, way overkill, especialy with the way butons are implemented, perhaps try an autoclicker if you want to reach this
 
     if (newH < 5) newH = 5;
     if (newH > 1023) newH = 1023;
@@ -63,11 +66,11 @@ void MapEditor::resizeMap(int newW, int newH) {
     auto oldData = gridData;
     gridData.assign(newH, std::vector<int>(newW, 0));
 
-    int copyH = std::min((int)oldData.size(), newH);
-    int copyW = std::min((int)oldData[0].size(), newW);
+    int copyH = std::min((int) oldData.size(), newH);
+    int copyW = std::min((int) oldData[0].size(), newW);
 
-    for(int y=0; y<copyH; ++y) {
-        for(int x=0; x<copyW; ++x) {
+    for (int y = 0; y < copyH; ++y) {
+        for (int x = 0; x < copyW; ++x) {
             gridData[y][x] = oldData[y][x];
         }
     }
@@ -82,8 +85,8 @@ void MapEditor::resizeMap(int newW, int newH) {
     cellSize = std::min(sizeX, sizeY);
 }
 
-sf::Texture* MapEditor::getTextureForId(int id) {
-    switch(id) {
+sf::Texture *MapEditor::getTextureForId(int id) {
+    switch (id) {
         case 1: return &tWall;
         case 2: return &tSR;
         case 3: return &tLR;
@@ -98,16 +101,16 @@ sf::Texture* MapEditor::getTextureForId(int id) {
     }
 }
 
-void MapEditor::saveMap(const std::string& filename) {
+void MapEditor::saveMap(const std::string &filename) {
     std::ofstream out(filename);
     if (!out.is_open()) return;
 
     for (int i = 0; i < gridWidth + 2; ++i) out << '1';
     out << "\n";
 
-    for (const auto& row : gridData) {
+    for (const auto &row: gridData) {
         out << '1';
-        for (int cell : row) {
+        for (int cell: row) {
             out << cell;
         }
         out << '1';
@@ -131,7 +134,7 @@ void MapEditor::handleInput() {
     while (const std::optional<sf::Event> event = window.pollEvent()) {
         if (event->is<sf::Event::Closed>()) window.close();
 
-        if (const auto* keyEvent = event->getIf<sf::Event::KeyPressed>()) {
+        if (const auto *keyEvent = event->getIf<sf::Event::KeyPressed>()) {
             if (keyEvent->code == sf::Keyboard::Key::Escape) window.close();
             if (keyEvent->code == sf::Keyboard::Key::S) saveMap("assets/map_created");
 
@@ -145,13 +148,13 @@ void MapEditor::handleInput() {
             }
         }
 
-        if (const auto* mouseBtn = event->getIf<sf::Event::MouseButtonPressed>()) {
+        if (const auto *mouseBtn = event->getIf<sf::Event::MouseButtonPressed>()) {
             if (mouseBtn->button == sf::Mouse::Button::Left) {
                 sf::Vector2i mPos = mouseBtn->position;
                 if (isClicked(btnWMinus, mPos)) resizeMap(gridWidth - 1, gridHeight);
-                if (isClicked(btnWPlus, mPos))  resizeMap(gridWidth + 1, gridHeight);
+                if (isClicked(btnWPlus, mPos)) resizeMap(gridWidth + 1, gridHeight);
                 if (isClicked(btnHMinus, mPos)) resizeMap(gridWidth, gridHeight - 1);
-                if (isClicked(btnHPlus, mPos))  resizeMap(gridWidth, gridHeight + 1);
+                if (isClicked(btnHPlus, mPos)) resizeMap(gridWidth, gridHeight + 1);
             }
         }
     }
@@ -198,7 +201,7 @@ void MapEditor::render() {
 
             int id = gridData[y][x];
             if (id != 0) {
-                sf::Texture* tex = getTextureForId(id);
+                sf::Texture *tex = getTextureForId(id);
                 if (tex && tex->getSize().x > 0) {
                     sf::Sprite s(*tex);
                     float scaleX = cellSize / static_cast<float>(tex->getSize().x);
@@ -230,8 +233,10 @@ void MapEditor::render() {
         window.draw(pSprite);
     }
 
-    window.draw(btnWMinus); window.draw(btnWPlus);
-    window.draw(btnHMinus); window.draw(btnHPlus);
+    window.draw(btnWMinus);
+    window.draw(btnWPlus);
+    window.draw(btnHMinus);
+    window.draw(btnHPlus);
 
     if (fontLoaded) {
         float uiX = static_cast<float>(window.getSize().x) * 0.76f;
@@ -245,19 +250,23 @@ void MapEditor::render() {
         window.draw(label);
 
         sf::Text sym(font, "-", 24);
-        sym.setPosition({btnWMinus.getPosition().x + 9, btnWMinus.getPosition().y - 4}); window.draw(sym);
-        sym.setPosition({btnHMinus.getPosition().x + 9, btnHMinus.getPosition().y - 4}); window.draw(sym);
+        sym.setPosition({btnWMinus.getPosition().x + 9, btnWMinus.getPosition().y - 4});
+        window.draw(sym);
+        sym.setPosition({btnHMinus.getPosition().x + 9, btnHMinus.getPosition().y - 4});
+        window.draw(sym);
         sym.setString("+");
-        sym.setPosition({btnWPlus.getPosition().x + 7, btnWPlus.getPosition().y - 4}); window.draw(sym);
-        sym.setPosition({btnHPlus.getPosition().x + 7, btnHPlus.getPosition().y - 4}); window.draw(sym);
+        sym.setPosition({btnWPlus.getPosition().x + 7, btnWPlus.getPosition().y - 4});
+        window.draw(sym);
+        sym.setPosition({btnHPlus.getPosition().x + 7, btnHPlus.getPosition().y - 4});
+        window.draw(sym);
 
         std::string selName = (currentSelection == 100) ? "PLAYER START" : std::to_string(currentSelection);
         sf::Text text(font, "Selected: " + selName, 20);
         text.setPosition({uiX, 180.f});
         window.draw(text);
 
-        sf::Texture* currTex = getTextureForId(currentSelection);
-        if(currTex && currTex->getSize().x > 0) {
+        sf::Texture *currTex = getTextureForId(currentSelection);
+        if (currTex && currTex->getSize().x > 0) {
             sf::Sprite preview(*currTex);
             float pScale = 64.0f / std::max(currTex->getSize().x, currTex->getSize().y);
             preview.setScale({pScale, pScale});
@@ -284,7 +293,9 @@ void MapEditor::render() {
         if (showSaveMessage) {
             sf::RectangleShape bg({static_cast<float>(window.getSize().x) * 0.8f, 150.f});
             bg.setFillColor(sf::Color(0, 0, 0, 220));
-            sf::Vector2f winCenter = {static_cast<float>(window.getSize().x) / 2.f, static_cast<float>(window.getSize().y) / 2.f};
+            sf::Vector2f winCenter = {
+                static_cast<float>(window.getSize().x) / 2.f, static_cast<float>(window.getSize().y) / 2.f
+            };
             bg.setOrigin({bg.getSize().x / 2.f, bg.getSize().y / 2.f});
             bg.setPosition(winCenter);
 
