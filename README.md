@@ -11,15 +11,15 @@
 - **Right Click** - To use the knife - short range with 2x damage
 - **P** - To pause the game
 - **R** - To restart the game
-### All the assets from the game are original(including the music)  and have not been taken from the internet. Excluding the font.
+
+### All the assets from the game are original (including the music) and have not been taken from the internet. Excluding the font.
 
 ### Known bugs:
 
-I . For the random generated map, enemies might spawn in unreachable positions, so the lvl will be unfinishable.
 1. ~~Enemies sprites might stack causing lag - will be fixed when implementing a better tracking algorithm~~ (Probably
    fixed, or at least ameliorated in such a way that it wont be noticeable)
 2. If the map is not bordered with 1's, even if the wall looks good when you "push" into it, the wall will move 1 tile -
-   solved by creating a correct map(bordered with 1's) - **Not a problem**
+   solved by creating a correct map (bordered with 1's) - **Not a problem**
 3. In the map creator you might be able to place the player over a wall, making the map not playable
 ### To implement:
 
@@ -65,6 +65,7 @@ sure to keep the filenames the same.
   attack(Yes, HD comes from high damage).
 - You can also change the map by modifying the map1 file - just make sure to have the map bordered with 1's.   
   1 is a wall and 0 is a free space -> will probably get modified in a future update to include marking enemy positions.
+- Ammo/Medkit/Mixed.png - pickups that will give either hp/ammo/a mix of hp+ammo
 
 #### Notice the game won't start with any missing files/files named incorrectly.
 ### Tema 0

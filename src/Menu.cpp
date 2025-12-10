@@ -158,7 +158,7 @@ sf::VideoMode Menu::selectResolution() {
 int Menu::selectGameMode(sf::RenderWindow &window) {
     sf::Font font;
     if (!loadMenuFont(font)) return 1;
-    sf::Text title(font, "SELECT MODE", 50);
+    sf::Text title(font, "SELECT MODE (press 1,2 or 3)", 50);
     title.setFillColor(sf::Color::Yellow);
 
     auto b = title.getLocalBounds();

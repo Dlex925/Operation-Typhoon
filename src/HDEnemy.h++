@@ -27,8 +27,9 @@ explicit LongRangeHighDamageEnemy(double x = 2.5, double y = 2.5, float heightSc
 void attackPlayer(Player &player, double deltaTime, const Map &map) override;
 
 //void update(double deltaTime, const Map &map, const Player &player) override;
+private: //Short range attack
 void SRAttackPlayer(Player &player, double deltaTime);
-
+public :
 [[nodiscard]] std::unique_ptr<Enemy> clone() const override {
     return std::make_unique<LongRangeHighDamageEnemy>(*this);
 }

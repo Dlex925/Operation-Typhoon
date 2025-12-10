@@ -1,15 +1,13 @@
 #ifndef OOP_ENEMY_H
 #define OOP_ENEMY_H
 
-#include <cstddef>
 #include <memory>
-#include <iosfwd>
 #include <string>
 
 #include "Pathfinder.h++"
 #include "Player.h++"
 class Map;
-class Player;
+
 
 class Enemy {
     double worldX{2.5};
@@ -21,7 +19,6 @@ class Enemy {
     int hp{100};
     bool dead{false};
     int typeCode_{1};
-    int AttackDmg{10};
     std::vector<Point> currentPath;
     float pathTimer = 0.0f;
 
@@ -95,7 +92,6 @@ public:
         swap(lhs.hp, rhs.hp);
         swap(lhs.dead, rhs.dead);
         swap(lhs.typeCode_, rhs.typeCode_);
-        swap(lhs.AttackDmg, rhs.AttackDmg);
         swap(lhs.attackInterval_, rhs.attackInterval_);
         swap(lhs.attackCooldown_, rhs.attackCooldown_);
     }
