@@ -40,6 +40,7 @@ class GameManager {
     bool gameFin = false;
 
     int maxMaps_ = 0;
+
     void countMaps();
 
     void loadNextLevel();

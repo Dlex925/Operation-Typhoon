@@ -12,6 +12,7 @@
 #include <iostream>
 
 namespace fs = std::filesystem;
+
 GameManager::GameManager(sf::RenderWindow& win, std::string harta, Player& p)
     : window(win), map(harta, initialPlayerX_, initialPlayerY_), player(p), raycast(window, map, player) {
     std::cout << initialPlayerX_ << ", " << initialPlayerY_ << "\n";
@@ -29,12 +30,11 @@ GameManager::GameManager(sf::RenderWindow& win, std::string harta, Player& p)
 void GameManager::countMaps() {
     maxMaps_ = 0;
     if (fs::exists("assets")) {
-        for (const auto& entry : fs::directory_iterator("assets")) {
+        for (const auto &entry: fs::directory_iterator("assets")) {
             if (entry.is_regular_file()) {
                 std::string filename = entry.path().filename().string();
 
                 if (filename.find("map") == 0) {
-
                     if (filename == "map_created" || filename == "map_random") {
                         continue;
                     }
@@ -103,8 +103,8 @@ void GameManager::restartGame_() {
     }
 
     curentMapIndex_ = 1;
-     std::string firstMap = "assets/map1";
-     map = Map(firstMap, initialPlayerX_, initialPlayerY_);
+    std::string firstMap = "assets/map1";
+    map = Map(firstMap, initialPlayerX_, initialPlayerY_);
 
     player.resetForNewGame();
     player.setPosition(initialPlayerX_, initialPlayerY_);
@@ -156,7 +156,6 @@ void GameManager::start() {
                 window.close();
                 return;
             }
-
         } else if (levelComplete_) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
                 winmusic.stop();
@@ -173,7 +172,6 @@ void GameManager::start() {
                     loadNextLevel();
                 }
             }
-
         } else if (!paused_) {
             player.updateWeapon(deltaTime);
             for (auto &e: enemies) {
@@ -391,7 +389,6 @@ void GameManager::Engine() const{
         if (uiFontLoaded_) {
             std::string wintxt;
             if (gameFin) {
-
                 wintxt = "THANKS FOR PLAYING";
             } else {
                 wintxt = "Level Complete";

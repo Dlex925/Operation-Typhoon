@@ -68,7 +68,7 @@ sf::VideoMode Menu::selectResolution() {
         while (auto event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
                 window.close();
-            } else if (const auto* key = event->getIf<sf::Event::KeyPressed>()) {
+            } else if (const auto *key = event->getIf<sf::Event::KeyPressed>()) {
                 if (key->code == sf::Keyboard::Key::Escape) {
                     window.close();
                     return sf::VideoMode({deskSize.x, deskSize.y});
@@ -276,7 +276,7 @@ struct ScoreEntry {
     std::string name;
     int score;
 
-    bool operator>(const ScoreEntry& other) const {
+    bool operator>(const ScoreEntry &other) const {
         return score > other.score;
     }
 };
@@ -306,16 +306,18 @@ std::string Menu::askName(sf::RenderWindow &window, int score) {
                 return playerName;
             }
 
-            if (const auto* keyEvent = event->getIf<sf::Event::KeyPressed>()) {
+            if (const auto *keyEvent = event->getIf<sf::Event::KeyPressed>()) {
                 if (keyEvent->code == sf::Keyboard::Key::Escape) {
                     return playerName.empty() ? "Unknown" : playerName;
                 }
             }
 
-            if (const auto* textEvent = event->getIf<sf::Event::TextEntered>()) {
-                if (textEvent->unicode == 8) { // Backspace
+            if (const auto *textEvent = event->getIf<sf::Event::TextEntered>()) {
+                if (textEvent->unicode == 8) {
+                    // Backspace
                     if (!playerName.empty()) playerName.pop_back();
-                } else if (textEvent->unicode == 13) { // Enter
+                } else if (textEvent->unicode == 13) {
+                    // Enter
                     if (!playerName.empty()) return playerName;
                 } else if (textEvent->unicode < 128 && playerName.size() < 55) {
                     playerName += static_cast<char>(textEvent->unicode);
@@ -340,7 +342,7 @@ void Menu::saveHighscore(const std::string &name, int score) {
     std::ofstream out("highscores.txt", std::ios::app);
     if (out.is_open()) {
         std::string safeName = name;
-        if(safeName.empty()) safeName = "Unknown";
+        if (safeName.empty()) safeName = "Unknown";
         std::replace(safeName.begin(), safeName.end(), ' ', '_');
         out << safeName << " " << score << "\n";
         out.close();
@@ -396,7 +398,7 @@ void Menu::showHighscores(sf::RenderWindow &window) {
                 window.close();
                 return;
             }
-            if (const auto* keyEvent = event->getIf<sf::Event::KeyPressed>()) {
+            if (const auto *keyEvent = event->getIf<sf::Event::KeyPressed>()) {
                 if (keyEvent->code == sf::Keyboard::Key::Escape) {
                     return;
                 }

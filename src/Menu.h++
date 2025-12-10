@@ -21,8 +21,11 @@ public:
     std::pair<int, int> selectGenerationSize(sf::RenderWindow &window);
 
     std::string askName(sf::RenderWindow &window, int score);
+
     void saveHighscore(const std::string &name, int score);
+
     void showHighscores(sf::RenderWindow &window);
+
 private:
     Menu() = default;
 
