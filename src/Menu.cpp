@@ -10,6 +10,9 @@
 #include <thread>
 #include <SFML/Audio.hpp>
 #include <chrono>
+#include <fstream>
+#include <iostream>
+#include <optional>
 
 static bool loadMenuFont(sf::Font &font) {
     const char *path = "assets/0xProtoNerdFontPropo-Regular.ttf";
@@ -65,7 +68,7 @@ sf::VideoMode Menu::selectResolution() {
         while (auto event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
                 window.close();
-            } else if (auto key = event->getIf<sf::Event::KeyPressed>()) {
+            } else if (const auto* key = event->getIf<sf::Event::KeyPressed>()) {
                 if (key->code == sf::Keyboard::Key::Escape) {
                     window.close();
                     return sf::VideoMode({deskSize.x, deskSize.y});
@@ -119,7 +122,6 @@ sf::VideoMode Menu::selectResolution() {
         }
 
         auto sel = options[current];
-        //std::string modeStr = fullscreenChosen_ ? "Fullscreen" : "Windowed";
 
         if (fullscreenChosen_) {
             window.setTitle(
@@ -155,10 +157,11 @@ sf::VideoMode Menu::selectResolution() {
     auto sel = options[current];
     return sf::VideoMode({sel.x, sel.y});
 }
+
 int Menu::selectGameMode(sf::RenderWindow &window) {
     sf::Font font;
     if (!loadMenuFont(font)) return 1;
-    sf::Text title(font, "SELECT MODE (press 1,2 or 3)", 50);
+    sf::Text title(font, "SELECT MODE", 50);
     title.setFillColor(sf::Color::Yellow);
 
     auto b = title.getLocalBounds();
@@ -267,4 +270,143 @@ std::pair<int, int> Menu::selectGenerationSize(sf::RenderWindow &window) {
         window.display();
     }
     return {30, 30};
+}
+
+struct ScoreEntry {
+    std::string name;
+    int score;
+
+    bool operator>(const ScoreEntry& other) const {
+        return score > other.score;
+    }
+};
+
+std::string Menu::askName(sf::RenderWindow &window, int score) {
+    sf::Font font;
+    if (!loadMenuFont(font)) return "Unknown";
+
+    std::string playerName = "";
+    sf::Text titleText(font, "Thanks for Playing\nSCORE: " + std::to_string(score), 40);
+    titleText.setFillColor(sf::Color::Red);
+
+    sf::FloatRect tb = titleText.getLocalBounds();
+    titleText.setPosition({(window.getSize().x - tb.size.x) / 2.f, 50.f});
+
+    sf::Text infoText(font, "ENTER YOUR NAME (ESC to Skip and Exit):", 30);
+    infoText.setFillColor(sf::Color::Yellow);
+    infoText.setPosition({(window.getSize().x - infoText.getLocalBounds().size.x) / 2.f, 200.f});
+
+    sf::Text nameText(font, "_", 40);
+    nameText.setFillColor(sf::Color::White);
+
+    while (window.isOpen()) {
+        while (const std::optional<sf::Event> event = window.pollEvent()) {
+            if (event->is<sf::Event::Closed>()) {
+                window.close();
+                return playerName;
+            }
+
+            if (const auto* keyEvent = event->getIf<sf::Event::KeyPressed>()) {
+                if (keyEvent->code == sf::Keyboard::Key::Escape) {
+                    return playerName.empty() ? "Unknown" : playerName;
+                }
+            }
+
+            if (const auto* textEvent = event->getIf<sf::Event::TextEntered>()) {
+                if (textEvent->unicode == 8) { // Backspace
+                    if (!playerName.empty()) playerName.pop_back();
+                } else if (textEvent->unicode == 13) { // Enter
+                    if (!playerName.empty()) return playerName;
+                } else if (textEvent->unicode < 128 && playerName.size() < 55) {
+                    playerName += static_cast<char>(textEvent->unicode);
+                }
+            }
+        }
+
+        nameText.setString(playerName + "_");
+        sf::FloatRect nb = nameText.getLocalBounds();
+        nameText.setPosition({(window.getSize().x - nb.size.x) / 2.f, 250.f});
+
+        window.clear(sf::Color(20, 20, 20));
+        window.draw(titleText);
+        window.draw(infoText);
+        window.draw(nameText);
+        window.display();
+    }
+    return "Unknown";
+}
+
+void Menu::saveHighscore(const std::string &name, int score) {
+    std::ofstream out("highscores.txt", std::ios::app);
+    if (out.is_open()) {
+        std::string safeName = name;
+        if(safeName.empty()) safeName = "Unknown";
+        std::replace(safeName.begin(), safeName.end(), ' ', '_');
+        out << safeName << " " << score << "\n";
+        out.close();
+    }
+}
+
+void Menu::showHighscores(sf::RenderWindow &window) {
+    sf::Font font;
+    if (!loadMenuFont(font)) return;
+
+    std::vector<ScoreEntry> scores;
+    std::ifstream in("highscores.txt");
+    std::string n;
+    int s;
+    while (in >> n >> s) {
+        scores.push_back({n, s});
+    }
+    in.close();
+
+    std::sort(scores.begin(), scores.end(), [](const ScoreEntry &a, const ScoreEntry &b) {
+        return a.score > b.score;
+    });
+
+    if (scores.size() > 100) scores.resize(100); // Top 100
+
+    sf::Text title(font, "HIGHSCORES", 50);
+    title.setFillColor(sf::Color::Yellow);
+    sf::FloatRect tb = title.getLocalBounds();
+    title.setPosition({(window.getSize().x - tb.size.x) / 2.f, 30.f});
+
+    sf::Text listText(font, "", 30);
+    listText.setFillColor(sf::Color::White);
+
+    std::string content;
+    for (size_t i = 0; i < scores.size(); ++i) {
+        content += std::to_string(i + 1) + ". " + scores[i].name + " ..... " + std::to_string(scores[i].score) + "\n";
+    }
+
+    if (scores.empty()) content = "No scores yet.";
+
+    listText.setString(content);
+    sf::FloatRect lb = listText.getLocalBounds();
+    listText.setPosition({(window.getSize().x - lb.size.x) / 2.f, 120.f});
+
+    sf::Text exitText(font, "Press ESC to Exit", 20);
+    exitText.setFillColor(sf::Color::Green);
+    sf::FloatRect eb = exitText.getLocalBounds();
+    exitText.setPosition({(window.getSize().x - eb.size.x) / 2.f, window.getSize().y - 50.f});
+
+    while (window.isOpen()) {
+        while (const std::optional<sf::Event> event = window.pollEvent()) {
+            if (event->is<sf::Event::Closed>()) {
+                window.close();
+                return;
+            }
+            if (const auto* keyEvent = event->getIf<sf::Event::KeyPressed>()) {
+                if (keyEvent->code == sf::Keyboard::Key::Escape) {
+                    return;
+                }
+            }
+        }
+
+        window.clear(sf::Color(20, 20, 20));
+        window.draw(title);
+        window.draw(listText);
+        window.draw(exitText);
+        window.display();
+    }
 }

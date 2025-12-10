@@ -39,6 +39,9 @@ class GameManager {
     bool levelComplete_ = false;
     bool gameFin = false;
 
+    int maxMaps_ = 0;
+    void countMaps();
+
     void loadNextLevel();
 
     void spawnEnemiesFromMap();

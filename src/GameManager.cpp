@@ -7,15 +7,49 @@
 #include "SREnemy.h++"
 #include "EnemyFactory.h++"
 #include "EnemyType.h++"
+#include "Menu.h++"
+#include <filesystem>
+#include <iostream>
 
+namespace fs = std::filesystem;
 GameManager::GameManager(sf::RenderWindow& win, std::string harta, Player& p)
     : window(win), map(harta, initialPlayerX_, initialPlayerY_), player(p), raycast(window, map, player) {
     std::cout << initialPlayerX_ << ", " << initialPlayerY_ << "\n";
+
+    curentMapIndex_ = 1;
+
+    countMaps();
+    std::cout << "Detected maps: " << maxMaps_ << "\n";
+
     player.setPosition(initialPlayerX_, initialPlayerY_);
     spawnEnemiesFromMap();
     spawnPickupsFromMap();
 }
 
+void GameManager::countMaps() {
+    maxMaps_ = 0;
+    if (fs::exists("assets")) {
+        for (const auto& entry : fs::directory_iterator("assets")) {
+            if (entry.is_regular_file()) {
+                std::string filename = entry.path().filename().string();
+
+                if (filename.find("map") == 0) {
+
+                    if (filename == "map_created" || filename == "map_random") {
+                        continue;
+                    }
+
+                    maxMaps_++;
+                }
+            }
+        }
+    } else {
+        std::cerr << "Warning: 'assets' folder not found. Defaulting to 1 map.\n";
+        maxMaps_ = 1;
+    }
+
+    if (maxMaps_ == 0) maxMaps_ = 1;
+}
 void GameManager::spawnEnemiesFromMap() {
     enemies.clear();
     for (unsigned long y = 0; y < map.getHeight(); ++y) {
@@ -68,6 +102,10 @@ void GameManager::restartGame_() {
         music.play();
     }
 
+    curentMapIndex_ = 1;
+     std::string firstMap = "assets/map1";
+     map = Map(firstMap, initialPlayerX_, initialPlayerY_);
+
     player.resetForNewGame();
     player.setPosition(initialPlayerX_, initialPlayerY_);
 
@@ -85,12 +123,10 @@ void GameManager::start() {
     sf::Clock clock;
     if (player.getMaxHp() < player.getHp())
         throw GameException("Please give the player less hp then max hp");
-    // Planning to let the map creator chose the player hp at the start of the map
+
     window.setMouseCursorVisible(false);
     auto viewSize = window.getView().getSize();
-    int winW = viewSize.x;
-    int winH = viewSize.y;
-    sf::Mouse::setPosition({winW / 2, winH / 2}, window);
+    sf::Mouse::setPosition({static_cast<int>(viewSize.x) / 2, static_cast<int>(viewSize.y) / 2}, window);
 
     if (!uiFont.openFromFile("assets/0xProtoNerdFontPropo-Regular.ttf")) {
         throw AssetLoadException("assets/0xProtoNerdFontPropo-Regular.ttf", "Font");
@@ -108,11 +144,36 @@ void GameManager::start() {
 
         if (gameOver_) {
             gameOverTimer_ += deltaTime;
+            if (gameOverTimer_ > 3.0f) {
+                music.stop();
+                if (gameOverJingle_.getStatus() == sf::SoundSource::Status::Playing)
+                    gameOverJingle_.stop();
+
+                std::string name = Menu::getInstance().askName(window, player.score_());
+                Menu::getInstance().saveHighscore(name, player.score_());
+                Menu::getInstance().showHighscores(window);
+
+                window.close();
+                return;
+            }
+
         } else if (levelComplete_) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
                 winmusic.stop();
-                loadNextLevel();
+
+                if (gameFin) {
+                    music.stop();
+                    std::string name = Menu::getInstance().askName(window, player.score_());
+                    Menu::getInstance().saveHighscore(name, player.score_());
+                    Menu::getInstance().showHighscores(window);
+
+                    window.close();
+                    return;
+                } else {
+                    loadNextLevel();
+                }
             }
+
         } else if (!paused_) {
             player.updateWeapon(deltaTime);
             for (auto &e: enemies) {
@@ -126,34 +187,38 @@ void GameManager::start() {
                 item->updateAndCollect(player);
             }
 
-
             if (!levelComplete_) {
-                levelComplete_ = true;
+                bool allDead = true;
                 for (const auto &e : enemies) {
                     if (e && !e->isDead()) {
-                        levelComplete_ = false;
+                        allDead = false;
                         break;
                     }
                 }
-                if (levelComplete_) {
+
+                if (allDead) {
+                    levelComplete_ = true;
+                    if (curentMapIndex_ >= maxMaps_) {
+                        gameFin = true;
+                    }
+
                     music.pause();
                     if (winmusic.openFromFile("assets/win.ogg")) {
                         winmusic.setLooping(false);
                         winmusic.play();
-                    } else throw AssetLoadException("assets/win.ogg", "Sound");
+                    }
                 }
             }
+
             if (player.getHp() <= 0) {
                 gameOver_ = true;
                 gameOverTimer_ = 0.f;
-                if (music.getStatus() == sf::SoundSource::Status::Playing) {
-                    music.pause();
-                }
+                if (music.getStatus() == sf::SoundSource::Status::Playing) music.pause();
                 if (!gameOverSoundPlayed_) {
                     if (gameOverJingle_.openFromFile("assets/Dead.ogg")) {
                         gameOverJingle_.setLooping(false);
                         gameOverJingle_.play();
-                    } else throw AssetLoadException("assets/Dead.ogg", "Sound");
+                    }
                     gameOverSoundPlayed_ = true;
                 }
             }
@@ -178,10 +243,6 @@ void GameManager::handleInput(float deltaTime) {
         restartGame_();
         return;
     }
-
-    /*for (auto &e: enemies) {
-        std::cout << *e << "\n";
-    }Debug*/
 
     bool pNow = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P);
     if (pNow && !pHeld_) {
@@ -326,10 +387,16 @@ void GameManager::Engine() const{
         sf::RectangleShape overlay({static_cast<float>(window.getSize().x), static_cast<float>(window.getSize().y)});
         overlay.setFillColor(sf::Color(0, 0, 0, 150));
         window.draw(overlay);
+
         if (uiFontLoaded_) {
             std::string wintxt;
-            if (!gameFin) wintxt = "Level Complete";
-            else wintxt = "THANKS FOR PLAYING";
+            if (gameFin) {
+
+                wintxt = "THANKS FOR PLAYING";
+            } else {
+                wintxt = "Level Complete";
+            }
+
             sf::Text winText(uiFont, wintxt);
             winText.setCharacterSize(88);
             winText.setFillColor(sf::Color::Red);
@@ -337,9 +404,14 @@ void GameManager::Engine() const{
             auto b = winText.getLocalBounds();
             winText.setPosition({(window.getSize().x - b.size.x) / 2.f, window.getSize().y * 0.3f});
             window.draw(winText);
+
             std::string nexttxt;
-            if (!gameFin) nexttxt = "Press Space for the next level";
-            else nexttxt = "Press Esc to exit";
+            if (gameFin) {
+                nexttxt = "Press Space to Finish";
+            } else {
+                nexttxt = "Press Space for the next level";
+            }
+
             sf::Text nextText(uiFont, nexttxt);
             nextText.setCharacterSize(88);
             nextText.setFillColor(sf::Color::Red);
@@ -354,23 +426,35 @@ void GameManager::Engine() const{
     window.display();
 }
 
-
 void GameManager::loadNextLevel() {
     curentMapIndex_++;
+
+    std::string nextMapPath = "assets/map" + std::to_string(curentMapIndex_);
+
+    if (!fs::exists(nextMapPath)) {
+        gameFin = true;
+        levelComplete_ = true;
+        return;
+    }
+
     try {
-        std::string nextMapPath = "assets/map" + std::to_string(curentMapIndex_);
         map = Map(nextMapPath, initialPlayerX_, initialPlayerY_);
-        player.resetForNewGame();
-        player.setPosition(initialPlayerX_, initialPlayerY_);
-        enemies.clear();
-        spawnEnemiesFromMap();
-        levelComplete_ = false;
-        if (music.getStatus() != sf::SoundSource::Status::Playing) {
-            music.play();
-        }
     } catch (...) {
         gameFin = true;
+        levelComplete_ = true;
+        return;
+    }
+
+    player.setPosition(initialPlayerX_, initialPlayerY_);
+
+    enemies.clear();
+    spawnEnemiesFromMap();
+    pickups.clear();
+    spawnPickupsFromMap();
+
+    levelComplete_ = false;
+
+    if (music.getStatus() != sf::SoundSource::Status::Playing) {
+        music.play();
     }
 }
-
-
