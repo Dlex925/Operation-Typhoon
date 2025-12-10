@@ -34,7 +34,7 @@ void GameManager::countMaps() {
             if (entry.is_regular_file()) {
                 std::string filename = entry.path().filename().string();
 
-                if (filename.find("map") == 0) {
+                if (filename.starts_with("map")) {
                     if (filename == "map_created" || filename == "map_random") {
                         continue;
                     }
