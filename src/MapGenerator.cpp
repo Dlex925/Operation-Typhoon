@@ -95,10 +95,10 @@ void MapGenerator::populateLevel() {
     for (int i = 0; i < std::max(area / 350, 1); ++i) popRandomSpot(3); // LR Enemy
     for (int i = 0; i < std::max(area / 600, 1); ++i) popRandomSpot(4); // HD Enemy
     for (int i = 0; i < std::max(area / 1250, 0); ++i) popRandomSpot(5); // Boom
-    for (int i = 0; i < std::max(area / 80, 1); ++i) popRandomSpot(6);  // HP
-    for (int i = 0; i < std::max(area / 80, 1); ++i) popRandomSpot(7);  // Ammo
+    for (int i = 0; i < std::max(area / 80, 1); ++i) popRandomSpot(6); // HP
+    for (int i = 0; i < std::max(area / 80, 1); ++i) popRandomSpot(7); // Ammo
     for (int i = 0; i < std::max(area / 120, 1); ++i) popRandomSpot(8); // Mixed
-    for (int i = 0; i < std::max(area / 25, 1); ++i) popRandomSpot(9);  // Points
+    for (int i = 0; i < std::max(area / 25, 1); ++i) popRandomSpot(9); // Points
 
     int startX = -1, startY = -1;
     bool found = false;
@@ -114,14 +114,14 @@ void MapGenerator::populateLevel() {
 
     if (!found) return;
 
-    std::vector<std::vector<bool>> visited(height, std::vector<bool>(width, false));
+    std::vector<std::vector<bool> > visited(height, std::vector<bool>(width, false));
     std::queue<GenPoint> q;
 
     q.push({startX, startY});
     visited[startY][startX] = true;
 
-    int dirX[] = {0, 0, 1, -1};
-    int dirY[] = {1, -1, 0, 0};
+    const int dirX[] = {0, 0, 1, -1};
+    const int dirY[] = {1, -1, 0, 0};
 
     while (!q.empty()) {
         GenPoint current = q.front();
