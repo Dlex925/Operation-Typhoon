@@ -96,11 +96,13 @@ public:
         swap(lhs.attackInterval_, rhs.attackInterval_);
         swap(lhs.attackCooldown_, rhs.attackCooldown_);
     }
+
     void updateDeathTimer(float deltaTime) {
         if (dead) {
             deathTimer += deltaTime;
         }
     }
+
     [[nodiscard]] bool shouldDespawn() const {
         return deathTimer >= 10.0f;
     }

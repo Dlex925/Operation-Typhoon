@@ -179,16 +179,15 @@ void GameManager::start() {
                 if (!e->isDead()) {
                     e->update(deltaTime, map, player);
                     e->attackPlayer(player, deltaTime, map);
-                }
-                else {
+                } else {
                     e->updateDeathTimer(deltaTime);
                 }
             }
 
             enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
-                [](const std::unique_ptr<Enemy>& e) {
-                    return !e || e->shouldDespawn();
-                }), enemies.end());
+                                         [](const std::unique_ptr<Enemy> &e) {
+                                             return !e || e->shouldDespawn();
+                                         }), enemies.end());
 
 
             for (auto &item: pickups) {
