@@ -57,10 +57,8 @@ public:
     void spawnPickupsFromMap();
 
     void Engine() const; //
-    friend std::ostream& operator<<(std::ostream& os, const GameManager& gm) {
-
-
-    os << "MAP:\n";
+    friend std::ostream &operator<<(std::ostream &os, const GameManager &gm) {
+        os << "MAP:\n";
     os << gm.map;
 
     os << "\nPLAYER:\n";
