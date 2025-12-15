@@ -180,7 +180,17 @@ void GameManager::start() {
                     e->update(deltaTime, map, player);
                     e->attackPlayer(player, deltaTime, map);
                 }
+                else {
+                    e->updateDeathTimer(deltaTime);
+                }
             }
+
+            enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
+                [](const std::unique_ptr<Enemy>& e) {
+                    return !e || e->shouldDespawn();
+                }), enemies.end());
+
+
             for (auto &item: pickups) {
                 item->updateAndCollect(player);
             }

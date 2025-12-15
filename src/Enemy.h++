@@ -21,6 +21,7 @@ class Enemy {
     int typeCode_{1};
     std::vector<Point> currentPath;
     float pathTimer = 0.0f;
+    float deathTimer{0.0f};
 
 protected:
     float attackInterval_{0.5f};
@@ -94,6 +95,14 @@ public:
         swap(lhs.typeCode_, rhs.typeCode_);
         swap(lhs.attackInterval_, rhs.attackInterval_);
         swap(lhs.attackCooldown_, rhs.attackCooldown_);
+    }
+    void updateDeathTimer(float deltaTime) {
+        if (dead) {
+            deathTimer += deltaTime;
+        }
+    }
+    [[nodiscard]] bool shouldDespawn() const {
+        return deathTimer >= 10.0f;
     }
 };
 
