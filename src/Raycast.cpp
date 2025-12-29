@@ -261,10 +261,10 @@ void Raycast::renderPickup(const PickupBase &pickup) const {
 
     if (transformY <= 0.0001) {
         return;
-            /*
-            Checks that the object isnt behind the player and also prevents division by 0 errors.
-            There is no need to check transformX as it can be negative or positive - right relative to the center of the camera or left
-             */
+        /*
+        Checks that the object isnt behind the player and also prevents division by 0 errors.
+        There is no need to check transformX as it can be negative or positive - right relative to the center of the camera or left
+         */
     }
 
     int spriteScreenX = static_cast<int>((w / 2.0) * (1 + transformX / transformY));

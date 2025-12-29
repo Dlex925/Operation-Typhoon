@@ -139,12 +139,10 @@ void Enemy::update(double deltaTime, const Map &map, const Player &player) {
     }
 
     attackPlayer(const_cast<Player &>(player), deltaTime, map);
-
-
 }
 
 //
-bool Enemy::canAttack(const Player& player, const Map& map, double deltaTime) {
+bool Enemy::canAttack(const Player &player, const Map &map, double deltaTime) {
     attackCooldown_ -= static_cast<float>(deltaTime);
     if (attackCooldown_ > 0.f) return false;
     double distSq = Dist(player);

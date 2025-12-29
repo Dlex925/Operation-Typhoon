@@ -5,15 +5,12 @@
 #include <SFML/Audio.hpp>
 
 void LongRangeHighDamageEnemy::attackPlayer(Player& player, double deltaTime, const Map &map) {
-
-
-
     double dist = Dist(player);
     if (dist <= attackRange() * 0.2) {
         SRAttackPlayer(player, deltaTime);
         return;
     }
-    if (canAttack(player, map,deltaTime)){
+    if (canAttack(player, map, deltaTime)) {
         player.takeDamage(attackDamage());
         attackCooldown_ = attackInterval_;
     }

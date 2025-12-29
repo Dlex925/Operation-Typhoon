@@ -5,7 +5,7 @@
 
 
 void LongRangeEnemy::attackPlayer(Player& player, double deltaTime,const Map &map) {
-    if (canAttack(player, map,deltaTime)){
+    if (canAttack(player, map, deltaTime)) {
         player.takeDamage(attackDamage());
         attackCooldown_ = attackInterval_;
     }

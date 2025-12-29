@@ -49,10 +49,15 @@ class GameManager {
     void restartGame_();
 public:
     GameManager(sf::RenderWindow& win, std::string harta, Player& p);
-    GameManager(const GameManager&) = delete;
-    GameManager& operator=(const GameManager&) = delete;
-    GameManager(GameManager&&) = delete;
-    GameManager& operator=(GameManager&&) = delete;
+
+    GameManager(const GameManager &) = delete;
+
+    GameManager &operator=(const GameManager &) = delete;
+
+    GameManager(GameManager &&) = delete;
+
+    GameManager &operator=(GameManager &&) = delete;
+
     ~GameManager() = default;
 
     void start();
@@ -76,7 +81,7 @@ public:
     os << const_cast<GameManager &>(gm).player.getWeapon();
 
     return os;
-}
+    }
 
 
 };

@@ -18,7 +18,7 @@ public :
     static std::string getTextureName() { return "Medkit"; }
 };
 
-class  AmmoStrategy {
+class AmmoStrategy {
 public :
     static void apply(Player &p) {
         p.addAmmo(50);
@@ -27,7 +27,7 @@ public :
     static std::string getTextureName() { return "Ammo"; }
 };
 
-class  MixedStrategy {
+class MixedStrategy {
 public :
     static void apply(Player &p) {
         p.heal(150);
@@ -36,7 +36,7 @@ public :
     static std::string getTextureName() { return "Mixed"; }
 };
 
-class  PointsStrategy {
+class PointsStrategy {
 public:
     static void apply(Player &p) {
         p.addPoints(100);

@@ -334,10 +334,8 @@ void GameManager::Engine() const{
                       "    Score: " + std::to_string(player.score_()));
         hud.setPosition({12.f, 10.f});
         window.draw(hud);
-    }
-    else {
+    } else {
         throw std::runtime_error("Failed to load font");
-
     }
 
     if (paused_) {

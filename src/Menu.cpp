@@ -60,8 +60,7 @@ sf::VideoMode Menu::selectResolution() {
 
         selection->setCharacterSize(32);
         selection->setFillColor(sf::Color(255, 255, 255));
-    }
-    else {
+    } else {
         throw std::runtime_error("Font not loaded");
     }
 
