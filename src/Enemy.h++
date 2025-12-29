@@ -28,7 +28,7 @@ protected:
     float attackCooldown_{0.9f};
     static int enemy_no;
     static int enemy_dead;
-
+    bool canAttack(const Player& player, const Map& map, double deltaTime);
     static bool hasLineOfSight(const Map &map, double sx, double sy, double tx, double ty);
 
 public:
@@ -65,8 +65,12 @@ public:
     virtual void attackPlayer(Player &player, double deltaTime, const Map &map) = 0;
 
     [[nodiscard]] virtual std::unique_ptr<Enemy> clone() const = 0;
-    virtual void print(std::ostream &os) const = 0;
-
+    void print(std::ostream &os) const  {
+        os << typeName() << "(hp=" << getHp() << "/" << getMaxHp() << ", x=" << getWorldX() << ", y=" << getWorldY() <<
+                ")" << "\nDead_Enemies " << enemy_dead << "\nTotal Enemies " << enemy_no << '\n' << (
+                    static_cast<float>(enemy_dead) / static_cast<float>(enemy_no) >= 0.5) << '\n' << static_cast<float>(
+                        enemy_dead) / static_cast<float>(enemy_no) << "\n";
+    }
     friend std::ostream &operator<<(std::ostream &os, const Enemy &e) {
         e.print(os);
         return os;

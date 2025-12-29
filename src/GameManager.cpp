@@ -335,6 +335,10 @@ void GameManager::Engine() const{
         hud.setPosition({12.f, 10.f});
         window.draw(hud);
     }
+    else {
+        throw std::runtime_error("Failed to load font");
+
+    }
 
     if (paused_) {
         sf::RectangleShape overlay({static_cast<float>(window.getSize().x), static_cast<float>(window.getSize().y)});

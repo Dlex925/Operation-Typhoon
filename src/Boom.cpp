@@ -7,12 +7,17 @@
 
 void Boom::attackPlayer(Player &player, double deltaTime, const Map &map) {
     if (isDead()) return;
-    attackCooldown_ -= static_cast<float>(deltaTime);
-    if (attackCooldown_ > 0.f) return;
-    double dist = Dist(player);
-    if (dist <= attackRange() * attackRange() && this->hasLineOfSight(map, this->getWorldX(), this->getWorldY(),
-                                                                      player.getX(), player.getY())) {
-        player.takeDamage(attackDamage());
-        takeDamage(500000);
+
+    if (!triggered) {
+        if (canAttack(player, map, deltaTime)) {
+            triggered = true;
+        }
+    } else {
+        fuseTimer -= static_cast<float>(deltaTime);
+        if (fuseTimer <= 0.0f) {
+            player.takeDamage(attackDamage());
+
+            takeDamage(999999);
+        }
     }
 }

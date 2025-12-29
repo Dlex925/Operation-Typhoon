@@ -9,7 +9,8 @@
 #include "GameManager.h++"
 #include <string>
 
-struct HealthStrategy {
+class HealthStrategy {
+public :
     static void apply(Player &p) {
         p.heal(250);
     }
@@ -17,7 +18,8 @@ struct HealthStrategy {
     static std::string getTextureName() { return "Medkit"; }
 };
 
-struct AmmoStrategy {
+class  AmmoStrategy {
+public :
     static void apply(Player &p) {
         p.addAmmo(50);
     }
@@ -25,7 +27,8 @@ struct AmmoStrategy {
     static std::string getTextureName() { return "Ammo"; }
 };
 
-struct MixedStrategy {
+class  MixedStrategy {
+public :
     static void apply(Player &p) {
         p.heal(150);
         p.addAmmo(25);
@@ -33,7 +36,8 @@ struct MixedStrategy {
     static std::string getTextureName() { return "Mixed"; }
 };
 
-struct PointsStrategy {
+class  PointsStrategy {
+public:
     static void apply(Player &p) {
         p.addPoints(100);
     }

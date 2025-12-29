@@ -9,13 +9,15 @@
 
 class Boom : public Enemy {
     int AttackDmg{500};
+    bool triggered = false;
+    float fuseTimer = 1.5f;
 
 public:
     explicit Boom(double x = 2.5, double y = 2.5, float heightScale = 1.0f, double mvspeed = 5)
         : Enemy(x, y, heightScale, 200, mvspeed) {
     }
 
-    [[nodiscard]] double attackRange() const override { return 0.8; }
+    [[nodiscard]] double attackRange() const override { return triggered ? 100.0 : 1.5; }
 
     [[nodiscard]] int attackDamage() const override { return AttackDmg; }
     [[nodiscard]] const std::string typeName() const override { return "Boom"; }
@@ -24,10 +26,6 @@ public:
 
     [[nodiscard]] std::unique_ptr<Enemy> clone() const override { return std::make_unique<Boom>(*this); }
 
-    void print(std::ostream &os) const override {
-        os << typeName() << "(hp=" << getHp() << "/" << getMaxHp() << ", x=" << getWorldX() << ", y=" << getWorldY() <<
-                ")";
-    }
 
     Boom(const Boom &other) = default;
 

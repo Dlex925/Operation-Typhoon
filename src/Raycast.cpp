@@ -83,9 +83,6 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
         bool loaded = false;
     };
     static std::unordered_map<std::string, Textures> cache;
-    static sf::Texture legacy1("assets/Enemy1.png"); // legacy fallback idle/attack
-    static sf::Texture legacy2("assets/Enemy2.png"); // legacy fallback dead
-
     std::string type = enemy.typeName();
     auto it = cache.find(type);
     if (it == cache.end()) {
@@ -118,17 +115,10 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
     const sf::Texture *tex = nullptr;
     if (isDead) {
         if (it->second.dead.getSize().x > 0) tex = &it->second.dead;
-        else if (legacy2.getSize().x > 0) tex = &legacy2;
-        else if (legacy1.getSize().x > 0) tex = &legacy1;
     } else if (isAttacking) {
         if (it->second.attack.getSize().x > 0 && In_short_range)tex = &it->second.attack2;
-        else if (it->second.attack.getSize().x > 0) tex = &it->second.attack;
-        else if (it->second.idle.getSize().x > 0) tex = &it->second.idle;
-        else if (legacy1.getSize().x > 0) tex = &legacy1;
     } else {
         if (it->second.idle.getSize().x > 0) tex = &it->second.idle;
-        else if (legacy1.getSize().x > 0) tex = &legacy1;
-        else if (legacy2.getSize().x > 0) tex = &legacy2;
     }
 
     int w = static_cast<int>(window->getSize().x);
@@ -271,6 +261,10 @@ void Raycast::renderPickup(const PickupBase &pickup) const {
 
     if (transformY <= 0.0001) {
         return;
+            /*
+            Checks that the object isnt behind the player and also prevents division by 0 errors.
+            There is no need to check transformX as it can be negative or positive - right relative to the center of the camera or left
+             */
     }
 
     int spriteScreenX = static_cast<int>((w / 2.0) * (1 + transformX / transformY));

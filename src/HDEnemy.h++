@@ -34,44 +34,10 @@ public :
     return std::make_unique<LongRangeHighDamageEnemy>(*this);
 }
 
-void print(std::ostream &os) const override {
-    os << typeName() << "(hp=" << getHp() << "/" << getMaxHp() << ", x=" << getWorldX() << ", y=" << getWorldY() <<
-            ")" << "\nDead_Enemies " << enemy_dead << "\nTotal Enemies " << enemy_no << '\n' << (
-                static_cast<float>(enemy_dead) / static_cast<float>(enemy_no) >= 0.5) << '\n' << static_cast<float>(
-                    enemy_dead) / static_cast<float>(enemy_no) << "\n";
-    }
 
-LongRangeHighDamageEnemy(const LongRangeHighDamageEnemy &other)
-    : Enemy(other),
-      AttackDmg(other.AttackDmg) {
-}
 
-LongRangeHighDamageEnemy(LongRangeHighDamageEnemy &&other) noexcept
-    : Enemy(std::move(other)),
-      AttackDmg(other.AttackDmg) {
-}
 
-LongRangeHighDamageEnemy &operator=(const LongRangeHighDamageEnemy &other) {
-    if (this == &other)
-        return *this;
-    Enemy::operator =(other);
-    AttackDmg = other.AttackDmg;
-    return *this;
-}
 
-LongRangeHighDamageEnemy &operator=(LongRangeHighDamageEnemy &&other) noexcept {
-    if (this == &other)
-        return *this;
-    Enemy::operator =(std::move(other));
-    AttackDmg = other.AttackDmg;
-    return *this;
-}
-
-friend void swap(LongRangeHighDamageEnemy &lhs, LongRangeHighDamageEnemy &rhs) noexcept {
-    using std::swap;
-    swap(static_cast<Enemy &>(lhs), static_cast<Enemy &>(rhs));
-    swap(lhs.AttackDmg, rhs.AttackDmg);
-}
 };
 
 #endif // OOP_HDENEMY_H
