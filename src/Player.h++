@@ -33,7 +33,7 @@ public:
     [[nodiscard]] double getPlaneX() const { return planeX; }
     [[nodiscard]]double getPlaneY() const { return planeY; }
 
-    void addP(int a) {
+    void addPoints(int a) {
         score += a;
         score = std::max(score, 0);
     }

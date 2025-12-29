@@ -92,7 +92,7 @@ void GameManager::restartGame_() {
     paused_ = false;
     pHeld_ = false;
     rHeld_ = false;
-    player.addP(-9999999);
+    player.addPoints(-9999999);
 
     if (gameOverJingle_.getStatus() == sf::SoundSource::Status::Playing) {
         gameOverJingle_.stop();

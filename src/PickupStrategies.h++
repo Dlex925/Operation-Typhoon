@@ -35,7 +35,7 @@ struct MixedStrategy {
 
 struct PointsStrategy {
     static void apply(Player &p) {
-        p.addP(100);
+        p.addPoints(100);
     }
 
     static std::string getTextureName() { return "Points"; }
