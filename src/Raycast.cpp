@@ -117,6 +117,7 @@ void Raycast::renderEnemy(const Enemy &enemy) const {
         if (it->second.dead.getSize().x > 0) tex = &it->second.dead;
     } else if (isAttacking) {
         if (it->second.attack.getSize().x > 0 && In_short_range)tex = &it->second.attack2;
+        else tex = &it ->second.attack;
     } else {
         if (it->second.idle.getSize().x > 0) tex = &it->second.idle;
     }
