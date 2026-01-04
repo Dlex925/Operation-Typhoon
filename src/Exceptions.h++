@@ -21,6 +21,14 @@ public:
     }
 };
 
+
+class  FontException : public AssetLoadException {
+public:
+    explicit FontException(const std::string &filename)
+        : AssetLoadException(filename, "Font") {
+    }
+};
+
 class MapException : public GameException {
 public:
     explicit MapException(const std::string &details)

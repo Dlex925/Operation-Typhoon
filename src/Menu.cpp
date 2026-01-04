@@ -14,8 +14,10 @@
 #include <iostream>
 #include <optional>
 
+#include "Exceptions.h++"
+
 static bool loadMenuFont(sf::Font &font) {
-    const char *path = "assets/0xProtoNerdFontPropo-Regular.ttf";
+   std::string path = "assets/0xProtoNerdFontPropo-Regular.ttf";
     return font.openFromFile(path);
 }
 
@@ -61,7 +63,7 @@ sf::VideoMode Menu::selectResolution() {
         selection->setCharacterSize(32);
         selection->setFillColor(sf::Color(255, 255, 255));
     } else {
-        throw std::runtime_error("Font not loaded");
+        throw FontException("assets/0xProtoNerdFontPropo-Regular.ttf");
     }
 
     fullscreenChosen_ = false;

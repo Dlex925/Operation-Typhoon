@@ -129,7 +129,8 @@ void GameManager::start() {
     sf::Mouse::setPosition({static_cast<int>(viewSize.x) / 2, static_cast<int>(viewSize.y) / 2}, window);
 
     if (!uiFont.openFromFile("assets/0xProtoNerdFontPropo-Regular.ttf")) {
-        throw AssetLoadException("assets/0xProtoNerdFontPropo-Regular.ttf", "Font");
+        throw FontException("assets/0xProtoNerdFontPropo-Regular.ttf");
+
     }
     uiFontLoaded_ = true;
 
@@ -335,7 +336,8 @@ void GameManager::Engine() const{
         hud.setPosition({12.f, 10.f});
         window.draw(hud);
     } else {
-        throw std::runtime_error("Failed to load font");
+        throw FontException("assets/0xProtoNerdFontPropo-Regular.ttf");
+
     }
 
     if (paused_) {
