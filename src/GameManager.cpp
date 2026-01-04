@@ -130,7 +130,6 @@ void GameManager::start() {
 
     if (!uiFont.openFromFile("assets/0xProtoNerdFontPropo-Regular.ttf")) {
         throw FontException("assets/0xProtoNerdFontPropo-Regular.ttf");
-
     }
     uiFontLoaded_ = true;
 
@@ -337,7 +336,6 @@ void GameManager::Engine() const{
         window.draw(hud);
     } else {
         throw FontException("assets/0xProtoNerdFontPropo-Regular.ttf");
-
     }
 
     if (paused_) {

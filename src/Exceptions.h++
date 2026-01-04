@@ -22,7 +22,7 @@ public:
 };
 
 
-class  FontException : public AssetLoadException {
+class FontException : public AssetLoadException {
 public:
     explicit FontException(const std::string &filename)
         : AssetLoadException(filename, "Font") {

@@ -17,7 +17,7 @@
 #include "Exceptions.h++"
 
 static bool loadMenuFont(sf::Font &font) {
-   std::string path = "assets/0xProtoNerdFontPropo-Regular.ttf";
+    std::string path = "assets/0xProtoNerdFontPropo-Regular.ttf";
     return font.openFromFile(path);
 }
 
