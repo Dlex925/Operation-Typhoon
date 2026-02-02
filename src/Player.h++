@@ -1,4 +1,3 @@
-
 #ifndef OOP_PLAYER_H
 #define OOP_PLAYER_H
 #include "Map.h++"
@@ -6,8 +5,8 @@
 #include <algorithm>
 
 class Player {
-    double posX, posY, dirX, dirY , planeX , planeY;
-    const double moveSpeed  , rotSpeed;
+    double posX, posY, dirX, dirY, planeX, planeY;
+    const double moveSpeed, rotSpeed;
     double mouseSensitivity;
     Weapon weapon;
     int hp_ = 1000;
@@ -17,21 +16,28 @@ class Player {
 
 public:
     explicit Player(double x = 1.f, double y = 1.f);
-    void MoveForward(double deltaTime, const Map& map);
-    void MoveBackward(double deltaTime, const Map& map);
-    void MoveLeft(double deltaTime, const Map& map);
-    void MoveRight(double deltaTime, const Map& map);
+
+    void MoveForward(double deltaTime, const Map &map);
+
+    void MoveBackward(double deltaTime, const Map &map);
+
+    void MoveLeft(double deltaTime, const Map &map);
+
+    void MoveRight(double deltaTime, const Map &map);
+
     void RotateCamera(double mouseDeltaX);
-    friend std::ostream& operator<<(std::ostream& os, const Player& player) ;
+
+    friend std::ostream &operator<<(std::ostream &os, const Player &player);
+
     void updateWeapon(float deltaTime) { weapon.update(deltaTime); }
-    void drawWeapon(sf::RenderWindow& window) { weapon.draw(window); }
-    Weapon& getWeapon() { return weapon; }
-    [[nodiscard]]double getX() const { return posX; }
-    [[nodiscard]]double getY() const { return posY; }
-    [[nodiscard]]double getDirX() const { return dirX; }
+    void drawWeapon(sf::RenderWindow &window) { weapon.draw(window); }
+    Weapon &getWeapon() { return weapon; }
+    [[nodiscard]] double getX() const { return posX; }
+    [[nodiscard]] double getY() const { return posY; }
+    [[nodiscard]] double getDirX() const { return dirX; }
     [[nodiscard]] double getDirY() const { return dirY; }
     [[nodiscard]] double getPlaneX() const { return planeX; }
-    [[nodiscard]]double getPlaneY() const { return planeY; }
+    [[nodiscard]] double getPlaneY() const { return planeY; }
 
     void addPoints(int a) {
         score += a;
@@ -50,6 +56,11 @@ public:
     void resetForNewGame() {
         hp_ = maxHp_;
         ammo_ = 30;
+    }
+
+    void enableGodMode() {
+        maxHp_ = 10000000;
+        hp_ = maxHp_;
     }
 
     [[nodiscard]] int getHp() const { return hp_; }

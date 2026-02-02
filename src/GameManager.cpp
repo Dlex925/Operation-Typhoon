@@ -21,7 +21,9 @@ GameManager::GameManager(sf::RenderWindow& win, std::string harta, Player& p)
 
     countMaps();
     std::cout << "Detected maps: " << maxMaps_ << "\n";
-
+    if (Menu::getInstance().isGodModeActive()) {
+        player.enableGodMode();
+    }
     player.setPosition(initialPlayerX_, initialPlayerY_);
     spawnEnemiesFromMap();
     spawnPickupsFromMap();

@@ -177,6 +177,7 @@ int Menu::selectGameMode(sf::RenderWindow &window) {
     sf::Text opt1(font, "1. START MISSION", 35);
     sf::Text opt2(font, "2. MAP CREATOR", 35);
     sf::Text opt3(font, "3. GENERATE RANDOM MAP", 35);
+    sf::Text opt4(font, "9. God Mode (toggle, click to activate, then chose 1/2/3)", 35);
 
 
     opt1.setPosition({
@@ -191,6 +192,10 @@ int Menu::selectGameMode(sf::RenderWindow &window) {
     opt3.setPosition({
         (window.getSize().x - opt3.getLocalBounds().size.x) / 2.f,
         window.getSize().y * 0.65f
+    });
+    opt4.setPosition({
+        (window.getSize().x - opt4.getLocalBounds().size.x) / 2.f,
+        window.getSize().y * 0.75f
     });
 
     while (window.isOpen()) {
@@ -208,6 +213,9 @@ int Menu::selectGameMode(sf::RenderWindow &window) {
                     return 0;
                 }
                 if (keyEvent->code == sf::Keyboard::Key::Num3) return 3;
+                if (keyEvent->code == sf::Keyboard::Key::Num9) {
+                    godModeActive_ = true;
+                }
             }
         }
 
@@ -216,6 +224,7 @@ int Menu::selectGameMode(sf::RenderWindow &window) {
         window.draw(opt1);
         window.draw(opt2);
         window.draw(opt3);
+        window.draw(opt4);
         window.display();
     }
     return 0;

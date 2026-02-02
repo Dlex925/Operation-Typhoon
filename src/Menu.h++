@@ -26,8 +26,12 @@ public:
 
     void showHighscores(sf::RenderWindow &window);
 
+    bool isGodModeActive() const { return godModeActive_; }
+
 private:
     Menu() = default;
+
+    bool godModeActive_ = false;
 
     ~Menu() = default;
 
